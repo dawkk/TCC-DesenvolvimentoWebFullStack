@@ -1,9 +1,12 @@
+import Banner from '../../components/Banner';
 import NavBar from '../../components/NavBar';
-/* import styles from './Home.module.scss' */
 
 const Home = () => {
   return (
-    <NavBar></NavBar>
+    <>
+      <NavBar></NavBar>
+      <Banner></Banner>
+    </>
   )
 }
 
