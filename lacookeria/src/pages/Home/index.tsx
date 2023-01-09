@@ -1,12 +1,10 @@
-import styles from './Home.module.scss'
+import NavBar from '../../components/NavBar';
+/* import styles from './Home.module.scss' */
 
 const Home = () => {
   return (
-    <>
-    
-    
-    </>
+    <NavBar></NavBar>
   )
 }
 
-export default Home
+export default Home;
