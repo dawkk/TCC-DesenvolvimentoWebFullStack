@@ -1,7 +1,6 @@
 import { Grid } from '@mui/material';
 import { Box } from '@mui/system';
-import { url } from 'inspector';
-import colorTheme from '../ColorThemes';
+import colorTheme from '../../../components/ColorThemes';
 import styles from './ListMenus.module.scss'
 import menuImage1 from './images/menu-hamburguer.jpg'
 
