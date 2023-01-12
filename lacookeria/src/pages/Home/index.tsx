@@ -1,8 +1,4 @@
-import { ClassNames } from '@emotion/react';
-import { Container } from '@mui/system';
-import { Link } from 'react-router-dom';
 import Banner from '../../components/Banner';
-import colorTheme from '../../components/ColorThemes';
 import Footer from '../../components/Footer';
 import NavBar from '../../components/NavBar';
 import styles from './Home.module.scss'

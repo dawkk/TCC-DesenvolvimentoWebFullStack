@@ -21,3 +21,7 @@ const colorTheme = createTheme({
 });
 
 export default colorTheme;
+/* 
+import colorTheme from '../ColorThemes';
+sx={{color:colorTheme.palette.primary.light}} 
+*/
