@@ -1,8 +1,12 @@
+import Logo from '../Logo';
 import styles from './Footer.module.scss'
 
 const Footer = () => {
   return (
     <footer className={styles.FooterStyle}>
+      <div>
+        <Logo/>
+      </div>
       <div>
         <p>Copyright &copy; {new Date().getFullYear()} La Cookeria</p>
       </div>
