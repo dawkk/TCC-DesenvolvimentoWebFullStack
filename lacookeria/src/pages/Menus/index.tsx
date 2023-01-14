@@ -8,12 +8,12 @@ import styles from './Menu.module.scss'
 
 const Menus = () => {
   return (
-    <Box sx={{backgroundColor:colorTheme.palette.primary.light, height:'100vh', paddingTop:20 }}>
+    <Box sx={{backgroundColor:colorTheme.palette.primary.light, height:'100%', paddingTop:20 }}>
       <NavBar/>
       <BannerMenu/>
       <ListMenus/>
       
-      {/* <Footer/> */}
+      <Footer/>
     </Box>
   )
 }

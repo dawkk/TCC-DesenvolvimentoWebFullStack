@@ -1,5 +1,4 @@
 import { Box, Button, Checkbox, Container, Divider, FormControlLabel, Grid, Link, Paper, TextField, Typography } from '@mui/material';
-import { width } from '@mui/system';
 import Logo from '../../../components/Logo';
 import styles from './Login.module.scss'
 import FacebookIcon from '@mui/icons-material/Facebook';
@@ -82,7 +81,6 @@ const Login = () => {
         </Typography>
       </div>
     </Box>
-
   )
 }
 
