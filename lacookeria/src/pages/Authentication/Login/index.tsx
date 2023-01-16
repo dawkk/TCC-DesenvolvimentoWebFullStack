@@ -1,5 +1,6 @@
 import { Box, Button, Checkbox, Container, Divider, FormControlLabel, Grid, Link, Paper, TextField, Typography } from '@mui/material';
 import Logo from '../../../components/Logo';
+import { Link as RouterLink } from 'react-router-dom';
 import styles from './Login.module.scss'
 import FacebookIcon from '@mui/icons-material/Facebook';
 import GoogleIcon from '@mui/icons-material/Google';
@@ -32,7 +33,11 @@ const Login = () => {
             <Paper>
               <div className={styles.FormHeader}>
                 <h2>Login</h2>
-                <a>Não possui conta?</a>
+                <Link component={RouterLink} to="/register">
+                  <Button>
+                    Não possui conta?
+                  </Button>
+                </Link>
               </div>
               <Grid component="form" sx={{
                 pl: 4, pr: 4, boxSizing: 'border-box',
