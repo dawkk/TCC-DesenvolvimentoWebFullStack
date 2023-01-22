@@ -1,12 +1,23 @@
 import { Box, Button, Checkbox, Container, Divider, FormControlLabel, Grid, Link, Paper, TextField, Typography } from '@mui/material';
 import Logo from '../../../components/Logo';
 import styles from './Register.module.scss'
+import { Link as RouterLink } from 'react-router-dom';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import GoogleIcon from '@mui/icons-material/Google';
 import TwitterIcon from '@mui/icons-material/Twitter';
-
+import { useState } from 'react';
 
 const Register = () => {
+
+  const [formValues, setFormValues] = useState(defaultValues);
+  const defaultValues = {
+    name: "",
+    age: 0,
+    sex: "",
+    os: "",
+    favoriteNumber: 0,
+  };
+
   return (
     <Box className={styles.Background} sx={{ height: '100%' }}>
       <Grid
@@ -30,6 +41,11 @@ const Register = () => {
         >
           <Grid justifyContent="center" alignItems="center" sx={{ width: '40%', backgroundColor: 'whitesmoke', borderRadius: 24. }}>
             <Paper>
+              <Box sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 4, boxSizing: 'border-box' }}>
+                <Typography variant='h4'>Registre-se</Typography>
+                <Link component={RouterLink} to="/login"><Typography variant='h6'>Já possui conta?</Typography></Link>
+                
+              </Box>
               <Grid component="form" sx={{
                 pl: 4, pr: 4, boxSizing: 'border-box',
                 '& .MuiTextField-root': { mb: 1 },

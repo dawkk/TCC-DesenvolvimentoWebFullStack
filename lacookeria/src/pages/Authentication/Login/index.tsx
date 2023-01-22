@@ -1,6 +1,7 @@
 import { Box, Button, Checkbox, Container, Divider, FormControlLabel, Grid, Link, Paper, TextField, Typography } from '@mui/material';
 import Logo from '../../../components/Logo';
 import styles from './Login.module.scss'
+import { Link as RouterLink } from 'react-router-dom';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import GoogleIcon from '@mui/icons-material/Google';
 import TwitterIcon from '@mui/icons-material/Twitter';
@@ -30,10 +31,11 @@ const Login = () => {
         >
           <Grid justifyContent="center" alignItems="center" sx={{ width: '40%', backgroundColor: 'whitesmoke', borderRadius: 24. }}>
             <Paper>
-              <div className={styles.FormHeader}>
-                <h2>Login</h2>
-                <a>Não possui conta?</a>
-              </div>
+              <Box sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 4, boxSizing: 'border-box' }}>
+                <Typography variant='h4'>Login</Typography>
+                <Link component={RouterLink} to="/register"><Typography variant='h6'>Não possui conta?</Typography></Link>
+                
+              </Box>
               <Grid component="form" sx={{
                 pl: 4, pr: 4, boxSizing: 'border-box',
                 '& .MuiTextField-root': { mb: 1, width: '100%' },
@@ -57,7 +59,7 @@ const Login = () => {
                   </div>
                   <Button variant="contained" sx={{ width: '100%', height: '50px', mb: '32px' }}>Login</Button>
                   <Typography variant="caption" display="block" gutterBottom sx={{ mb: '32px' }}>
-                    <Divider>
+                    <Divider> 
                       Ou faça login com
                     </Divider>
                   </Typography>
