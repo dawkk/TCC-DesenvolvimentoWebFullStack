@@ -31,14 +31,11 @@ const Login = () => {
         >
           <Grid justifyContent="center" alignItems="center" sx={{ width: '40%', backgroundColor: 'whitesmoke', borderRadius: 24. }}>
             <Paper>
-              <div className={styles.FormHeader}>
-                <h2>Login</h2>
-                <Link component={RouterLink} to="/register">
-                  <Button>
-                    Não possui conta?
-                  </Button>
-                </Link>
-              </div>
+              <Box sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 4, boxSizing: 'border-box' }}>
+                <Typography variant='h4'>Login</Typography>
+                <Link component={RouterLink} to="/register"><Typography variant='h6'>Não possui conta?</Typography></Link>
+                
+              </Box>
               <Grid component="form" sx={{
                 pl: 4, pr: 4, boxSizing: 'border-box',
                 '& .MuiTextField-root': { mb: 1, width: '100%' },
@@ -62,7 +59,7 @@ const Login = () => {
                   </div>
                   <Button variant="contained" sx={{ width: '100%', height: '50px', mb: '32px' }}>Login</Button>
                   <Typography variant="caption" display="block" gutterBottom sx={{ mb: '32px' }}>
-                    <Divider>
+                    <Divider> 
                       Ou faça login com
                     </Divider>
                   </Typography>
