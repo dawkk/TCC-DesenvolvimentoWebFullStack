@@ -29,7 +29,7 @@ const NavBar = () => {
                 Delivery
               </Button>
             </Link>
-            <Link component={RouterLink} to="/">
+            <Link component={RouterLink} to="/about">
               <Button sx={{ my: 2, color: colorTheme.palette.primary.contrastText }}>
                 Quem somos
               </Button>

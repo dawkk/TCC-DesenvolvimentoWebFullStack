@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Login from './pages/Authentication/Login';
 import Menus from './pages/Menus';
 import Register from './pages/Authentication/Register';
+import About from './pages/About';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <Route path='/menus' element={<Menus/>}/>
       <Route path='/login' element={<Login/>}/>
       <Route path='/register' element={<Register/>}/>
+      <Route path='/about' element={<About/>}/>
 
 
     </Routes>
