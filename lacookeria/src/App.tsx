@@ -6,6 +6,7 @@ import Menus from './pages/Menus';
 import Register from './pages/Authentication/Register';
 import About from './pages/About';
 import Profile from './pages/Profile';
+import OrdersProfile from './pages/Profile/OrdersProfile';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Route path='/register' element={<Register/>}/>
       <Route path='/about' element={<About/>}/>
       <Route path='/profile' element={<Profile/>}/>
+      <Route path='/profile/orders' element={<OrdersProfile/>}/>
 
 
     </Routes>

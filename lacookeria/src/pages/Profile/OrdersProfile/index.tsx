@@ -1,12 +1,12 @@
 import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
-import Footer from "../../components/Footer";
-import NavBar from "../../components/NavBar";
-import colorTheme from '../../components/ColorThemes';
+import Footer from "../../../components/Footer";
+import NavBar from "../../../components/NavBar";
+import colorTheme from '../../../components/ColorThemes';
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
-import NavProfile from "./NavProfile";
+import NavProfile from "../NavProfile";
 
 
-const Profile = () => {
+const OrdersProfile = () => {
 
   function createData(
     order: number,
@@ -20,6 +20,10 @@ const Profile = () => {
 
   const rows = [
     createData(15, 'Frozen yoghurt', 'Concluido', 250, 'Ver Mais(link)'),
+    createData(25, 'Ice cream sandwich', 'Cancelado', 150, 'Ver Mais(link)'),
+    createData(356, 'Eclair', 'Concluido', 199, 'Ver Mais(link)'),
+    createData(150, 'Cupcake', 'Concluido', 50, 'Ver Mais(link)'),
+    createData(289, 'Gingerbread', 'Concluido', 25, 'Ver Mais(link)'),
   ];
 
   return (
@@ -74,7 +78,7 @@ const Profile = () => {
   )
 }
 
-export default Profile;
+export default OrdersProfile;
 
 {/* <Link component={RouterLink} to="/">
               <Button variant="outlined" sx={{ width: '100%' }} startIcon={<HomeIcon />}>

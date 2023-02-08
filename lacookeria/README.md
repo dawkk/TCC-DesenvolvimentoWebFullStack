@@ -50,4 +50,6 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 - Register page: Create each form field rules, errors, behaviours, etc
 
+- I guess there is a way to easily create better color themes, check MUI  https://mui.com/material-ui/customization/palette/
+
 -->
