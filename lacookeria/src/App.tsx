@@ -5,6 +5,7 @@ import Login from './pages/Authentication/Login';
 import Menus from './pages/Menus';
 import Register from './pages/Authentication/Register';
 import About from './pages/About';
+import Profile from './pages/Profile';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Route path='/login' element={<Login/>}/>
       <Route path='/register' element={<Register/>}/>
       <Route path='/about' element={<About/>}/>
+      <Route path='/profile' element={<Profile/>}/>
 
 
     </Routes>

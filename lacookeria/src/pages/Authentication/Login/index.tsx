@@ -16,7 +16,7 @@ const Login = () => {
         justifyContent="flex-end"
         sx={{
           minHeight: '100vh'
-        }}
+        }} 
       >
         <Grid item xs={12} sx={{ ml: 3, mt: 3 }}>
           <Logo />
