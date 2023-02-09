@@ -3,8 +3,10 @@ import mongoose from "mongoose";
 const dishSchema = new mongoose.Schema({
   id: {type: String},
   title: {type: String, required: true},
-  description: {type: String, required: true},
-  price: {type: Number, required:true}
+  description: {type: String},
+  price: {type: Number},
+  menu: {type: mongoose.Schema.Types.ObjectId, ref:'menus', required: true},
+  type: {type: String}
 });
 
 const dishes = mongoose.model('dishes', dishSchema);
