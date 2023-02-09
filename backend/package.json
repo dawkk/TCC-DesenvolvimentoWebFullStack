@@ -5,6 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "dev": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -12,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.2",
-    "express-generator": "^4.16.1"
+    "express-generator": "^4.16.1",
+    "mongoose": "^6.9.1"
   }
 }
