@@ -1,4 +1,5 @@
 import express from "express";
+import users from "./userRoutes.js";
 import dishes from "./dishRoutes.js"
 import menus from "./menuRoutes.js"
 
@@ -10,7 +11,8 @@ const routes = (app) => {
   app.use(
     express.json(),
     dishes,
-    menus
+    menus,
+    users
   )
 }
 
