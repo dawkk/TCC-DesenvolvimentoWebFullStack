@@ -4,7 +4,7 @@ import * as bcrypt from 'bcrypt';
 class UserController {
 
   static listUsers = (req, res) => {
-    users.find()
+    users.find('-password')
       /* .populate('address') */
       .exec((err, users) => {
         if (err) {
@@ -16,9 +16,10 @@ class UserController {
       )
   }
 
-  static listUserById = (req, res) => {
+  static listUserById = async (req, res) => {
     const id = req.params.id;
-    users.findById(id)
+
+    const user = await users.findById(id, '-password')
       /* Lembrar de deixar o nome do esquema em singular, por ex menus é o esquema porem abaixo usamos menu */
       /*  .populate('menu', 'name') */
 
