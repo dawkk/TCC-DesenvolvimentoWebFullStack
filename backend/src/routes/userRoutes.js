@@ -12,6 +12,7 @@ router
   .post("/users", UserController.createUser)
   .put("/users/:id", UserController.updateUser)
   .delete("/users/:id", UserController.deleteUser)
-
+  .post("/auth/login", UserController.loginUser)
+  
 
 export default router;
