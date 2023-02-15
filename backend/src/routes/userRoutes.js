@@ -1,5 +1,6 @@
 import express from "express";
 import UserController from "../controllers/userController.js";
+import verifyJWT from "../middlewares/verifyJWT.js";
 
 const router = express.Router();
 
@@ -13,6 +14,7 @@ router
   .put("/users/:id", UserController.updateUser)
   .delete("/users/:id", UserController.deleteUser)
   .post("/auth/login", UserController.loginUser)
+  .get("/auth/logout", verifyJWT, UserController.logoutUser)
   
 
 export default router;

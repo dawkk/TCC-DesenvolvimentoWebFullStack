@@ -1,14 +1,7 @@
 import express from "express";
-import session from "express-session";
 import db from "./config/dbConnect.js";
 import routes from "./routes/index.js";
-
-/* 
-require('dotenv').config()
-const express = require('express');
-const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken') */
-
+import cookieParser from "cookie-parser";
 
 db.on("error", console.log.bind(console, 'Erro de conexão'))
 db.once("open", () => {
@@ -17,7 +10,8 @@ db.once("open", () => {
 
 const app = express();
 app.use(express.json());
-app.use(express.urlencoded({extended:true}))
+app.use(express.urlencoded({extended:true}));
+app.use(cookieParser());
 routes(app);
 
 export default app

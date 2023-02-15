@@ -1,24 +1,9 @@
 import users from "../models/user.js"
 import * as bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-
-
-function checkToken(req, res, next) {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
-  if (!token) return res.status(401).json({ msg: "Acesso negado!" });
-  try {
-    const secret = process.env.ACESS_TOKEN_SECRET;
-    jwt.verify(token, secret);
-    next();
-  } catch (err) {
-    res.status(400).json({ msg: "O Token é inválido!" });
-  }
-}
+import verifyJWT from "../middlewares/verifyJWT.js";
 
 class UserController {
-
-
 
   static listUsers = (req, res) => {
     users.find()
@@ -53,8 +38,8 @@ class UserController {
   static createUser = async (req, res) => {
     /* para lembrar users aqui se refere ao schema/coleção que criamos no mongoose em models como referencia */
     let user = new users(req.body);
-    const userExists = await users.findOne({ email: req.body.email });
-    if (userExists) {
+    const findUser = await users.findOne({ email: req.body.email });
+    if (findUser) {
       return res.status(422).send({ message: "Por favor, utilize outro e-mail!" });
     } else {
       const salt = await bcrypt.genSalt(12);
@@ -94,7 +79,6 @@ class UserController {
 
   static listUserByEmail = (req, res) => {
     const email = req.query.email;
-
     users.find({ 'email': email }, {}, (err, users) => {
       if (!err) {
         return res.status(200).send(users)
@@ -108,31 +92,60 @@ class UserController {
 
   static loginUser = async (req, res) => {
     const { password, email } = req.body;
-    const userExists = await users.findOne({ email: req.body.email });
+    const findUser = await users.findOne({ email: req.body.email }).exec();
 
     if (!email) {
       return res.status(422).send({ message: "O email é obrigatório!" });
     } if (!password) {
       return res.status(422).send({ message: "A senha é obrigatória!" });
-    } if (!userExists) {
-      return res.status(422).send({ message: "Por favor, utilize outro e-mail!" });
+    } if (!findUser) {
+      return res.status(401).send({ message: "E-mail não encontrado, por favor utilize outro e-mail!" });
     }
-    const checkPassword = await bcrypt.compare(req.body.password, userExists.password);
-    if (!checkPassword) {
+    const passwordMatch = await bcrypt.compare(req.body.password, findUser.password);
+    if (!passwordMatch) {
       return res.status(422).json({ message: "Senha inválida" });
     } else {
       try {
-      
+        const roles = Object.values(findUser.roles).filter(Boolean);
         const payload = {
-          id: users._id,
+          "UserInfo": {
+            "id": findUser._id,
+            "roles": roles
+          }
         };
-        const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '30m'});
-        const refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, {expiresIn: '1d'});
-        return res.cookie('jwt', refreshToken, {httpOnly: true, maxAge: 24* 60 * 60 * 1000}).status(200).json({ message: "Autenticação realizada com sucesso!", accessToken, refreshToken });
-      } catch(err){
-        return res.status(500).json(err.message);
+        const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30m' });
+        const refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '1d' });
+        findUser.refreshToken = refreshToken;
+        const updateUser = await findUser.save();
+        console.log(updateUser);
+        console.log(roles);
+
+        return res.cookie('jwt', refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 }).status(200).json({ message: "Autenticação realizada com sucesso!", accessToken, refreshToken, roles });
+
+      } catch (err) {
+        return res.status(401).json(err.message);
       }
     }
+  }
+
+  static logoutUser = async (req, res) => {
+
+    const cookies = req.cookies;
+    if (!cookies?.jwt) return res.sendStatus(204);
+    const refreshToken = cookies.jwt;
+
+    const findUser = await users.findOne({ refreshToken }).exec();
+    if (!findUser) {
+      res.clearCookie('jwt', { httpOnly: true, secure: true });
+      return res.sendStatus(204);
+    }
+
+    findUser.refreshToken = '';
+    const result = await findUser.save();
+    console.log(result);
+
+    res.clearCookie('jwt', { httpOnly: true, secure: true });
+    res.sendStatus(204);
   }
 }
 

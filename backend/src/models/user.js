@@ -7,6 +7,15 @@ const userSchema = new mongoose.Schema({
   email: {type: String, required: true},
   password:{type: String, required: true},
   /* address: {type: mongoose.Schema.Types.ObjectId, ref:'adresses', required: true}, */
+  roles: {
+    User: {
+      type:Number,
+      default:4000
+    },
+    Editor: {type: Number},
+    Admin: { type: Number}
+  },
+  refreshToken: {type: String},
   status: {type: Boolean}
 });
 
