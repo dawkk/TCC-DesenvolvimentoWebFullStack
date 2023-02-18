@@ -5,7 +5,7 @@ import verifyJWT from "../middlewares/verifyJWT.js";
 
 class UserController {
 
-  static listUsers = (req, res) => {
+  static listAllUsers = (req, res) => {
     users.find()
       /* .populate('address') */
       .exec((err, users) => {
@@ -88,12 +88,11 @@ class UserController {
     })
   }
 
-  /* LOGIN */
+  /* --------------------LOGIN------------------------- */
 
   static loginUser = async (req, res) => {
     const { password, email } = req.body;
     const findUser = await users.findOne({ email: req.body.email }).exec();
-
     if (!email) {
       return res.status(422).send({ message: "O email é obrigatório!" });
     } if (!password) {
@@ -110,7 +109,7 @@ class UserController {
         const payload = {
           "UserInfo": {
             "id": findUser._id,
-            "roles": roles
+            "roles": findUser.roles
           }
         };
         const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30m' });
@@ -127,7 +126,7 @@ class UserController {
       }
     }
   }
-
+  /* --------------------LOGOUT------------------------- */
   static logoutUser = async (req, res) => {
 
     const cookies = req.cookies;
@@ -145,7 +144,7 @@ class UserController {
     console.log(result);
 
     res.clearCookie('jwt', { httpOnly: true, secure: true });
-    res.sendStatus(204);
+    res.sendStatus(204).json({ message: "Logout realizado com sucesso!"});;
   }
 }
 

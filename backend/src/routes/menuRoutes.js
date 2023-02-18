@@ -3,12 +3,15 @@ import MenuController from "../controllers/menusController.js";
 
 const router = express.Router();
 
-router
-  .get("/menus", MenuController.listMenus)
-  .get("/menus/:id", MenuController.listMenuById)
-  .post("/menus", MenuController.createMenu)
-  .put("/menus/:id", MenuController.updateMenu)
-  .delete("/menus/:id", MenuController.deleteMenu)
+router.route("/menus")
+  .get(MenuController.listMenus)
+  .post(MenuController.createMenu)
+ 
+  router.route("/menus/:id")
+  .get(MenuController.listMenuById)
+  .put(MenuController.updateMenu)
+  .delete(MenuController.deleteMenu)
+
 
 
 export default router;
