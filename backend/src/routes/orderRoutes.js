@@ -17,9 +17,9 @@ router.route("/orders/:id")
   .put(verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Editor), OrderController.updateOrder)
   .delete(verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Editor), OrderController.deleteOrder)
 
-router
+/* router
   .get("/orders/:id", verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Editor), OrderController.listOrdersByUserId)
-  .get("/orders/totalsales", OrderController.listOrdersTotalSales)
+  .get("/orders/totalsales", OrderController.listOrdersTotalSales) */
 
 
   

@@ -1,12 +1,11 @@
 import mongoose from "mongoose";
 
-const userSchema = new mongoose.Schema({
+const userAddressSchema = new mongoose.Schema({
   id: {type: Number},
   firstName: {type: String, required: true},
   lastName: {type: String},
   email: {type: String, required: true},
   password:{type: String, required: true},
-  /* address: {type: mongoose.Schema.Types.ObjectId, ref:'adresses', required: true}, */
   address: {
     city: {type: String},
     state: {type: String},
@@ -29,6 +28,6 @@ const userSchema = new mongoose.Schema({
   status: {type: Boolean}
 });
 
-const users = mongoose.model('users', userSchema);
+const addresses = mongoose.model('addresses', userSchema);
 
 export default users;

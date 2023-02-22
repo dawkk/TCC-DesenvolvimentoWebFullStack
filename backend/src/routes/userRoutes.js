@@ -16,7 +16,7 @@ router.route("/users")
 
 router.route("/users/:id")
   .get(verifyJWT, verifyRoles(ROLES_LIST.User), UserController.listUserById)
-  .put(verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Editor), UserController.updateUser)
+  .put(verifyJWT, verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Editor), UserController.updateUser)
   .delete(verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Editor), UserController.deleteUser)
 
 router.route("/users/search")
