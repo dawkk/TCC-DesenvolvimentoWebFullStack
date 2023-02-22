@@ -1,5 +1,4 @@
 import orders from "../models/order.js"
-import orderItems from "../models/orderItems.js";
 
 class OrderController {
 
@@ -24,7 +23,6 @@ class OrderController {
 
   static createOrder = async (req, res) => {
     const newOrder = new orders(req.body);
-
     newOrder.save((err) => {
       if(err) return res.status(500).send({message: `${err.message} - Falha ao criar pedido.`});
       else {return res.status(201).send(newOrder.toJSON())}
@@ -33,6 +31,7 @@ class OrderController {
   }
 
 
+  /* sidenote if we add all products at once inside the array it will add correctly, otherwise it will substitute currently dish for new added dish */
   static updateOrder = async (req, res) => {
     const id = req.params.id;
     orders.findByIdAndUpdate(id, {$set: req.body}, (err) => {
@@ -55,20 +54,8 @@ class OrderController {
     })
   }
 
-  static listOrdersByUserId =  async (req, res) => {
-    const userOrders = await orders.find({user: req.params.userid}).populate({ 
-      path: 'orderItems', populate: {
-          path : 'item', populate: 'menu'} 
-      }).sort({'dateOrdered': -1});
 
-      if(!userOrders){
-        res.status(500).send({message: `Erro: Cliente procurado não encontrado!`})
-      } else {
-        res.status(200).send(userOrders)
-      }
-  }
-
-  static listOrdersTotalSales =  async (req, res) => {
+  /* static listOrdersTotalSales =  async (req, res) => {
     const totalSales = await orders.aggregate([
       {$group: {_id:null, totalsales: { $sum: '$totalPrice'}}}
     ])
@@ -78,7 +65,7 @@ class OrderController {
       } else {
         return res.status(200).send({totalsales: totalSales.pop().totalsales})
       }
-  }
+  } */
 
 }
 
