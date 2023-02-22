@@ -25,6 +25,7 @@ class UserController {
       /* Lembrar de deixar o nome do esquema em singular, por ex menus é o esquema porem abaixo usamos menu */
       /*  .populate('menu', 'name') */
       .exec((err, users) => {
+        
         if (err) {
           return res.status(400).send({ message: `${err.message} - Id do usuario não encontrado. ` })
         } else {

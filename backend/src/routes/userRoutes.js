@@ -8,14 +8,10 @@ import handleRefreshToken from "../controllers/refreshTokenController.js"
 const router = express.Router();
 
 /* quando projetar rotas precisamos colocar no topo da mais especifica para a menos especifica, ou teremos erros de código
-https://www.google.com/search?client=firefox-b-d&q=debug+vscode+express */
+*/
 
 router.route("/users")
-  .get(verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Editor),  UserController.listAllUsers)
-  .post(UserController.createUser)
-
-router.route("/users")
-  .get(verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Editor),  UserController.listAllUsers)
+  .get(verifyJWT, verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Editor), UserController.listAllUsers)
   .post(UserController.createUser)
 
 router.route("/users/:id")
@@ -29,10 +25,12 @@ router.route("/users/search")
 router
   .post("/auth/login", UserController.loginUser)
   .get("/auth/logout", UserController.logoutUser)
-  .post("/refresh", handleRefreshToken)
+  /* .post("/refresh", handleRefreshToken) */
 
 
 /* 
+
+router.use(verifyJWT)
 router
   .get("/users", UserController.listUsers)
   .get("/users/search", UserController.listUserByEmail)
