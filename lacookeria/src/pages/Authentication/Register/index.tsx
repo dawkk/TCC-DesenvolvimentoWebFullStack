@@ -37,7 +37,7 @@ const Register = () => {
                 <Typography variant='h4'>Registro</Typography>
                 <Link component={RouterLink} to="/login"><Typography variant='h6'>Já possui Login?</Typography></Link>
               </Box>
-              <Grid component="form" container spacing={2} sx={{
+              <Grid container spacing={2} sx={{
                 pl: 4, pr: 4, boxSizing: 'border-box',
                 '& .MuiTextField-root': { mb: 1 },
               }}>
@@ -45,8 +45,6 @@ const Register = () => {
                 <FormFields/>
 
                 <Grid item xs={12} md={12}>
-                  <FormControlLabel control={<Checkbox defaultChecked />} label="Me mantenha logado" />
-                  <Button variant="contained" sx={{ width: '100%', height: '50px', mb: '32px' }}>Criar Conta</Button>
                   <Typography variant="caption" display="block" gutterBottom sx={{ mb: '32px' }}>
                     <Divider>
                       Ou registre-se com

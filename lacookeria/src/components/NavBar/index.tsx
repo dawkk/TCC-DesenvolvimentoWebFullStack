@@ -4,6 +4,8 @@ import colorTheme from '../ColorThemes';
 import { Link as RouterLink } from 'react-router-dom';
 import Logo from '../Logo';
 
+import CartDrawer from './cartDrawer';
+
 
 const NavBar = () => {
   return (
@@ -39,9 +41,9 @@ const NavBar = () => {
                 Login
               </Button>
             </Link>
-            <Link component={RouterLink} to="/">
-              <Button sx={{ my: 2, color: colorTheme.palette.primary.contrastText }}>
-                Carrinho
+            <Link component={RouterLink} to="/" >
+              <Button sx={{ my: 1.3, color: colorTheme.palette.primary.contrastText }}>
+                <CartDrawer />
               </Button>
             </Link>
           </Box>
