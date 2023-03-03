@@ -55,4 +55,7 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 REGISTER PAGE:
 - Idea: to implement strenghbar password check for user
 
+IMAGES FOLDER:
+- Rearrange folder from public to inside SRC to avoid errors
+
 -->

@@ -1,3 +1,5 @@
+
+
 /* import { Button, FormHelperText, Grid, IconButton, InputAdornment, InputLabel, OutlinedInput, Stack, Typography } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
@@ -383,6 +385,7 @@ import axios from '../../../../api/axios';
 import * as Yup from 'yup';
 import { Formik, Form } from 'formik';
 import { useState } from 'react';
+import http from '../../../../api/axios';
 
 const celRegex = /([0-9]{2,3})?(\([0-9]{2}\))([0-9]{4,5})([0-9]{4})/;
 
@@ -436,7 +439,7 @@ const FormFields = () => {
             setStatus({ success: false });
             setSubmitting(false);
             
-            const response = await axios.post("/users", JSON.stringify({values}), {
+            const response = await http.post("/users", JSON.stringify(values), {
               headers: { 'Content-Type': 'application/json'},
               /* withCredentials:true }*/
             });

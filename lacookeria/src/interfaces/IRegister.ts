@@ -1,4 +1,4 @@
-export default interface IPrato {
+export default interface IRegister {
   firstName: string,
   lastName: string,
   cellphone: string,

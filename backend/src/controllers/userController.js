@@ -44,13 +44,16 @@ class UserController {
       return res.status(422).send({ message: "Por favor, utilize outro e-mail!" });
     } else {
       const salt = await bcrypt.genSalt(12);
+      console.log(req.body);
       const passwordHash = await bcrypt.hash(req.body.password, salt);
       user.password = passwordHash;
       user.save((err) => {
         if (err) {
           return res.status(500).send({ message: `${err.message} - Falha ao cadastrar usuario.` })
         } else {
-          return res.status(201).send(user.toJSON())
+          const objUser = user.toJSON();
+          delete objUser.password;
+          return res.status(201).send(objUser);
         }
       })
     }
@@ -120,7 +123,7 @@ class UserController {
         console.log(updateUser);
         console.log(roles);
 
-        return res.cookie('jwt', refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 }).status(200).json({ message: "Autenticação realizada com sucesso!", accessToken, refreshToken, roles });
+        return res.cookie('jwt', accessToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 }).status(200).json({ message: "Autenticação realizada com sucesso!", accessToken, refreshToken, roles });
 
       } catch (err) {
         return res.status(401).json(err.message);

@@ -16,6 +16,11 @@ const NavBar = () => {
             <Logo />
           </Box>
           <Box sx={{ display: 'flex', justifyContent: 'space-around', alignContent: 'center', width: '100%', padding: 1, boxSizing: 'border-box' }}>
+          <Link component={RouterLink} to="/">
+              <Button sx={{ my: 2, color: colorTheme.palette.primary.contrastText }}>
+                Menu Administrativo
+              </Button>
+            </Link>
             <Link component={RouterLink} to="/">
               <Button sx={{ my: 2, color: colorTheme.palette.primary.contrastText }}>
                 Início
@@ -41,10 +46,8 @@ const NavBar = () => {
                 Login
               </Button>
             </Link>
-            <Link component={RouterLink} to="/" >
-              <Button sx={{ my: 1.3, color: colorTheme.palette.primary.contrastText }}>
-                <CartDrawer />
-              </Button>
+            <Link component={RouterLink} to="" sx={{my:2}} >
+              <CartDrawer />
             </Link>
           </Box>
         </Toolbar>

@@ -1,11 +1,10 @@
-import { Box, Button, Checkbox, Divider, FormControlLabel, Grid, InputLabel, Link, OutlinedInput, Paper, Typography } from '@mui/material';
+import { Box, Button, Divider, Grid, Link, Paper, Typography } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import Logo from '../../../components/Logo';
 import styles from './Register.module.scss'
 import FacebookIcon from '@mui/icons-material/Facebook';
 import GoogleIcon from '@mui/icons-material/Google';
 import TwitterIcon from '@mui/icons-material/Twitter';
-import { Stack } from '@mui/system';
 import FormFields from './FormFields';
 
 
@@ -64,7 +63,7 @@ const Register = () => {
       <div className={styles.Footer}>
         <Typography variant="subtitle2" color="white" component="span">Copyright 2023
           &copy; &nbsp;
-          <Typography component={Link} variant="subtitle2" href="https://codedthemes.com" target="_blank" underline="hover">
+          <Typography component={Link} variant="subtitle2" href="link" target="_blank" underline="hover">
             LaCookeria
           </Typography>
         </Typography>

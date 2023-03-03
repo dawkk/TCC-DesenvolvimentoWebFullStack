@@ -27,19 +27,4 @@ router
   .get("/auth/logout", UserController.logoutUser)
   /* .post("/refresh", handleRefreshToken) */
 
-
-/* 
-
-router.use(verifyJWT)
-router
-  .get("/users", UserController.listUsers)
-  .get("/users/search", UserController.listUserByEmail)
-  .get("/users/:id", UserController.listUserById)
-  .post("/users", UserController.createUser)
-  .put("/users/:id", UserController.updateUser)
-  .delete("/users/:id", UserController.deleteUser)
-  .post("/auth/login", UserController.loginUser)
-  .get("/auth/logout", verifyJWT, UserController.logoutUser)
-   */
-
 export default router;
