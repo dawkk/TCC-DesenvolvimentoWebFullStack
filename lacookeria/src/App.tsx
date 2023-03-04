@@ -7,6 +7,8 @@ import Register from './pages/Authentication/Register';
 import About from './pages/About';
 import Profile from './pages/Profile';
 import OrdersProfile from './pages/Profile/OrdersProfile';
+import Dishes from './pages/Dishes';
+import CreateDish from './pages/CreateDish';
 
 function App() {
   return (
@@ -19,6 +21,11 @@ function App() {
       <Route path='/profile' element={<Profile/>}/>
       <Route path='/profile/orders' element={<OrdersProfile/>}/>
 
+      <Route path='/dashboard' element={<OrdersProfile/>}/>
+      <Route path='/dishes' element={<Dishes/>}/>
+      <Route path='/dishes/edit/:id' element={<CreateDish/>}/>
+      <Route path='/orders' element={<OrdersProfile/>}/>
+      <Route path='/inventory' element={<OrdersProfile/>}/>
 
     </Routes>
   );

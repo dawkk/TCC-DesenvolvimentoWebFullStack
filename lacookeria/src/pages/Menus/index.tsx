@@ -4,7 +4,6 @@ import Footer from '../../components/Footer';
 import ListMenus from './ListMenus';
 import NavBar from '../../components/NavBar';
 import BannerMenu from './Banner';
-import styles from './Menu.module.scss'
 
 const Menus = () => {
   return (

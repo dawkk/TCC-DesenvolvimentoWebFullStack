@@ -5,6 +5,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import Logo from '../Logo';
 
 import CartDrawer from './cartDrawer';
+import DropDownList from './DropdownList';
 
 
 const NavBar = () => {
@@ -16,11 +17,7 @@ const NavBar = () => {
             <Logo />
           </Box>
           <Box sx={{ display: 'flex', justifyContent: 'space-around', alignContent: 'center', width: '100%', padding: 1, boxSizing: 'border-box' }}>
-          <Link component={RouterLink} to="/">
-              <Button sx={{ my: 2, color: colorTheme.palette.primary.contrastText }}>
-                Menu Administrativo
-              </Button>
-            </Link>
+            <DropDownList/>
             <Link component={RouterLink} to="/">
               <Button sx={{ my: 2, color: colorTheme.palette.primary.contrastText }}>
                 Início

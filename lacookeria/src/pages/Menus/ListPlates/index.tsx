@@ -1,6 +1,5 @@
 import { Box, Button, Card, CardActions, CardContent, CardMedia, Divider, Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import http from "../../../api/axios";
@@ -19,7 +18,7 @@ const ListPlates: React.FC = () => {
 
   return (
     <Grid container>
-      <Grid xs={12} sx={{ mt: 10, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <Grid item xs={12} sx={{ mt: 10, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <Typography gutterBottom variant="h2" component="div">
           <Divider>
             Menu Principal
