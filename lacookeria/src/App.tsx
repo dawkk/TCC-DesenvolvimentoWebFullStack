@@ -9,6 +9,7 @@ import Profile from './pages/Profile';
 import OrdersProfile from './pages/Profile/OrdersProfile';
 import Dishes from './pages/Dishes';
 import CreateDish from './pages/CreateDish';
+import PutDish from './pages/Dishes/PutDish';
 
 function App() {
   return (
@@ -21,9 +22,13 @@ function App() {
       <Route path='/profile' element={<Profile/>}/>
       <Route path='/profile/orders' element={<OrdersProfile/>}/>
 
-      <Route path='/dashboard' element={<OrdersProfile/>}/>
+      
+
       <Route path='/dishes' element={<Dishes/>}/>
-      <Route path='/dishes/edit/:id' element={<CreateDish/>}/>
+      <Route path='/dishes/create' element={<CreateDish/>}/>
+      <Route path='/dishes/:_id' element={<PutDish/>}/>
+
+      <Route path='/dashboard' element={<OrdersProfile/>}/>
       <Route path='/orders' element={<OrdersProfile/>}/>
       <Route path='/inventory' element={<OrdersProfile/>}/>
 

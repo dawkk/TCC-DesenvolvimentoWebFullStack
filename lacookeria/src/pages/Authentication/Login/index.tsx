@@ -5,6 +5,7 @@ import styles from './Login.module.scss'
 import FacebookIcon from '@mui/icons-material/Facebook';
 import GoogleIcon from '@mui/icons-material/Google';
 import TwitterIcon from '@mui/icons-material/Twitter';
+import LoginFormFields from './LoginFormFields';
 
 
 const Login = () => {
@@ -34,41 +35,26 @@ const Login = () => {
               <Box sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 4, boxSizing: 'border-box' }}>
                 <Typography variant='h4'>Login</Typography>
                 <Link component={RouterLink} to="/register"><Typography variant='h6'>Não possui conta?</Typography></Link>
-                
               </Box>
-              <Grid component="form" sx={{
+              <Grid container sx={{
                 pl: 4, pr: 4, boxSizing: 'border-box',
                 '& .MuiTextField-root': { mb: 1, width: '100%' },
               }}>
-                <div>
-                  <p className={styles.Text}>E-mail</p>
-                  <TextField
-                    id="outlined-required"
-                    defaultValue="email@email.com"
-                  />
-                  <p className={styles.Text}>Senha</p>
-                  <TextField
-                    id="outlined-password-input"
-                    label="Senha"
-                    type="password"
-                    autoComplete="current-password"
-                  />
-                  <div className={styles.Flex}>
-                    <FormControlLabel control={<Checkbox defaultChecked />} label="Me mantenha logado" />
-                    <p>Esqueci minha senha</p>
-                  </div>
-                  <Button variant="contained" sx={{ width: '100%', height: '50px', mb: '32px' }}>Login</Button>
+               
+                <LoginFormFields/>
+
+                <Grid item xs={12} md={12} sx={{mt:4}}>
                   <Typography variant="caption" display="block" gutterBottom sx={{ mb: '32px' }}>
-                    <Divider> 
-                      Ou faça login com
+                    <Divider>
+                      Ou faça Login com
                     </Divider>
                   </Typography>
-                  <Grid>
-                    <Button variant="contained" sx={{ width: '30%', height: '50px', mb: '32px', mr: '22px', backgroundColor: '#44558e' }}><FacebookIcon></FacebookIcon></Button>
-                    <Button variant="contained" sx={{ width: '30%', height: '50px', mb: '32px', mr: '22px', backgroundColor: '#EA4335' }}><GoogleIcon></GoogleIcon></Button>
-                    <Button variant="contained" sx={{ width: '30%', height: '50px', mb: '32px', backgroundColor: '#03a9f4' }}><TwitterIcon></TwitterIcon></Button>
+                  <Grid item xs={12} md={12} sx={{display:'flex', justifyContent:'space-between',mb:6}}>
+                    <Button variant="contained" sx={{ width: '30%', height: '50px', backgroundColor: '#44558e' }}><FacebookIcon></FacebookIcon></Button>
+                    <Button variant="contained" sx={{ width: '30%', height: '50px', backgroundColor: '#EA4335' }}><GoogleIcon></GoogleIcon></Button>
+                    <Button variant="contained" sx={{ width: '30%', height: '50px', backgroundColor: '#03a9f4' }}><TwitterIcon></TwitterIcon></Button>
                   </Grid>
-                </div>
+                </Grid>
               </Grid>
             </Paper>
           </Grid>

@@ -123,7 +123,7 @@ class UserController {
         console.log(updateUser);
         console.log(roles);
 
-        return res.cookie('jwt', accessToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 }).status(200).json({ message: "Autenticação realizada com sucesso!", accessToken, refreshToken, roles });
+        return res.cookie('token', accessToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 }).status(200).json({ message: "Autenticação realizada com sucesso!", accessToken, refreshToken, roles });
 
       } catch (err) {
         return res.status(401).json(err.message);

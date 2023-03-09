@@ -1,11 +1,11 @@
 import { Button, FormControl, FormHelperText, Grid, InputLabel, MenuItem, OutlinedInput, Select, Stack, Typography } from '@mui/material';
 import * as Yup from 'yup';
 import { Formik, Form } from 'formik';
-import http from '../../api/axios';
+import http from '../../../api/axios';
 import { useEffect, useState } from 'react';
-import IMenu from '../../interfaces/IMenu';
+import IMenu from '../../../interfaces/IMenu';
 
-const FormDish = () => {
+const FormCreateDish = () => {
   const [menus, setMenus] = useState<IMenu[]>([])
 
   useEffect(() => {
@@ -93,7 +93,7 @@ const FormDish = () => {
                     type='price'
                     value={values.price}
                     name='price'
-                    placeholder='Celular'
+                    placeholder='R$'
                     onBlur={handleBlur}
                     onChange={handleChange}
                     error={Boolean(touched.price && errors.price)}
@@ -203,4 +203,4 @@ const FormDish = () => {
   )
 }
 
-export default FormDish;
+export default FormCreateDish;

@@ -1,5 +1,6 @@
-import { Box, Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Box, Button, Link, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
+import { Link as RouterLink } from 'react-router-dom';
 import http from "../../../api/axios";
 import IDish from "../../../interfaces/IDish";
 import EditIcon from '@mui/icons-material/Edit';
@@ -15,10 +16,19 @@ const ListDishes: React.FC = () => {
       .then(response => setDishes(response.data))
   }, [])
 
+  const deleteDish = (_id: string) => {
+    http.delete(`/dishes/${_id}`, {data: {_id: _id}})
+        .then(() => {
+          const listDishes = dishes.filter(dish => dish._id !== _id)
+          setDishes([...listDishes])
+        })
+  }
+
   return (
     <>
       <Box sx={{ backgroundColor: colorTheme.palette.primary.light, height: '100vh' }}>
         <Box sx={{ ml: '20%', mr: '20%', mb: 20 }}>
+        <Link component={RouterLink} to={`/dishes/create`}><Button>Adicionar Novo Prato</Button></Link>
           <Box sx={{ display: 'flex' }}>
             <Box sx={{ backgroundColor: 'white' }}>
               <Paper>
@@ -52,8 +62,8 @@ const ListDishes: React.FC = () => {
                         <TableCell align="center">{dish.description}</TableCell>
                         <TableCell align="center">R${dish.price}</TableCell>
                         <TableCell align="center">{dish.type}</TableCell>
-                        <TableCell align="center"><Button><EditIcon /></Button></TableCell>
-                        <TableCell align="center"><Button><DeleteForeverIcon /></Button></TableCell>
+                        <TableCell align="center"><Link component={RouterLink} to={`/dishes/${dish._id}`}><EditIcon /></Link></TableCell>
+                        <TableCell align="center"><Button onClick={() => deleteDish(dish._id)}><DeleteForeverIcon /></Button></TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
