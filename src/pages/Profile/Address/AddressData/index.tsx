@@ -1,27 +1,12 @@
-import { Button, FormHelperText, Grid, IconButton, InputAdornment, InputLabel, OutlinedInput, Stack, Typography } from '@mui/material';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { Button, FormHelperText, Grid, InputLabel, OutlinedInput, Stack } from '@mui/material';
 import * as Yup from 'yup';
 import { Formik, Form } from 'formik';
 import { useEffect, useState } from 'react';
 import http from '../../../../api/axios';
-import { useParams } from 'react-router-dom';
-import IUser from '../../../../interfaces/IUser';
 
 const celRegex = /([0-9]{2,3})?(\([0-9]{2}\))([0-9]{4,5})([0-9]{4})/;
 
 const AddressData = () => {
-  const [showPassword, setShowPassword] = useState(false);
-  const handleClickShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
-
- /*  const test = localStorage.getItem('user');
-  const testObj = JSON.parse(test); */
-
-  const testing = localStorage.setItem('id',"63ed5f444e1dcf8afcfe41f5")
-
-  /* GPT*/
 
   interface User {
     id: number;
@@ -51,8 +36,8 @@ const AddressData = () => {
       try {
         const response = await http.get<User>(`/users/${userId}`);
         setUserData({ isLoading: false, user: response.data });
-      } catch (error:any) {
-        setUserData({ isLoading: false, error: error.message });
+      } catch (error: unknown) {
+        setUserData({ isLoading: false, error: error as string });
       }
     };
   
@@ -65,39 +50,11 @@ const AddressData = () => {
     }
   }, []);
 
-
-
-
-  /* GPT */
-  /* const [user, setUser] = useState<IUser[]>([]);
-
-  const params = useParams();
-
-  useEffect(() => {
-
-    http.get<IUser[]>('/users/:id')
-      .then(response => setUser(response.data))
-      .then(data => console.log(data));
-
-
-    console.log('PARAMS HERE FOUND')
-    http.get<IUser[]>(`/users/${params._id}`)
-      .then(response => setUser(response.data))
-      .then(data => console.log(data));
-
-    console.log(params._id)
-    console.log(setUser)
-
-
-  }, []) */
-
-
   const yupValidationSchema = Yup.object().shape({
     firstName: Yup.string().max(255).required('Nome Obrigatório'),
     lastName: Yup.string().max(255).required('Sobrenome Obrigatório'),
     cellphone: Yup.string().matches(celRegex, 'Este numero não é valido, o formato deveria ser (XX)XXXXXXXXX').required('Celular Obrigatório'),
     email: Yup.string().email('Must be a valid email').max(255).required('Email Obrigatório'),
-    password: Yup.string().max(255).required('Senha Obrigatória'),
     addressStreet: Yup.string().max(255),
     addressNumber: Yup.number(),
     addressNeighborhood: Yup.string().max(255),
@@ -117,7 +74,6 @@ const AddressData = () => {
           lastName: '',
           cellphone: '',
           email: '',
-          password: '',
           addressStreet: '',
           addressNumber: '',
           addressNeighborhood: '',
@@ -128,7 +84,7 @@ const AddressData = () => {
           submit: null
         }}
         validationSchema={yupValidationSchema}
-        onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
+        onSubmit={async (values, {setStatus, setSubmitting }) => {
           alert(JSON.stringify(values, null, 2));
           try {
             setStatus({ success: false });
