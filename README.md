@@ -25,3 +25,7 @@ Depois, acesse <a href="http://localhost:3000/">http://localhost:3000/</a> no se
 
 ## 📚 Mais informações do curso
 
+
+Rodar Local
+- Atualizar o .env para que o baseName seja apenas /
+- e o backend localhost/8000 como era antes
