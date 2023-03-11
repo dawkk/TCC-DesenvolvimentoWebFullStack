@@ -3,7 +3,7 @@ import { Container } from '@mui/system';
 import colorTheme from '../ColorThemes';
 import { Link as RouterLink } from 'react-router-dom';
 import Logo from '../Logo';
-import { createContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import CartDrawer from './cartDrawer';
 import DropDownList from './DropdownList';

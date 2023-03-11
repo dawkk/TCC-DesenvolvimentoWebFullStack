@@ -24,8 +24,3 @@ Para abrir e rodar o projeto, execute npm i para instalar as dependências e npm
 Depois, acesse <a href="http://localhost:3000/">http://localhost:3000/</a> no seu navegador.
 
 ## 📚 Mais informações do curso
-
-
-Rodar Local
-- Atualizar o .env para que o baseName seja apenas /
-- e o backend localhost/8000 como era antes

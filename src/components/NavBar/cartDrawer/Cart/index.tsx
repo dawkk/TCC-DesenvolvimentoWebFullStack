@@ -1,4 +1,4 @@
-import { Box, Card, CardMedia, Typography, IconButton, Button, CardActions, CardContent, Divider, Grid } from "@mui/material";
+import { Box, Card, CardMedia, Typography, Button, CardActions, CardContent, Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 import ICartItem from "../../../../interfaces/ICartItem";
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
