@@ -15,7 +15,7 @@ root.render(
   <AuthProvider>
     <React.StrictMode>
 
-      <BrowserRouter>
+      <BrowserRouter basename={process.env.REACT_APP_BASE_NAME}>
         <ThemeProvider theme={colorTheme}>
           <CssBaseline>
             <App />
