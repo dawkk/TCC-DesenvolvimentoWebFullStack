@@ -4,10 +4,11 @@ import { Formik, Form } from 'formik';
 import http from '../../../api/axios';
 import { useEffect, useState } from 'react';
 import IMenu from '../../../interfaces/IMenu';
+import { useNavigate } from 'react-router';
 
 const FormCreateDish = () => {
   const [menus, setMenus] = useState<IMenu[]>([])
-
+  const navigate = useNavigate();
   useEffect(() => {
     http.get<IMenu[]>('/menus')
       .then(response => setMenus(response.data))
@@ -34,7 +35,7 @@ const FormCreateDish = () => {
           submit: null
         }}
         validationSchema={yupValidationSchema}
-        onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
+        onSubmit={async (values, { setStatus, setSubmitting }) => {
           alert(JSON.stringify(values, null, 2));
           try {
             setStatus({ success: false });
@@ -44,6 +45,7 @@ const FormCreateDish = () => {
               headers: { 'Content-Type': 'application/json' },
               /* withCredentials:true }*/
             });
+            navigate('/dishes');
             console.log(response?.data);
           } catch (err) {
             console.error(err);

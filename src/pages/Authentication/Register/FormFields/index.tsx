@@ -29,7 +29,7 @@ const FormFields = () => {
     firstName: Yup.string().max(255).required('Nome Obrigatório'),
     lastName: Yup.string().max(255).required('Sobrenome Obrigatório'),
     cellphone: Yup.string().matches(celRegex, 'Este numero não é valido, o formato deveria ser (XX)XXXXXXXXX').required('Celular Obrigatório'),
-    email: Yup.string().email('Must be a valid email').max(255).required('Email Obrigatório'),
+    email: Yup.string().email('Formato invalido precisa ser um e-mail: email@email.com').max(255).required('Email Obrigatório'),
     password: Yup.string().max(255).required('Senha Obrigatória'),
     addressStreet: Yup.string().max(255),
     addressNumber: Yup.number(),
@@ -61,8 +61,7 @@ const FormFields = () => {
           submit: null
         }}
         validationSchema={yupValidationSchema}
-        onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-          alert(JSON.stringify(values, null, 2));
+        onSubmit={async (values, { setStatus, setSubmitting }) => {
           try {
             setStatus({ success: false });
             setSubmitting(false);
@@ -87,20 +86,6 @@ const FormFields = () => {
       >
         {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
           <Form noValidate onSubmit={handleSubmit}>
-            {showSucessAlert &&
-              <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                <Alert onClose={handleCloseAlert} severity="success" sx={{ position: 'absolute', top: 120, width: '60%' }}>
-                  Dados atualizados com sucesso!
-                </Alert>
-              </Box>
-            }
-            {showFailAlert &&
-              <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                <Alert onClose={handleCloseAlert} severity="error" sx={{ position: 'absolute', top: 120, width: '60%' }}>
-                  Erro: Dados não foram atualizados.
-                </Alert>
-              </Box>
-            }
             <Grid
               container spacing={2} sx={{
                 display: 'flex', flexWrap: 'wrap', pl: 2, pt: 4, boxSizing: 'border-box',
@@ -119,7 +104,7 @@ const FormFields = () => {
                     onBlur={handleBlur}
                     onChange={handleChange}
                     error={Boolean(touched.firstName && errors.firstName)}
-                  />
+                    />
                   {touched.firstName && errors.firstName && (
                     <FormHelperText error id="helper-text-firstname-signup">
                       {errors.firstName}
@@ -161,7 +146,7 @@ const FormFields = () => {
                     onBlur={handleBlur}
                     onChange={handleChange}
                     error={Boolean(touched.cellphone && errors.cellphone)}
-                  />
+                    />
                   {touched.cellphone && errors.cellphone && (
                     <FormHelperText error id="helper-text-cellphone-signup">
                       {errors.cellphone}
@@ -186,7 +171,7 @@ const FormFields = () => {
                     onBlur={handleBlur}
                     onChange={handleChange}
                     error={Boolean(touched.addressStreet && errors.addressStreet)}
-                  />
+                    />
                   {touched.addressStreet && errors.addressStreet && (
                     <FormHelperText error id="helper-text-addressStreet-signup">
                       {errors.addressStreet}
@@ -207,7 +192,7 @@ const FormFields = () => {
                     onBlur={handleBlur}
                     onChange={handleChange}
                     error={Boolean(touched.addressNumber && errors.addressNumber)}
-                  />
+                    />
                   {touched.addressNumber && errors.addressNumber && (
                     <FormHelperText error id="helper-text-addressNumber-signup">
                       {errors.addressNumber}
@@ -249,7 +234,7 @@ const FormFields = () => {
                     onBlur={handleBlur}
                     onChange={handleChange}
                     error={Boolean(touched.addressCity && errors.addressCity)}
-                  />
+                    />
                   {touched.addressCity && errors.addressCity && (
                     <FormHelperText error id="helper-text-addressCity-signup">
                       {errors.addressCity}
@@ -270,7 +255,7 @@ const FormFields = () => {
                     onBlur={handleBlur}
                     onChange={handleChange}
                     error={Boolean(touched.addressState && errors.addressState)}
-                  />
+                    />
                   {touched.addressState && errors.addressState && (
                     <FormHelperText error id="helper-text-addressState-signup">
                       {errors.addressState}
@@ -312,7 +297,7 @@ const FormFields = () => {
                     onBlur={handleBlur}
                     onChange={handleChange}
                     error={Boolean(touched.addressExtra && errors.addressExtra)}
-                  />
+                    />
                   {touched.addressExtra && errors.addressExtra && (
                     <FormHelperText error id="helper-text-addressExtra-signup">
                       {errors.addressExtra}
@@ -337,7 +322,7 @@ const FormFields = () => {
                     onBlur={handleBlur}
                     onChange={handleChange}
                     error={Boolean(touched.email && errors.email)}
-                  />
+                    />
                   {touched.email && errors.email && (
                     <FormHelperText error id="helper-text-email-signup">
                       {errors.email}
@@ -368,12 +353,12 @@ const FormFields = () => {
                           onClick={handleClickShowPassword}
                           edge="end"
                           size="large"
-                        >
+                          >
                           {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
                         </IconButton>
                       </InputAdornment>
                     }
-                  />
+                    />
                   {touched.password && errors.password && (
                     <FormHelperText error id="helper-text-password-signup">
                       {errors.password}
@@ -398,6 +383,20 @@ const FormFields = () => {
                 >
                   Criar Conta
                 </Button>
+            {showSucessAlert &&
+              <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                <Alert onClose={handleCloseAlert} severity="success" sx={{ position: 'absolute', bottom: -50, width: '45%' }}>
+                  Registro realizado com sucesso!
+                </Alert>
+              </Box>
+            }
+            {showFailAlert &&
+              <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                <Alert onClose={handleCloseAlert} severity="error" sx={{ position: 'absolute', bottom: -50, width: '45%' }}>
+                  Erro: Registro não concluido. Este e-mail já esta em uso em usuario ativo.
+                </Alert>
+              </Box>
+            }
               </Grid>
             </Grid>
           </Form>

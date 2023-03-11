@@ -1,5 +1,4 @@
 import http from "../../api/axios";
-import { ErrorResponse } from "../../interfaces/IErrorResponse";
 import { ILogin } from "../../interfaces/ILogin";
 
 export function setUserLocalStorage (user:ILogin | null) {
@@ -20,7 +19,7 @@ export async function LoginRequest (email:string, password: string){
     const request = await http.post("/auth/login", {email, password});
 
     return request.data;
-  } catch (error:any) {
+  } catch (error) {
     
     return null
   }
@@ -28,6 +27,8 @@ export async function LoginRequest (email:string, password: string){
 
 /* 
  tentativa de error handle
+
+ import { ErrorResponse } from "../../interfaces/IErrorResponse";
 
 catch (error:any) {
   let errorResponse: ErrorResponse;

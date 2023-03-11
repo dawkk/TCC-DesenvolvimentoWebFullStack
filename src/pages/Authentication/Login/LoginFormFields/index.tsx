@@ -7,8 +7,6 @@ import { useState } from 'react';
 import { useAuth } from '../../../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 
-
-
 const LoginFormFields = () => {
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => {
@@ -26,21 +24,26 @@ const LoginFormFields = () => {
   const auth = useAuth();
   const navigate = useNavigate();
 
-  async function onFinish(values: {email:string, password:string}) {
-    try{
+  async function onFinish(values: { email: string, password: string }) {
+    try {
       await auth.authenticate(values.email, values.password);
-      navigate('/');
+      setShowSucessAlert(true);
+      setShowFailAlert(false);
+      setTimeout(() => {
+        navigate('/');
+      }, 2000); // 2000ms = 2 seconds delay
     } catch (error) {
       console.log("Usuario ou senha errado");
+
+      setShowFailAlert(true);
+      setShowSucessAlert(false);
     }
   }
 
-
   const yupValidationSchema = Yup.object().shape({
-    email: Yup.string().email('Must be a valid email').max(255).required('Email Obrigatório'),
+    email: Yup.string().email('Precisa ser um e-mail valido').max(255).required('Email Obrigatório'),
     password: Yup.string().max(255).required('Senha Obrigatória'),
   });
-
 
   return (
     <>
@@ -51,29 +54,18 @@ const LoginFormFields = () => {
           submit: null
         }}
         validationSchema={yupValidationSchema}
-        onSubmit={async (values , { setErrors, setStatus, setSubmitting }) => {
-
-          alert(JSON.stringify(values, null, 2));
+        onSubmit={async (values, { setStatus, setSubmitting }) => {
           console.log(values.email, values.password)
-  
           try {
             setStatus({ success: false });
             setSubmitting(false);
-            console.log("entramos no bloco de envio agora começara a função")
-            
-            /* LOGIN ABAIXO */
+            /* FUNÇÃO LOGIN ABAIXO */
             onFinish(values);
-            console.log("aqui acabou a função")
-            setShowSucessAlert(true);
-            setShowFailAlert(false);
-
           } catch (err) {
-            
             console.error(err);
+            setShowFailAlert(true);
             setStatus({ success: false });
             setSubmitting(false);
-            setShowSucessAlert(false);
-            setShowFailAlert(true);
           }
         }}
 
@@ -82,15 +74,15 @@ const LoginFormFields = () => {
           <Form noValidate onSubmit={handleSubmit}>
             {showSucessAlert &&
               <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                <Alert onClose={handleCloseAlert} severity="success" sx={{ position:'absolute', top:120,width: '60%' }}>
-                  Dados atualizados com sucesso!
+                <Alert onClose={handleCloseAlert} severity="success" sx={{ position: 'absolute', top: 120, width: '60%' }}>
+                  Login realizado com sucesso! Redirecionando..
                 </Alert>
               </Box>
             }
             {showFailAlert &&
               <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                <Alert onClose={handleCloseAlert} severity="error" sx={{ position:'absolute', top:120,width: '60%'}}>
-                  Erro: Dados não foram atualizados.
+                <Alert onClose={handleCloseAlert} severity="error" sx={{ position: 'absolute', top: 120, width: '60%' }}>
+                  Erro: E-mail ou senha incorreto(a).
                 </Alert>
               </Box>
             }
@@ -157,24 +149,24 @@ const LoginFormFields = () => {
                 </Stack>
               </Grid>
               {errors.submit && (
-                
+
                 <Grid item xs={12}>
                   <Alert severity="error">Email ou senha errada — Tente novamente!</Alert>
                   <FormHelperText error>{errors.submit}</FormHelperText>
                 </Grid>
               )}
               <Grid item xs={12}>
-                  <Button
-                    disableElevation
-                    disabled={isSubmitting}
-                    fullWidth
-                    size="large"
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                  >
-                    Login
-                  </Button>
+                <Button
+                  disableElevation
+                  disabled={isSubmitting}
+                  fullWidth
+                  size="large"
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                >
+                  Login
+                </Button>
               </Grid>
             </Grid>
           </Form>

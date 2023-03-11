@@ -2,6 +2,7 @@ import { Box, Button, Card, CardActions, CardContent, CardMedia, Divider, Grid, 
 import { useEffect, useState } from "react";
 import http from "../../../api/axios";
 import IDish from "../../../interfaces/IDish";
+import ICartItem from "../../../interfaces/ICartItem"
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 
@@ -14,9 +15,10 @@ const ListPlates: React.FC = () => {
       .then(response => setDishes(response.data))
   }, [])
 
+  
   const handleAddToCart = (dish: IDish) => {
-    const cartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
-    const existingCartItemIndex = cartItems.findIndex((item: any) => item.id === dish._id);
+    const cartItems:ICartItem[] = JSON.parse(localStorage.getItem('cartItems') || '[]');
+    const existingCartItemIndex = cartItems.findIndex((item: ICartItem) => item.id === dish._id);
   
     if (existingCartItemIndex !== -1) {
       cartItems[existingCartItemIndex].quantity += 1;
