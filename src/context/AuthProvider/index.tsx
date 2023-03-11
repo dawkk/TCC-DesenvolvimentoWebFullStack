@@ -20,14 +20,12 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
 
   async function authenticate(email: string, password: string) {
     const response = await LoginRequest(email, password);
-    console.log('essa é a resposta do authenticate', response)
     /* aqui foi colocado roles na tentativa de agregar os roles ao objeto */
     const payload = { jwt: response.accessToken, roles: response.roles, id:response.id};
 
     setUser(payload);
     setUserLocalStorage(payload);
     console.log('esse é o payload', payload)
-    console.log('esse é o jwt??', user?.jwt)
   }
 
   function logout() {

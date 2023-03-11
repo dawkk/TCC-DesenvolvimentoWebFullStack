@@ -2,6 +2,14 @@ import Banner from '../../components/Banner';
 import Footer from '../../components/Footer';
 import NavBar from '../../components/NavBar';
 import styles from './Home.module.scss'
+import saladImage from '../../assets/images/home/mini-banner-salad-web.jpg'
+import barbecueImage from '../../assets/images/home/mini-banner-barbecue.jpg'
+import menuHamburguer from '../../assets/images/home/menu-hamburguer.jpg'
+import menuDinner from '../../assets/images/home/menu-dinner.jpg'
+import menuDessert from '../../assets/images/home/menu-dessert.jpg'
+import menuLunch from '../../assets/images/home/menu-lunch.jpg'
+
+
 
 const Home = () => {
   return (
@@ -10,7 +18,7 @@ const Home = () => {
       <Banner></Banner>
       <div className={styles.Background}>
         <div className={styles.MiniBanners}>
-          <img src="/images/home/mini-banner-salad-web.jpg" alt="Prato de Salada Italiana" />
+          <img src={saladImage} alt="Prato de Salada Italiana" />
           <div className={styles.CentralCard}>
             <h2>Trabalhamos com Delivery!</h2>
             <div>
@@ -20,23 +28,23 @@ const Home = () => {
               <p>ligue para <a href="callto:99999999999">(99) 99999-999</a></p>
             </div>
           </div>
-          <img src="/images/home/mini-banner-barbecue.jpg" alt="Um hambúrguer desconstruído" />
+          <img src={barbecueImage} alt="Um hambúrguer desconstruído" />
         </div>
         <div className={styles.Categories}>
           <div className={styles.PreviewPlates}>
-            <img src="/images/home/menu-hamburguer.jpg" alt="Lanches" />
+            <img src={menuHamburguer} alt="Lanches" />
             <h4>Lanches</h4>
           </div>
           <div className={styles.PreviewPlates}>
-            <img src="/images/home/menu-lunch.jpg" alt="Saladas" />
+            <img src={menuLunch} alt="Saladas" />
             <h4>Saladas</h4>
           </div>
           <div className={styles.PreviewPlates}>
-            <img src="/images/home/menu-dinner.jpg" alt="Pratos" />
+            <img src={menuDinner} alt="Pratos" />
             <h4>Pratos</h4>
           </div>
           <div className={styles.PreviewPlates}>
-            <img src="/images/home/menu-dessert.jpg" alt="Sobremesas" />
+            <img src={menuDessert} alt="Sobremesas" />
             <h4>Sobremesas</h4>
           </div>
         </div>
