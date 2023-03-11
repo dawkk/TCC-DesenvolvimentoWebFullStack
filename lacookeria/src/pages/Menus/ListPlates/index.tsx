@@ -1,10 +1,9 @@
 import { Box, Button, Card, CardActions, CardContent, CardMedia, Divider, Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import http from "../../../api/axios";
 import IDish from "../../../interfaces/IDish";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+
 
 
 const ListPlates: React.FC = () => {
@@ -15,6 +14,22 @@ const ListPlates: React.FC = () => {
       .then(response => setDishes(response.data))
   }, [])
 
+  const handleAddToCart = (dish: IDish) => {
+    const cartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
+    const existingCartItemIndex = cartItems.findIndex((item: any) => item.id === dish._id);
+  
+    if (existingCartItemIndex !== -1) {
+      cartItems[existingCartItemIndex].quantity += 1;
+    } else {
+      cartItems.push({
+        id: dish._id,
+        name: dish.title,
+        price: dish.price,
+        quantity: 1,
+      });
+    }
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+  };
 
   return (
     <Grid container>
@@ -49,17 +64,8 @@ const ListPlates: React.FC = () => {
                 </Typography>
                 <CardActions sx={{ display: 'flex', flexDirection: 'column' }}>
                   <Box sx={{ display: 'flex', width: '100%' }}>
-                    <Button variant='outlined'>
-                      <KeyboardArrowUpIcon />
-                    </Button>
-                    <Typography sx={{ p: 1.5 }}>
-                      0
-                    </Typography>
-                    <Button variant='outlined'>
-                      <KeyboardArrowDownIcon />
-                    </Button>
-                    <Button sx={{alignSelf:'flex-end'}}>
-                      <AddShoppingCartIcon fontSize="large" sx={{ pl: 1 }} />
+                    <Button onClick={() => handleAddToCart(dish)} sx={{border:'solid', pl:8, pr:8,alignSelf:'flex-end'}}>
+                      <AddShoppingCartIcon fontSize="large" />
                     </Button>
                   </Box>
                 </CardActions>

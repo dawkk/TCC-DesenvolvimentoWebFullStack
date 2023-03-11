@@ -19,6 +19,10 @@ router.route("/users/:id")
   .put(verifyJWT, verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Editor), UserController.updateUser)
   .delete(verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Editor), UserController.deleteUser)
 
+/* router.route("/users/me")
+.get(verifyJWT, verifyRoles(ROLES_LIST.User), UserController.listSelf)
+.put(verifyJWT, verifyRoles(ROLES_LIST.User), UserController.updateSelf) */
+
 router.route("/users/search")
   .get(verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Editor), UserController.listUserByEmail)
 

@@ -10,6 +10,8 @@ import OrdersProfile from './pages/Profile/OrdersProfile';
 import Dishes from './pages/Dishes';
 import CreateDish from './pages/CreateDish';
 import PutDish from './pages/Dishes/PutDish';
+import Overview from './pages/Profile/Overview';
+import Address from './pages/Profile/Address';
 
 function App() {
   return (
@@ -20,7 +22,9 @@ function App() {
       <Route path='/register' element={<Register/>}/>
       <Route path='/about' element={<About/>}/>
       <Route path='/profile' element={<Profile/>}/>
+      <Route path='/profile/overview' element={<Overview/>}/>
       <Route path='/profile/orders' element={<OrdersProfile/>}/>
+      <Route path='/profile/address' element={<Address/>}/>
 
       
 

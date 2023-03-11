@@ -6,7 +6,8 @@ const dishSchema = new mongoose.Schema({
   description: {type: String},
   price: {type: Number},
   menu: {type: mongoose.Schema.Types.ObjectId, ref:'menus', required: true},
-  type: {type: String}
+  type: {type: String},
+  image: {type: String}
 });
 
 const dishes = mongoose.model('dishes', dishSchema);

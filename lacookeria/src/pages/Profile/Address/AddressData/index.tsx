@@ -1,29 +1,96 @@
-import { Alert, Box, Button, FormHelperText, Grid, IconButton, InputAdornment, InputLabel, OutlinedInput, Stack, Typography } from '@mui/material';
+import { Button, FormHelperText, Grid, IconButton, InputAdornment, InputLabel, OutlinedInput, Stack, Typography } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import * as Yup from 'yup';
 import { Formik, Form } from 'formik';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import http from '../../../../api/axios';
-import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import IUser from '../../../../interfaces/IUser';
 
 const celRegex = /([0-9]{2,3})?(\([0-9]{2}\))([0-9]{4,5})([0-9]{4})/;
 
-const FormFields = () => {
+const AddressData = () => {
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
 
-  const [showSucessAlert, setShowSucessAlert] = useState<boolean>(false);
-  const [showFailAlert, setShowFailAlert] = useState<boolean>(false);
+ /*  const test = localStorage.getItem('user');
+  const testObj = JSON.parse(test); */
 
-  const navigate = useNavigate();
+  const testing = localStorage.setItem('id',"63ed5f444e1dcf8afcfe41f5")
 
-  const handleCloseAlert = () => {
-    setShowSucessAlert(false);
-    setShowFailAlert(false);
+  /* GPT*/
+
+  interface User {
+    id: number;
+    name: string;
+    email: string;
+  }
+
+  interface UserData {
+    isLoading: boolean;
+    user?: User;
+    error?: string;
+  }
+  const [userId, setUserId] = useState<number>(0);
+  const [userData, setUserData] = useState<UserData>({ isLoading: true });
+
+  const getUserIdFromLocalStorage = (): number => {
+    const userIdString = localStorage.getItem('id');
+    if (userIdString) {
+      return parseInt(userIdString, 10);
+    }
+    return 0;
   };
+
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await http.get<User>(`/users/${userId}`);
+        setUserData({ isLoading: false, user: response.data });
+      } catch (error:any) {
+        setUserData({ isLoading: false, error: error.message });
+      }
+    };
+  
+    const userIdFromLocalStorage = getUserIdFromLocalStorage();
+    if (userIdFromLocalStorage) {
+      setUserId(userIdFromLocalStorage);
+      fetchUserData();
+    } else {
+      setUserData({ isLoading: false, error: 'User id not found in localStorage' });
+    }
+  }, []);
+
+
+
+
+  /* GPT */
+  /* const [user, setUser] = useState<IUser[]>([]);
+
+  const params = useParams();
+
+  useEffect(() => {
+
+    http.get<IUser[]>('/users/:id')
+      .then(response => setUser(response.data))
+      .then(data => console.log(data));
+
+
+    console.log('PARAMS HERE FOUND')
+    http.get<IUser[]>(`/users/${params._id}`)
+      .then(response => setUser(response.data))
+      .then(data => console.log(data));
+
+    console.log(params._id)
+    console.log(setUser)
+
+
+  }, []) */
+
 
   const yupValidationSchema = Yup.object().shape({
     firstName: Yup.string().max(255).required('Nome Obrigatório'),
@@ -71,108 +138,22 @@ const FormFields = () => {
               headers: { 'Content-Type': 'application/json' },
               /* withCredentials:true }*/
             });
-            navigate('/login');
-            setShowSucessAlert(true);
-            setShowFailAlert(false);
             console.log(response?.data);
           } catch (err) {
             console.error(err);
             setStatus({ success: false });
             setSubmitting(false);
-            setShowSucessAlert(false);
-            setShowFailAlert(true);
           }
         }}
 
       >
         {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
           <Form noValidate onSubmit={handleSubmit}>
-            {showSucessAlert &&
-              <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                <Alert onClose={handleCloseAlert} severity="success" sx={{ position: 'absolute', top: 120, width: '60%' }}>
-                  Dados atualizados com sucesso!
-                </Alert>
-              </Box>
-            }
-            {showFailAlert &&
-              <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                <Alert onClose={handleCloseAlert} severity="error" sx={{ position: 'absolute', top: 120, width: '60%' }}>
-                  Erro: Dados não foram atualizados.
-                </Alert>
-              </Box>
-            }
             <Grid
               container spacing={2} sx={{
-                display: 'flex', flexWrap: 'wrap', pl: 2, pt: 4, boxSizing: 'border-box',
+                display: 'flex', flexWrap: 'wrap', p: 4, boxSizing: 'border-box',
                 '& .MuiTextField-root': { mb: 1 },
               }}>
-
-              <Grid item xs={12} md={6}>
-                <Stack spacing={1}>
-                  <InputLabel>Nome*</InputLabel>
-                  <OutlinedInput
-                    id='firstName'
-                    type='firstName'
-                    value={values.firstName}
-                    name='firstName'
-                    placeholder='Nome'
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    error={Boolean(touched.firstName && errors.firstName)}
-                  />
-                  {touched.firstName && errors.firstName && (
-                    <FormHelperText error id="helper-text-firstname-signup">
-                      {errors.firstName}
-                    </FormHelperText>
-                  )}
-                </Stack>
-              </Grid>
-
-              <Grid item xs={12} md={6}>
-                <Stack spacing={1}>
-                  <InputLabel>Ultimo Sobrenome*</InputLabel>
-                  <OutlinedInput
-                    id='lastName'
-                    type='lastName'
-                    value={values.lastName}
-                    name='lastName'
-                    placeholder='Sobrenome'
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    error={Boolean(touched.lastName && errors.lastName)}
-                  />
-                  {touched.lastName && errors.lastName && (
-                    <FormHelperText error id="helper-text-lastname-signup">
-                      {errors.lastName}
-                    </FormHelperText>
-                  )}
-                </Stack>
-              </Grid>
-
-              <Grid item xs={12} md={6}>
-                <Stack spacing={1}>
-                  <InputLabel>Celular*</InputLabel>
-                  <OutlinedInput
-                    id='cellphone'
-                    type='cellphone'
-                    value={values.cellphone}
-                    name='cellphone'
-                    placeholder='Celular'
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    error={Boolean(touched.cellphone && errors.cellphone)}
-                  />
-                  {touched.cellphone && errors.cellphone && (
-                    <FormHelperText error id="helper-text-cellphone-signup">
-                      {errors.cellphone}
-                    </FormHelperText>
-                  )}
-                </Stack>
-              </Grid>
-
-              <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'center', mt: 2, mb: 1 }}>
-                <Typography variant='h5'>Endereço</Typography>
-              </Grid>
 
               <Grid item xs={12} md={12}>
                 <Stack spacing={1}>
@@ -321,66 +302,6 @@ const FormFields = () => {
                 </Stack>
               </Grid>
 
-              <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'center', mt: 5, mb: 5 }}>
-                <Typography variant='h5'>Credenciais de Login</Typography>
-              </Grid>
-
-              <Grid item xs={12} md={12}>
-                <Stack spacing={1}>
-                  <InputLabel>E-mail*</InputLabel>
-                  <OutlinedInput
-                    id='email'
-                    type='email'
-                    value={values.email}
-                    name='email'
-                    placeholder='email@email.com'
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    error={Boolean(touched.email && errors.email)}
-                  />
-                  {touched.email && errors.email && (
-                    <FormHelperText error id="helper-text-email-signup">
-                      {errors.email}
-                    </FormHelperText>
-                  )}
-                </Stack>
-              </Grid>
-
-              <Grid item xs={12} md={12}>
-                <Stack spacing={1}>
-                  <InputLabel>Senha*</InputLabel>
-                  <OutlinedInput
-                    id='password'
-                    type={showPassword ? 'text' : 'password'}
-                    value={values.password}
-                    name='password'
-                    placeholder='******'
-                    onBlur={handleBlur}
-                    onChange={(e) => {
-                      handleChange(e);
-                    }}
-                    inputProps={{}}
-                    error={Boolean(touched.password && errors.password)}
-                    endAdornment={
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={handleClickShowPassword}
-                          edge="end"
-                          size="large"
-                        >
-                          {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
-                        </IconButton>
-                      </InputAdornment>
-                    }
-                  />
-                  {touched.password && errors.password && (
-                    <FormHelperText error id="helper-text-password-signup">
-                      {errors.password}
-                    </FormHelperText>
-                  )}
-                </Stack>
-              </Grid>
               {errors.submit && (
                 <Grid item xs={12}>
                   <FormHelperText error>{errors.submit}</FormHelperText>
@@ -396,7 +317,7 @@ const FormFields = () => {
                   variant="contained"
                   color="primary"
                 >
-                  Criar Conta
+                  Atualizar Informações
                 </Button>
               </Grid>
             </Grid>
@@ -407,4 +328,4 @@ const FormFields = () => {
   )
 }
 
-export default FormFields;
+export default AddressData;

@@ -61,7 +61,7 @@ class UserController {
 
   static updateUser = (req, res) => {
     const id = req.params.id;
-    users.findByIdAndUpdate(id, { $set: req.body }, (err) => {
+    users.findByIdAndUpdate(id, "-password", { $set: req.body }, (err) => {
       if (!err) {
         return res.status(200).send({ message: 'usuario atualizado com sucesso!' })
       } else {
@@ -91,6 +91,30 @@ class UserController {
       }
     })
   }
+  /* --------------------SELF GET AND PUT REQUESTS FOR USER TRYING TO IMPLEMENT------------------------- */
+  /* static listSelf = async (req, res) => {
+    try {
+      const user = await users.findById(req.user.id).select('-password');
+      res.status(200).send(user);
+    } catch (err) {
+      res.status(500).send({ message: err.message });
+    }
+  };
+
+  static updateSelf = async (req, res) => {
+    try {
+      const id = req.user.id;
+      const user = await users.findByIdAndUpdate(id, "-password", { $set: req.body }, { new: true });
+      if (user.id === req.user.id) {
+        return res.status(200).send({ message: 'usuario atualizado com sucesso!' })
+      } else {
+        return res.status(401).send({ message: 'Unauthorized' });
+      }
+    } catch (err) {
+      return res.status(500).send({ message: err.message })
+    }
+  }
+ */
 
   /* --------------------LOGIN------------------------- */
 
@@ -118,12 +142,13 @@ class UserController {
         };
         const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30m' });
         const refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '1d' });
+        const id = findUser._id
         findUser.refreshToken = refreshToken;
         const updateUser = await findUser.save();
         console.log(updateUser);
         console.log(roles);
 
-        return res.cookie('token', accessToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 }).status(200).json({ message: "Autenticação realizada com sucesso!", accessToken, refreshToken, roles });
+        return res.cookie('jwt', accessToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 }).status(200).json({ message: "Autenticação realizada com sucesso!", accessToken, refreshToken, roles, id });
 
       } catch (err) {
         return res.status(401).json(err.message);

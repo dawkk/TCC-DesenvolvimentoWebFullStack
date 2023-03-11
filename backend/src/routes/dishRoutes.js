@@ -12,6 +12,8 @@ router
   .post("/dishes", DishController.createDish)
   .put("/dishes/:id", DishController.updateDish)
   .delete("/dishes/:id", DishController.deleteDish)
+  .post("/dishes/:id/image", DishController.uploadDishImage)
+  .get("/dishes/:id/image", DishController.getDishImage)
 
 
 export default router;

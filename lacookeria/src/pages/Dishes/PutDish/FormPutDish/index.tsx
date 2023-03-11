@@ -1,4 +1,4 @@
-import { Button, FormControl, FormHelperText, Grid, InputLabel, MenuItem, OutlinedInput, Select, Stack, Typography } from '@mui/material';
+import { Alert, Box, Button, FormControl, FormHelperText, Grid, InputLabel, MenuItem, OutlinedInput, Select, Stack, Typography } from '@mui/material';
 import * as Yup from 'yup';
 import { Formik, Form } from 'formik';
 import http from '../../../../api/axios';
@@ -8,44 +8,33 @@ import { useParams } from 'react-router-dom';
 import IDish from '../../../../interfaces/IDish';
 
 const FormPutDish = () => {
-
   const params = useParams();
-
+  const [showSucessAlert, setShowSucessAlert] = useState<boolean>(false);
+  const [showFailAlert, setShowFailAlert] = useState<boolean>(false);
   const [menus, setMenus] = useState<IMenu[]>([]);
-  const [dish, setDish] = useState<IDish[]>([]);
-
-
-  useEffect(() => {
-
-    http.get<IMenu[]>('/menus')
-      .then(response => setMenus(response.data))
-
-    if (params._id) {
-      /* How to update the items  */
-      console.log('PARAMS HERE FOUND')
-      http.get<IDish[]>(`/dishes/${params._id}`)
-        .then(response => setDish(response.data))
-        .then(data => console.log(data));
-        
-        console.log(params._id)
-        console.log(setDish)
-  
-    }
-
-  }, [params])
-
-  const formEmpty = {
+  const [initialValues, setInitialValues] = useState<IDish>({
+    _id: '',
     title: '',
     description: '',
-    price: '',
+    price: 0,
     menu: '',
     type: '',
-    submit: null
-  }
+  });
 
- const getData = () => setDish || formEmpty;
-
-
+  useEffect(() => {
+    http.get<IMenu[]>('/menus')
+      .then(response => setMenus(response.data))
+    console.log("aqui sao menus", menus)
+    http.get(`/dishes/${params._id}`)
+      .then(response => {
+        const updatingInitialValues: IDish = response.data;
+        setInitialValues(updatingInitialValues);
+      })
+      .catch(error => {
+        console.log(error);
+      })
+    console.log(initialValues)
+  }, [])
 
   const yupValidationSchema = Yup.object().shape({
     title: Yup.string().max(255).required('Titulo Obrigatório'),
@@ -55,48 +44,59 @@ const FormPutDish = () => {
     type: Yup.string().max(255),
   });
 
+  const handleCloseAlert = () => {
+    setShowSucessAlert(false);
+    setShowFailAlert(false);
+  };
+
   return (
     <>
       <Formik
-        initialValues={formEmpty}
+        initialValues={initialValues}
         validationSchema={yupValidationSchema}
+        enableReinitialize={true}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           /* alert(JSON.stringify(values, null, 2)); */
           try {
-            if (params._id) {
-              setStatus({ success: false });
-              setSubmitting(false);
+            setStatus({ success: false });
+            setSubmitting(false);
 
-              const response = await http.put(`/dishes/${params._id}`, JSON.stringify(values), {
-                headers: { 'Content-Type': 'application/json' },
-                /* withCredentials:true }*/
-              });
-              console.log(response?.data);
-              alert("Prato Atualizado com sucesso!");
-
-            } else {
-              setStatus({ success: false });
-              setSubmitting(false);
-
-              const response = await http.post("/dishes", JSON.stringify(values), {
-                headers: { 'Content-Type': 'application/json' },
-                /* withCredentials:true }*/
-              });
-              console.log(response?.data);
-              alert("Prato Criado com sucesso!");
-            }
+            const response = await http.put(`/dishes/${params._id}`, JSON.stringify(values), {
+              headers: { 'Content-Type': 'application/json' },
+              /* withCredentials:true }*/
+            });
+            console.log(response?.data);
+            setShowSucessAlert(true);
+            setShowFailAlert(false);
+        
           } catch (err) {
             console.error(err);
             setStatus({ success: false });
             setSubmitting(false);
+            setShowSucessAlert(false);
+            setShowFailAlert(true);
           }
         }}
 
       >
         {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
           <Form noValidate onSubmit={handleSubmit}>
+            {showSucessAlert && 
+             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+             <Alert onClose={handleCloseAlert} severity="success" sx={{ width: '40%' }}>
+               Prato atualizado com sucesso!
+             </Alert>
+           </Box>
+            }
+            {showFailAlert && 
+             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+             <Alert onClose={handleCloseAlert} severity="error" sx={{ width: '40%' }}>
+               Erro: Prato não foi atualizado.
+             </Alert>
+           </Box>
+            }
             <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'center', mt: 2, mb: 1 }}>
-              <Typography variant='h2'>Criar Prato</Typography>
+              <Typography variant='h2'>Atualizar Prato</Typography>
             </Grid>
             <Grid
               container spacing={2} sx={{
@@ -204,7 +204,7 @@ const FormPutDish = () => {
                       error={Boolean(touched.menu && errors.menu)}
                     >
                       {menus.map((menu) => (
-                        <MenuItem value={menu._id}>{menu.name}</MenuItem>
+                        <MenuItem key={menu._id} value={menu._id}>{menu.name}</MenuItem>
                       ))}
                     </Select>
                     {touched.menu && errors.menu && (
@@ -232,7 +232,7 @@ const FormPutDish = () => {
                   color="primary"
                   sx={{ boxSizing: 'border-box', padding: 2 }}
                 >
-                  Criar Prato
+                  Atualizar Prato
                 </Button>
               </Grid>
             </Grid>

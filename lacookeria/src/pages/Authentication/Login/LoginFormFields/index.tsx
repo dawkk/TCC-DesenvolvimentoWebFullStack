@@ -1,4 +1,4 @@
-import { Alert, Button, FormHelperText, Grid, IconButton, InputAdornment, InputLabel, OutlinedInput, Stack } from '@mui/material';
+import { Alert, Box, Button, FormHelperText, Grid, IconButton, InputAdornment, InputLabel, OutlinedInput, Stack } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import * as Yup from 'yup';
@@ -15,6 +15,14 @@ const LoginFormFields = () => {
     setShowPassword(!showPassword);
   };
 
+  const [showSucessAlert, setShowSucessAlert] = useState<boolean>(false);
+  const [showFailAlert, setShowFailAlert] = useState<boolean>(false);
+
+  const handleCloseAlert = () => {
+    setShowSucessAlert(false);
+    setShowFailAlert(false);
+  };
+
   const auth = useAuth();
   const navigate = useNavigate();
 
@@ -24,7 +32,6 @@ const LoginFormFields = () => {
       navigate('/');
     } catch (error) {
       console.log("Usuario ou senha errado");
-      alert(<Alert severity="error">This is an error alert — check it out!</Alert>)
     }
   }
 
@@ -53,21 +60,40 @@ const LoginFormFields = () => {
             setStatus({ success: false });
             setSubmitting(false);
             console.log("entramos no bloco de envio agora começara a função")
+            
             /* LOGIN ABAIXO */
             onFinish(values);
             console.log("aqui acabou a função")
+            setShowSucessAlert(true);
+            setShowFailAlert(false);
 
           } catch (err) {
             
             console.error(err);
             setStatus({ success: false });
             setSubmitting(false);
+            setShowSucessAlert(false);
+            setShowFailAlert(true);
           }
         }}
 
       >
         {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
           <Form noValidate onSubmit={handleSubmit}>
+            {showSucessAlert &&
+              <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                <Alert onClose={handleCloseAlert} severity="success" sx={{ position:'absolute', top:120,width: '60%' }}>
+                  Dados atualizados com sucesso!
+                </Alert>
+              </Box>
+            }
+            {showFailAlert &&
+              <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                <Alert onClose={handleCloseAlert} severity="error" sx={{ position:'absolute', top:120,width: '60%'}}>
+                  Erro: Dados não foram atualizados.
+                </Alert>
+              </Box>
+            }
             <Grid
               container spacing={2} sx={{
                 display: 'flex', flexWrap: 'wrap', pl: 2, pt: 4, boxSizing: 'border-box',

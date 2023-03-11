@@ -1,4 +1,4 @@
-import { Button, Card, CardActions, CardContent, CardMedia, Divider, Grid, Typography } from '@mui/material';
+import { Grid } from '@mui/material';
 import { Box } from '@mui/system';
 import styles from './ListMenus.module.scss'
 import menuImage1 from '../../../assets/images/menus/principal/burguer_combo.jpg'
@@ -46,7 +46,7 @@ const ListMenus = () => {
           </Grid>
         </Grid>
 
-        <ListPlates />
+          <ListPlates />
 
       </Box>
     </>

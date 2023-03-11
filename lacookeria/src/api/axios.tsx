@@ -12,7 +12,7 @@ export default http;
 
     const user = getUserLocalStorage()
 
-    config.headers.Authorization = user?.token;
+    config.headers.Authorization = user?.jwt;
 
     return config;
 

@@ -1,8 +1,8 @@
 import http from "../../api/axios";
 import { ErrorResponse } from "../../interfaces/IErrorResponse";
-import { IUser } from "../../interfaces/IUser";
+import { ILogin } from "../../interfaces/ILogin";
 
-export function setUserLocalStorage (user:IUser | null) {
+export function setUserLocalStorage (user:ILogin | null) {
   localStorage.setItem('user', JSON.stringify(user));
 }
 

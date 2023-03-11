@@ -1,21 +1,18 @@
 import { createContext, useEffect, useState } from "react";
 import http from "../../api/axios";
-import { IAuthProvider, IContext, IUser } from "../../interfaces/IUser";
+import { IAuthProvider, IContext, ILogin } from "../../interfaces/ILogin";
 import { getUserLocalStorage, LoginRequest, setUserLocalStorage } from "./util";
 
 
 export const AuthContext = createContext<IContext>({} as IContext);
 
 export const AuthProvider = ({ children }: IAuthProvider) => {
-  const [user, setUser] = useState<IUser | null>()
+  const [user, setUser] = useState<ILogin | null>()
  
  
 
   useEffect(() => {
     const user = getUserLocalStorage();
-    
-
-
     if(user) {
       setUser(user);
     }
@@ -25,10 +22,12 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
     const response = await LoginRequest(email, password);
     console.log('essa é a resposta do authenticate', response)
     /* aqui foi colocado roles na tentativa de agregar os roles ao objeto */
-    const payload = { token: response.token, roles: response.roles, email};
+    const payload = { jwt: response.accessToken, roles: response.roles, id:response.id};
 
     setUser(payload);
     setUserLocalStorage(payload);
+    console.log('esse é o payload', payload)
+    console.log('esse é o jwt??', user?.jwt)
   }
 
   function logout() {

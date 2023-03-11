@@ -1,13 +1,9 @@
-export interface IUser {
-  email?:string;
-  token?:string;
+export default interface IUser {
+  id?: number,
+  firstName: string,
+  lastName: string,
+  email: string,
+  cellphone: string,
+  address?: object
 }
 
-export interface IContext extends IUser {
-  authenticate: (email:string, password:string) => Promise<void>;
-  logout: () => void;
-}
-
-export interface IAuthProvider {
-  children: JSX.Element
-}

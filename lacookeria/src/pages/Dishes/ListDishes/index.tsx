@@ -10,6 +10,7 @@ import colorTheme from "../../../components/ColorThemes";
 
 const ListDishes: React.FC = () => {
   const [dishes, setDishes] = useState<IDish[]>([])
+  
 
   useEffect(() => {
     http.get<IDish[]>('/dishes')
@@ -17,18 +18,18 @@ const ListDishes: React.FC = () => {
   }, [])
 
   const deleteDish = (_id: string) => {
-    http.delete(`/dishes/${_id}`, {data: {_id: _id}})
-        .then(() => {
-          const listDishes = dishes.filter(dish => dish._id !== _id)
-          setDishes([...listDishes])
-        })
+    http.delete(`/dishes/${_id}`, { data: { _id: _id } })
+      .then(() => {
+        const listDishes = dishes.filter(dish => dish._id !== _id)
+        setDishes([...listDishes])
+      })
   }
 
   return (
     <>
       <Box sx={{ backgroundColor: colorTheme.palette.primary.light, height: '100vh' }}>
         <Box sx={{ ml: '20%', mr: '20%', mb: 20 }}>
-        <Link component={RouterLink} to={`/dishes/create`}><Button>Adicionar Novo Prato</Button></Link>
+          <Link component={RouterLink} to={`/dishes/create`}><Button>Adicionar Novo Prato</Button></Link>
           <Box sx={{ display: 'flex' }}>
             <Box sx={{ backgroundColor: 'white' }}>
               <Paper>
