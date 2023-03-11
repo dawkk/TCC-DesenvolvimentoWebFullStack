@@ -1,4 +1,4 @@
-import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Box, Paper, Typography } from "@mui/material";
 import Footer from "../../components/Footer";
 import NavBar from "../../components/NavBar";
 import colorTheme from '../../components/ColorThemes';
@@ -8,20 +8,6 @@ import OverviewData from "./Overview/OverviewData";
 
 
 const Profile = () => {
-
-  function createData(
-    order: number,
-    name: string,
-    status: string,
-    total: number,
-    link: string,
-  ) {
-    return { order, name, status, total, link };
-  }
-
-  const rows = [
-    createData(15, 'Frozen yoghurt', 'Concluido', 250, 'Ver Mais(link)'),
-  ];
 
   return (
     <Box sx={{ backgroundColor: colorTheme.palette.primary.light, height: '100%', paddingTop: 25 }}>
