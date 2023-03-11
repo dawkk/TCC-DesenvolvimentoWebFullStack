@@ -4,12 +4,10 @@ import { Formik, Form } from 'formik';
 import { useEffect, useState } from 'react';
 import http from '../../../../api/axios';
 import IUser from '../../../../interfaces/IUser';
-import { useAuth } from '../../../../hooks/useAuth';
 
 const celRegex = /([0-9]{2,3})?(\([0-9]{2}\))([0-9]{4,5})([0-9]{4})/;
 
 const OverviewData = () => {
-  const auth = useAuth();
   const userLocalStorage = JSON.parse(localStorage.getItem('user') || '{}');
   const jwtValue = userLocalStorage.jwt;
   const idValue: string = userLocalStorage.id;
@@ -47,7 +45,7 @@ const OverviewData = () => {
         console.log(error);
       })
     console.log(initialValues)
-    } catch (error:any) {
+    } catch (error:unknown) {
       console.log(error);
     }
   };
@@ -69,7 +67,7 @@ const OverviewData = () => {
         initialValues={initialValues}
         validationSchema={yupValidationSchema}
         enableReinitialize={true}
-        onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
+        onSubmit={async (values, { setStatus, setSubmitting }) => {
           alert(JSON.stringify(values, null, 2));
           try {
             setStatus({ success: false });

@@ -14,13 +14,9 @@ const AddressData = () => {
     email: string;
   }
 
-  interface UserData {
-    isLoading: boolean;
-    user?: User;
-    error?: string;
-  }
+  
   const [userId, setUserId] = useState<number>(0);
-  const [userData, setUserData] = useState<UserData>({ isLoading: true });
+
 
   const getUserIdFromLocalStorage = (): number => {
     const userIdString = localStorage.getItem('id');
@@ -34,10 +30,10 @@ const AddressData = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await http.get<User>(`/users/${userId}`);
-        setUserData({ isLoading: false, user: response.data });
+         await http.get<User>(`/users/${userId}`);
+    
       } catch (error: unknown) {
-        setUserData({ isLoading: false, error: error as string });
+         console.log(error);
       }
     };
   
@@ -45,9 +41,7 @@ const AddressData = () => {
     if (userIdFromLocalStorage) {
       setUserId(userIdFromLocalStorage);
       fetchUserData();
-    } else {
-      setUserData({ isLoading: false, error: 'User id not found in localStorage' });
-    }
+    } 
   }, []);
 
   const yupValidationSchema = Yup.object().shape({
@@ -104,6 +98,7 @@ const AddressData = () => {
 
       >
         {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
+
           <Form noValidate onSubmit={handleSubmit}>
             <Grid
               container spacing={2} sx={{
