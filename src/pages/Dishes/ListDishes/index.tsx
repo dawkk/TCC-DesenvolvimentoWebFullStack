@@ -29,8 +29,8 @@ const ListDishes: React.FC = () => {
     <>
       <Box sx={{ backgroundColor: colorTheme.palette.primary.light, height: '100vh' }}>
         <Box sx={{ ml: '20%', mr: '20%', mb: 20 }}>
-          <Link component={RouterLink} to={`/dishes/create`}><Button>Adicionar Novo Prato</Button></Link>
-          <Box sx={{ display: 'flex' }}>
+          <Link component={RouterLink} to={`/dishes/create`}><Button variant="contained" >Adicionar Novo Prato</Button></Link>
+          <Box sx={{ display: 'flex', mt:3 }}>
             <Box sx={{ backgroundColor: 'white' }}>
               <Paper>
                 <Box sx={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', padding: 2 }}>

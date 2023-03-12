@@ -1,11 +1,12 @@
 import { Alert, Box, Button, FormControl, FormHelperText, Grid, InputLabel, MenuItem, OutlinedInput, Select, Stack, Typography } from '@mui/material';
 import * as Yup from 'yup';
-import { Formik, Form } from 'formik';
+import { Formik, Form, useFormikContext } from 'formik';
 import http from '../../../../api/axios';
 import { useEffect, useState } from 'react';
 import IMenu from '../../../../interfaces/IMenu';
 import { useNavigate, useParams } from 'react-router-dom';
 import IDish from '../../../../interfaces/IDish';
+
 
 const FormPutDish = () => {
   const params = useParams();
@@ -17,18 +18,32 @@ const FormPutDish = () => {
     title: '',
     description: '',
     price: 0,
-    menu: '',
+    menu: {
+      _id: '',
+      name: '',
+    },
     type: '',
   });
   const navigate = useNavigate();
 
+  const userLocalStorage = JSON.parse(localStorage.getItem('user') || '{}');
+  const jwtValue = userLocalStorage.jwt;
+
   useEffect(() => {
     http.get<IMenu[]>('/menus')
       .then(response => setMenus(response.data))
-    console.log("aqui sao menus", menus)
-    http.get(`/dishes/${params._id}`)
+      .catch(error => {
+        console.log(error);
+      });
+
+    http.get(`/dishes/${params._id}`, {
+      headers: {
+        Authorization: `Bearer ${jwtValue}`,
+  }},)
       .then(response => {
         const updatingInitialValues: IDish = response.data;
+        console.log(response.data)
+
         setInitialValues(updatingInitialValues);
       })
       .catch(error => {
@@ -41,7 +56,10 @@ const FormPutDish = () => {
     title: Yup.string().max(255).required('Titulo Obrigatório'),
     description: Yup.string().max(255),
     price: Yup.number(),
-    menu: Yup.string().required('Menu Obrigatório'),
+    menu: Yup.object().shape({
+      _id: Yup.string().required('Menu Obrigatório'),
+      name: Yup.string(),
+    }),
     type: Yup.string().max(255),
   });
 
@@ -62,14 +80,15 @@ const FormPutDish = () => {
             setSubmitting(false);
 
             const response = await http.put(`/dishes/${params._id}`, JSON.stringify(values), {
-              headers: { 'Content-Type': 'application/json' },
-              /* withCredentials:true }*/
+                headers: {
+                  Authorization: `Bearer ${jwtValue}`,
+                },
             });
             navigate('/dishes');
             console.log(response?.data);
             setShowSucessAlert(true);
             setShowFailAlert(false);
-        
+
           } catch (err) {
             console.error(err);
             setStatus({ success: false });
@@ -82,19 +101,19 @@ const FormPutDish = () => {
       >
         {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
           <Form noValidate onSubmit={handleSubmit}>
-            {showSucessAlert && 
-             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-             <Alert onClose={handleCloseAlert} severity="success" sx={{ width: '40%' }}>
-               Prato atualizado com sucesso!
-             </Alert>
-           </Box>
+            {showSucessAlert &&
+              <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                <Alert onClose={handleCloseAlert} severity="success" sx={{ width: '40%' }}>
+                  Prato atualizado com sucesso!
+                </Alert>
+              </Box>
             }
-            {showFailAlert && 
-             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-             <Alert onClose={handleCloseAlert} severity="error" sx={{ width: '40%' }}>
-               Erro: Prato não foi atualizado.
-             </Alert>
-           </Box>
+            {showFailAlert &&
+              <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                <Alert onClose={handleCloseAlert} severity="error" sx={{ width: '40%' }}>
+                  Erro: Prato não foi atualizado.
+                </Alert>
+              </Box>
             }
             <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'center', mt: 2, mb: 1 }}>
               <Typography variant='h2'>Atualizar Prato</Typography>
@@ -198,7 +217,7 @@ const FormPutDish = () => {
                       id="menu"
                       type="menu"
                       name="menu"
-                      value={values.menu}
+                      value={values.menu._id}
                       label="menu"
                       onBlur={handleBlur}
                       onChange={handleChange}
@@ -210,18 +229,14 @@ const FormPutDish = () => {
                     </Select>
                     {touched.menu && errors.menu && (
                       <FormHelperText error id="helper-text-menu-signup">
-                        {errors.menu}
+                        {errors.menu.name}
                       </FormHelperText>
                     )}
                   </FormControl>
                 </Stack>
               </Grid>
-
-
               <Grid item xs={4}>
-
               </Grid>
-
               <Grid item xs={4} sx={{ mt: 8 }}>
                 <Button
                   disableElevation

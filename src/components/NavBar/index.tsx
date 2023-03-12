@@ -98,7 +98,7 @@ const NavBar = () => {
       </Container>
       {showLogoutAlert && (
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-          <Alert onClose={handleCloseLogoutAlert} severity="success" sx={{ width: '20vw' }}>
+          <Alert onClose={handleCloseLogoutAlert} severity="success" sx={{ position:'absolute', top:'12vh',width: '25vw' }}>
             Logout realizado com sucesso.
           </Alert>
         </Box>

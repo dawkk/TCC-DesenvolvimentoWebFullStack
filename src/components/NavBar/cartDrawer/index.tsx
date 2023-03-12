@@ -52,7 +52,7 @@ const CartDrawer: React.FC = () => {
           <Drawer anchor="right" open={cartOpen} onClose={handleCartClose}>
             <List sx={{ width: '20vw' }}> {/* Tamanho da drawer */}
               <ListItem>
-                <Typography gutterBottom variant="h6" component="div">
+                <Typography gutterBottom variant="h6" component="div" sx={{pl:2}}>
                   <Divider>
                     Carrinho de Compras
                   </Divider>
@@ -62,7 +62,7 @@ const CartDrawer: React.FC = () => {
                   <CloseIcon />
                 </Button>
               </ListItem>
-              <ListItem>
+              <ListItem sx={{p:0}}>
                 <Cart onUpdate={handleCartItemsUpdate} />
               </ListItem>
             </List>

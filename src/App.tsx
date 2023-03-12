@@ -8,7 +8,7 @@ import About from './pages/About';
 import Profile from './pages/Profile';
 import OrdersProfile from './pages/Profile/OrdersProfile';
 import Dishes from './pages/Dishes';
-import CreateDish from './pages/CreateDish';
+import CreateDish from './pages/Dishes/CreateDish';
 import PutDish from './pages/Dishes/PutDish';
 import Overview from './pages/Profile/Overview';
 import Address from './pages/Profile/Address';
