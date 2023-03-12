@@ -13,6 +13,13 @@ import { useAuth } from '../../hooks/useAuth';
 const NavBar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [showLogoutAlert, setShowLogoutAlert] = useState<boolean>(false);
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
+  const roles = user.roles || [];
+
+  const isAdmin =
+  roles.includes(3000) ||
+  roles.includes(2000) ||
+  roles.includes(1000);
 
   const auth = useAuth();
 
@@ -43,7 +50,9 @@ const NavBar = () => {
             <Logo />
           </Box>
           <Box sx={{ display: 'flex', justifyContent: 'space-around', alignContent: 'center', width: '100%', padding: 1, boxSizing: 'border-box' }}>
-            <DropDownList />
+            {isLoggedIn && isAdmin &&  (
+              <DropDownList />
+            )}
             <Link component={RouterLink} to="/">
               <Button sx={{ my: 2, color: colorTheme.palette.primary.contrastText }}>
                 Início
@@ -62,7 +71,7 @@ const NavBar = () => {
             {isLoggedIn ? (
               <Box>
                 <Link component={RouterLink} to="/profile">
-                  <Button sx={{ mr:4 ,my: 2, color: colorTheme.palette.primary.contrastText }}>
+                  <Button sx={{ mr: 4, my: 2, color: colorTheme.palette.primary.contrastText }}>
                     Meu Perfil
                   </Button>
                 </Link>
