@@ -14,7 +14,6 @@ const CartDrawer: React.FC = () => {
   const [cartItemsCount, setCartItemsCount] = React.useState<number>(0);
   const [cartItems, setCartItems] = React.useState<ICartItem[]>([]);
 
-
   React.useEffect(() => {
     const items = JSON.parse(localStorage.getItem('cartItems') || '[]') as ICartItem[];
     setCartItems(items);
@@ -23,9 +22,7 @@ const CartDrawer: React.FC = () => {
   React.useEffect(() => {
     const count = cartItems.reduce((total, item) => total + item.quantity, 0);
     setCartItemsCount(count);
-
   }, [cartItems]);
-
 
 
   const handleCartOpen = () => {
@@ -38,6 +35,8 @@ const CartDrawer: React.FC = () => {
 
   const handleCartItemsUpdate = (items: ICartItem[]) => {
     setCartItems(items);
+    const count = items.reduce((total, item) => total + item.quantity, 0);
+    setCartItemsCount(count);
   };
 
   return (

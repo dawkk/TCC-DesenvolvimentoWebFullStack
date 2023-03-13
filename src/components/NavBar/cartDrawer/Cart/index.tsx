@@ -23,6 +23,7 @@ const Cart: React.FC<ICartProps> = ({ onUpdate }) => {
     const updatedCartItems = cartItems.filter(item => item.id !== id);
     setCartItems(updatedCartItems);
     localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+    onUpdate(updatedCartItems);
   };
 
   const handleIncreaseQuantity = (id: string) => {
