@@ -70,7 +70,7 @@ const NavBar = () => {
             </Link>
             {isLoggedIn ? (
               <Box>
-                <Link component={RouterLink} to="/profile">
+                <Link component={RouterLink} to="/profile/overview">
                   <Button sx={{ mr: 4, my: 2, color: colorTheme.palette.primary.contrastText }}>
                     Meu Perfil
                   </Button>

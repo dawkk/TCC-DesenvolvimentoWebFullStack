@@ -34,7 +34,6 @@ const LoginFormFields = () => {
       }, 2000); // 2000ms = 2 seconds delay
     } catch (error) {
       console.log("Usuario ou senha errado");
-
       setShowFailAlert(true);
       setShowSucessAlert(false);
     }
@@ -55,7 +54,6 @@ const LoginFormFields = () => {
         }}
         validationSchema={yupValidationSchema}
         onSubmit={async (values, { setStatus, setSubmitting }) => {
-          console.log(values.email, values.password)
           try {
             setStatus({ success: false });
             setSubmitting(false);

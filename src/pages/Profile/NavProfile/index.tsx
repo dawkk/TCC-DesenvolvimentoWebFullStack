@@ -27,7 +27,7 @@ const NavProfile = () => {
               </MenuItem>
             </Link>
             <Divider />
-            <Link component={RouterLink} to="/profile/edit" underline="none">
+            <Link component={RouterLink} to="/" underline="none">
               <MenuItem sx={{mt:1,mb:1}}>
                 <ListItemIcon>
                   <EditIcon fontSize="small" color="primary" />
@@ -54,7 +54,7 @@ const NavProfile = () => {
               </MenuItem>
             </Link>
             <Divider />
-            <Link component={RouterLink} to="/profile/password" underline="none">
+            <Link component={RouterLink} to="/" underline="none">
               <MenuItem sx={{mt:1,mb:1}}>
                 <ListItemIcon>
                   <LockIcon fontSize="small" color="primary" />

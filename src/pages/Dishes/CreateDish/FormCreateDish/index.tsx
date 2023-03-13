@@ -6,6 +6,8 @@ import { useEffect, useState } from 'react';
 import IMenu from '../../../../interfaces/IMenu';
 import { useNavigate } from 'react-router';
 
+
+
 const FormCreateDish = () => {
   const [menus, setMenus] = useState<IMenu[]>([])
   const navigate = useNavigate();
@@ -13,6 +15,9 @@ const FormCreateDish = () => {
     http.get<IMenu[]>('/menus')
       .then(response => setMenus(response.data))
   }, [])
+
+  const userLocalStorage = JSON.parse(localStorage.getItem('user') || '{}');
+  const jwtValue = userLocalStorage.jwt;
 
 
   const yupValidationSchema = Yup.object().shape({
@@ -36,17 +41,18 @@ const FormCreateDish = () => {
         }}
         validationSchema={yupValidationSchema}
         onSubmit={async (values, { setStatus, setSubmitting }) => {
-          alert(JSON.stringify(values, null, 2));
           try {
             setStatus({ success: false });
             setSubmitting(false);
-
             const response = await http.post("/dishes", JSON.stringify(values), {
-              headers: { 'Content-Type': 'application/json' },
-              /* withCredentials:true }*/
+              headers: {
+                Authorization: `Bearer ${jwtValue}`,
+                'Content-Type': 'application/json'
+              }
             });
             navigate('/dishes');
-            console.log(response?.data);
+            response;
+            /* console.log(response?.data); */
           } catch (err) {
             console.error(err);
             setStatus({ success: false });
@@ -166,7 +172,7 @@ const FormCreateDish = () => {
                       error={Boolean(touched.menu && errors.menu)}
                     >
                       {menus.map((menu) => (
-                        <MenuItem value={menu._id}>{menu.name}</MenuItem>
+                        <MenuItem key={menu._id} value={menu._id}>{menu.name}</MenuItem>
                       ))}
                     </Select>
                     {touched.menu && errors.menu && (

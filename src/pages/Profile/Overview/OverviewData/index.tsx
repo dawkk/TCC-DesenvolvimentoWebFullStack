@@ -44,7 +44,6 @@ const OverviewData = () => {
       .catch(error => {
         console.log(error);
       })
-    console.log(initialValues)
     } catch (error:unknown) {
       console.log(error);
     }
@@ -68,16 +67,17 @@ const OverviewData = () => {
         validationSchema={yupValidationSchema}
         enableReinitialize={true}
         onSubmit={async (values, { setStatus, setSubmitting }) => {
-          alert(JSON.stringify(values, null, 2));
+       
           try {
             setStatus({ success: false });
             setSubmitting(false);
             const response = await http.put(`/users/${idValue}`, JSON.stringify(values), {
               headers: {
                 Authorization: `Bearer ${jwtValue}`,
+                'Content-Type': 'application/json'
               },
             });
-            console.log(response?.data);
+            response;
             setShowSucessAlert(true);
             setShowFailAlert(false);
           } catch (err) {

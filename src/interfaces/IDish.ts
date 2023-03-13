@@ -3,10 +3,13 @@ export default interface IDish {
   title: string,
   description: string,
   price: number,
-  menu: {
-    _id: string,
-    name: string,
-  },
+  menu:string,
   type: string
 }
 
+/* 
+menu: {
+  _id: string,
+  name: string,
+},
+ */

@@ -5,7 +5,22 @@ import http from '../../../../api/axios';
 import { useEffect, useState } from 'react';
 import IMenu from '../../../../interfaces/IMenu';
 import { useNavigate, useParams } from 'react-router-dom';
-import IDish from '../../../../interfaces/IDish';
+
+
+
+interface IDish2 {
+  _id: string,
+  title: string,
+  description: string,
+  price: number,
+  menu: {
+    _id: string,
+    name: string,
+  },
+  type: string
+}
+
+
 
 
 const FormPutDish = () => {
@@ -13,7 +28,7 @@ const FormPutDish = () => {
   const [showSucessAlert, setShowSucessAlert] = useState<boolean>(false);
   const [showFailAlert, setShowFailAlert] = useState<boolean>(false);
   const [menus, setMenus] = useState<IMenu[]>([]);
-  const [initialValues, setInitialValues] = useState<IDish>({
+  const [initialValues, setInitialValues] = useState<IDish2>({
     _id: '',
     title: '',
     description: '',
@@ -39,17 +54,16 @@ const FormPutDish = () => {
     http.get(`/dishes/${params._id}`, {
       headers: {
         Authorization: `Bearer ${jwtValue}`,
-  }},)
+        'Content-Type': 'application/json'
+      }
+    },)
       .then(response => {
-        const updatingInitialValues: IDish = response.data;
-        console.log(response.data)
-
+        const updatingInitialValues: IDish2 = response.data;
         setInitialValues(updatingInitialValues);
       })
       .catch(error => {
         console.log(error);
       })
-    console.log(initialValues)
   }, [])
 
   const yupValidationSchema = Yup.object().shape({
@@ -75,14 +89,17 @@ const FormPutDish = () => {
         validationSchema={yupValidationSchema}
         enableReinitialize={true}
         onSubmit={async (values, { setStatus, setSubmitting }) => {
+          
           try {
             setStatus({ success: false });
             setSubmitting(false);
+            
 
             const response = await http.put(`/dishes/${params._id}`, JSON.stringify(values), {
-                headers: {
-                  Authorization: `Bearer ${jwtValue}`,
-                },
+              headers: {
+                Authorization: `Bearer ${jwtValue}`,
+                'Content-Type': 'application/json'
+              },
             });
             navigate('/dishes');
             console.log(response?.data);
@@ -214,14 +231,15 @@ const FormPutDish = () => {
                     <InputLabel id="menu-select-label">Menu</InputLabel>
                     <Select
                       labelId="menu-select-label"
-                      id="menu"
+                      id="menu._id"
                       type="menu"
-                      name="menu"
+                      name="menu._id"
                       value={values.menu._id}
-                      label="menu"
+                      label="Menu*"
                       onBlur={handleBlur}
                       onChange={handleChange}
                       error={Boolean(touched.menu && errors.menu)}
+                      disabled={isSubmitting}
                     >
                       {menus.map((menu) => (
                         <MenuItem key={menu._id} value={menu._id}>{menu.name}</MenuItem>

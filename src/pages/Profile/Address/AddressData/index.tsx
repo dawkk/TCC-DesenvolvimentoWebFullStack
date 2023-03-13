@@ -86,9 +86,8 @@ const AddressData = () => {
 
             const response = await http.post("/users", JSON.stringify(values), {
               headers: { 'Content-Type': 'application/json' },
-              /* withCredentials:true }*/
             });
-            console.log(response?.data);
+            response;
           } catch (err) {
             console.error(err);
             setStatus({ success: false });

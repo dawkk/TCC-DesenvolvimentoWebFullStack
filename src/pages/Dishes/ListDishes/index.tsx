@@ -2,33 +2,56 @@ import { Box, Button, Link, Paper, Table, TableBody, TableCell, TableContainer, 
 import { useEffect, useState } from "react";
 import { Link as RouterLink } from 'react-router-dom';
 import http from "../../../api/axios";
-import IDish from "../../../interfaces/IDish";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import colorTheme from "../../../components/ColorThemes";
 
+interface IDish2 {
+  _id: string,
+  title: string,
+  description: string,
+  price: number,
+  menu: {
+    _id: string,
+    name: string,
+  },
+  type: string
+}
+
+
 
 const ListDishes: React.FC = () => {
-  const [dishes, setDishes] = useState<IDish[]>([])
+  const [dishes, setDishes] = useState<IDish2[]>([])
+
+  const userLocalStorage = JSON.parse(localStorage.getItem('user') || '{}');
+  const jwtValue = userLocalStorage.jwt;
   
 
   useEffect(() => {
-    http.get<IDish[]>('/dishes')
+    http.get<IDish2[]>('/dishes')
       .then(response => setDishes(response.data))
   }, [])
 
   const deleteDish = (_id: string) => {
-    http.delete(`/dishes/${_id}`, { data: { _id: _id } })
-      .then(() => {
-        const listDishes = dishes.filter(dish => dish._id !== _id)
-        setDishes([...listDishes])
-      })
-  }
+    const config = {
+      headers: {
+        Authorization: `Bearer ${jwtValue}`
+      },
+      data: { _id }
+    };
+
+
+  http.delete(`/dishes/${_id}`, config)
+  .then(() => {
+    const listDishes = dishes.filter(dish => dish._id !== _id)
+    setDishes([...listDishes])
+  })
+}
 
   return (
     <>
-      <Box sx={{ backgroundColor: colorTheme.palette.primary.light, height: '100vh' }}>
-        <Box sx={{ ml: '20%', mr: '20%', mb: 20 }}>
+      <Box sx={{ backgroundColor: colorTheme.palette.primary.light }}>
+        <Box sx={{ ml: '10%', mr: '10%', mb:'12vh' }}>
           <Link component={RouterLink} to={`/dishes/create`}><Button variant="contained" >Adicionar Novo Prato</Button></Link>
           <Box sx={{ display: 'flex', mt:3 }}>
             <Box sx={{ backgroundColor: 'white' }}>
@@ -46,6 +69,7 @@ const ListDishes: React.FC = () => {
                       <TableCell align="center">Descrição</TableCell>
                       <TableCell align="center">Preço</TableCell>
                       <TableCell align="center">Tipo</TableCell>
+                      <TableCell align="center">Menu</TableCell>
                       <TableCell align="center">Editar</TableCell>
                       <TableCell align="center">Excluir</TableCell>
                     </TableRow>
@@ -63,6 +87,7 @@ const ListDishes: React.FC = () => {
                         <TableCell align="center">{dish.description}</TableCell>
                         <TableCell align="center">R${dish.price}</TableCell>
                         <TableCell align="center">{dish.type}</TableCell>
+                        <TableCell align="center">{dish.menu.name}</TableCell>
                         <TableCell align="center"><Link component={RouterLink} to={`/dishes/${dish._id}`}><EditIcon /></Link></TableCell>
                         <TableCell align="center"><Button onClick={() => deleteDish(dish._id)}><DeleteForeverIcon /></Button></TableCell>
                       </TableRow>
