@@ -1,18 +1,24 @@
 {
   "files": {
     "main.css": "/TCC-DesenvolvimentoWebFullStack/static/css/main.0ebf4990.css",
-    "main.js": "/TCC-DesenvolvimentoWebFullStack/static/js/main.a08e5cbc.js",
+    "main.js": "/TCC-DesenvolvimentoWebFullStack/static/js/main.950c21ef.js",
     "static/media/burguer_combo.jpg": "/TCC-DesenvolvimentoWebFullStack/static/media/burguer_combo.ae09939ecc5f504d17b3.jpg",
     "static/media/pizza.jpg": "/TCC-DesenvolvimentoWebFullStack/static/media/pizza.edf84f01c5a08d4b5b99.jpg",
+    "static/media/menu-lunch.jpg": "/TCC-DesenvolvimentoWebFullStack/static/media/menu-lunch.fb5b9fa0126d3a58169c.jpg",
+    "static/media/menu-dinner.jpg": "/TCC-DesenvolvimentoWebFullStack/static/media/menu-dinner.ca9d2facab63d6abe208.jpg",
     "static/media/Banner_Restaurant.jpg": "/TCC-DesenvolvimentoWebFullStack/static/media/Banner_Restaurant.744608247e13bb6426cf.jpg",
+    "static/media/mini-banner-salad-web.jpg": "/TCC-DesenvolvimentoWebFullStack/static/media/mini-banner-salad-web.5be98e2f70b96590a7b5.jpg",
+    "static/media/menu-hamburguer.jpg": "/TCC-DesenvolvimentoWebFullStack/static/media/menu-hamburguer.40215f46058d593fb9de.jpg",
     "static/media/banner-menu.jpg": "/TCC-DesenvolvimentoWebFullStack/static/media/banner-menu.e98bea428ec73047aaa3.jpg",
+    "static/media/mini-banner-barbecue.jpg": "/TCC-DesenvolvimentoWebFullStack/static/media/mini-banner-barbecue.1c1287a33afccc8bcad2.jpg",
+    "static/media/menu-dessert.jpg": "/TCC-DesenvolvimentoWebFullStack/static/media/menu-dessert.42bff317f2667e8d702e.jpg",
     "static/media/banner-nuts-web.jpg": "/TCC-DesenvolvimentoWebFullStack/static/media/banner-nuts-web.ccbe41a227a580f1f355.jpg",
     "index.html": "/TCC-DesenvolvimentoWebFullStack/index.html",
     "main.0ebf4990.css.map": "/TCC-DesenvolvimentoWebFullStack/static/css/main.0ebf4990.css.map",
-    "main.a08e5cbc.js.map": "/TCC-DesenvolvimentoWebFullStack/static/js/main.a08e5cbc.js.map"
+    "main.950c21ef.js.map": "/TCC-DesenvolvimentoWebFullStack/static/js/main.950c21ef.js.map"
   },
   "entrypoints": [
     "static/css/main.0ebf4990.css",
-    "static/js/main.a08e5cbc.js"
+    "static/js/main.950c21ef.js"
   ]
 }
