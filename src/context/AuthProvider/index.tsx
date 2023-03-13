@@ -25,7 +25,7 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
 
     setUser(payload);
     setUserLocalStorage(payload);
-    console.log('esse é o payload', payload)
+    /* console.log('esse é o payload', payload) */
   }
 
   function logout() {
