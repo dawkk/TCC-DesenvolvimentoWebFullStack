@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/TCC-DesenvolvimentoWebFullStack/static/css/main.0ebf4990.css",
-    "main.js": "/TCC-DesenvolvimentoWebFullStack/static/js/main.950c21ef.js",
+    "main.js": "/TCC-DesenvolvimentoWebFullStack/static/js/main.1653eebb.js",
     "static/media/burguer_combo.jpg": "/TCC-DesenvolvimentoWebFullStack/static/media/burguer_combo.ae09939ecc5f504d17b3.jpg",
     "static/media/pizza.jpg": "/TCC-DesenvolvimentoWebFullStack/static/media/pizza.edf84f01c5a08d4b5b99.jpg",
     "static/media/menu-lunch.jpg": "/TCC-DesenvolvimentoWebFullStack/static/media/menu-lunch.fb5b9fa0126d3a58169c.jpg",
@@ -15,10 +15,10 @@
     "static/media/banner-nuts-web.jpg": "/TCC-DesenvolvimentoWebFullStack/static/media/banner-nuts-web.ccbe41a227a580f1f355.jpg",
     "index.html": "/TCC-DesenvolvimentoWebFullStack/index.html",
     "main.0ebf4990.css.map": "/TCC-DesenvolvimentoWebFullStack/static/css/main.0ebf4990.css.map",
-    "main.950c21ef.js.map": "/TCC-DesenvolvimentoWebFullStack/static/js/main.950c21ef.js.map"
+    "main.1653eebb.js.map": "/TCC-DesenvolvimentoWebFullStack/static/js/main.1653eebb.js.map"
   },
   "entrypoints": [
     "static/css/main.0ebf4990.css",
-    "static/js/main.950c21ef.js"
+    "static/js/main.1653eebb.js"
   ]
 }
