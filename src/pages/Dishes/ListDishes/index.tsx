@@ -5,32 +5,32 @@ import http from "../../../api/axios";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import colorTheme from "../../../components/ColorThemes";
-
-interface IDish2 {
-  _id: string,
-  title: string,
-  description: string,
-  price: number,
-  menu: {
-    _id: string,
-    name: string,
-  },
-  type: string
-}
+import IDish from "../../../interfaces/IDish";
+import IMenu from "../../../interfaces/IMenu";
 
 
 
 const ListDishes: React.FC = () => {
-  const [dishes, setDishes] = useState<IDish2[]>([])
+  const [dishes, setDishes] = useState<IDish[]>([])
+  const [menus, setMenus] = useState<IMenu[]>([])
 
   const userLocalStorage = JSON.parse(localStorage.getItem('user') || '{}');
   const jwtValue = userLocalStorage.jwt;
   
 
   useEffect(() => {
-    http.get<IDish2[]>('/dishes')
-      .then(response => setDishes(response.data))
-  }, [])
+    http.get<IMenu[]>('/menus')
+      .then(response => setMenus(response.data))
+
+      http.get<IDish[]>('/dishes')
+      .then(response => {
+        const updatedDishes = response.data.map((dish) => {
+          const menu = menus.find((menu) => menu._id === dish.menu?._id);
+          return { ...dish, menuName: menu?.name };
+        });
+        setDishes(updatedDishes);
+      })
+  }, [menus])
 
   const deleteDish = (_id: string) => {
     const config = {
@@ -87,7 +87,7 @@ const ListDishes: React.FC = () => {
                         <TableCell align="center">{dish.description}</TableCell>
                         <TableCell align="center">R${dish.price}</TableCell>
                         <TableCell align="center">{dish.type}</TableCell>
-                        <TableCell align="center">{dish.menu.name}</TableCell>
+                        <TableCell align="center">{dish.menu?.name}</TableCell>
                         <TableCell align="center"><Link component={RouterLink} to={`/dishes/${dish._id}`}><EditIcon /></Link></TableCell>
                         <TableCell align="center"><Button onClick={() => deleteDish(dish._id)}><DeleteForeverIcon /></Button></TableCell>
                       </TableRow>

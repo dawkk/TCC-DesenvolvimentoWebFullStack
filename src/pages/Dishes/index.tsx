@@ -7,7 +7,7 @@ import ListDishes from "./ListDishes";
 const Dishes = () => {
 
   return (
-    <Box sx={{ backgroundColor: colorTheme.palette.primary.light, height: '110vh', paddingTop: 20 }}>
+    <Box sx={{ backgroundColor: colorTheme.palette.primary.light, height: '100%', paddingTop: 20 }}>
       <NavBar />
       <ListDishes/>
       <Footer />

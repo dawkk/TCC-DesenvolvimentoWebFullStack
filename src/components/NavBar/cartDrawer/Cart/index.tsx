@@ -4,7 +4,6 @@ import ICartItem from "../../../../interfaces/ICartItem";
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import DeleteIcon from '@mui/icons-material/Delete';
-import colorTheme from "../../../ColorThemes";
 
 interface ICartProps {
   onUpdate: (items: ICartItem[]) => void;
@@ -12,7 +11,6 @@ interface ICartProps {
 
 const Cart: React.FC<ICartProps> = ({ onUpdate }) => {
   const [cartItems, setCartItems] = useState<ICartItem[]>([]);
-  const [totalAmount, setTotalAmount] = useState<number>(0);
 
   useEffect(() => {
     const items = JSON.parse(localStorage.getItem('cartItems') || '[]') as ICartItem[];
