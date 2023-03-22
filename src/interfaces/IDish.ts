@@ -8,7 +8,8 @@ export default interface IDish {
     name: string,
   },
   type: string,
-  image?: string
+  image?: string,
+  imageURL?: string
 }
 
 /* 
