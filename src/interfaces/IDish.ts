@@ -9,10 +9,3 @@ export default interface IDish {
   },
   type: string
 }
-
-/* 
-menu: {
-  _id: string,
-  name: string,
-},
- */
