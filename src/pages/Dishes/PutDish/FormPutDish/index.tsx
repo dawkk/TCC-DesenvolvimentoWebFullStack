@@ -39,13 +39,6 @@ const FormPutDish = () => {
         console.log(error);
       });
 
-    http.get<IMenu[]>('/menus')
-      .then(response => setMenus(response.data))
-      .catch(error => {
-        console.log(error);
-      });
-
-
     http.get(`/dishes/${params._id}`, {
       headers: {
         Authorization: `Bearer ${jwtValue}`,
@@ -82,6 +75,7 @@ const FormPutDish = () => {
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string>('');
 
+
   useEffect(() => {
     const getImage = async () => {
       try {
@@ -104,6 +98,23 @@ const FormPutDish = () => {
     getImage();
   }, [params._id, jwtValue]);
 
+  const updateDishInfo = () => {
+    http.get(`/dishes/${params._id}`, {
+      headers: {
+        Authorization: `Bearer ${jwtValue}`,
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => {
+        const updatingInitialValues: IDish = response.data;
+        setInitialValues(updatingInitialValues);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+
   const uploadDishImage = async (file: File) => {
     const formData = new FormData();
     formData.append('image', file);
@@ -115,6 +126,7 @@ const FormPutDish = () => {
         }
       });
       console.log(response.data);
+      updateDishInfo();
       return response.data;
     } catch (error) {
       console.error(error);
@@ -144,7 +156,7 @@ const FormPutDish = () => {
       </Grid>
       <Box sx={{ display: 'flex' }}>
         <Box sx={{mt:4, mr:2}}>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} encType="multipart/form-data">
             <Box sx={{ display: 'flex', flexDirection: 'column', width: 250 }}>
 
               <IconButton component="label" sx={{
@@ -182,16 +194,15 @@ const FormPutDish = () => {
             try {
               setStatus({ success: false });
               setSubmitting(false);
-
-
+              console.log('Values from formik', values)
               const response = await http.put(`/dishes/${params._id}`, JSON.stringify(values), {
                 headers: {
                   Authorization: `Bearer ${jwtValue}`,
                   'Content-Type': 'application/json'
                 },
               });
+              console.log("this is response",response?.data);
               navigate('/dishes');
-              console.log(response?.data);
               setShowSucessAlert(true);
               setShowFailAlert(false);
 
@@ -323,7 +334,7 @@ const FormPutDish = () => {
                         id="menu._id"
                         type="menu"
                         name="menu._id"
-                        value={values.menu._id}
+                        value={values.menu?._id || ''}
                         label="Menu*"
                         onBlur={handleBlur}
                         onChange={handleChange}

@@ -40,8 +40,6 @@ const FormFields = () => {
     addressExtra: Yup.string().max(255),
   });
 
-
-
   return (
     <>
       <Formik
