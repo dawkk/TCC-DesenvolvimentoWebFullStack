@@ -1,9 +1,8 @@
 {
   "files": {
-    "main.css": "/TCC-DesenvolvimentoWebFullStack/static/css/main.0ebf4990.css",
-    "main.js": "/TCC-DesenvolvimentoWebFullStack/static/js/main.1653eebb.js",
+    "main.css": "/TCC-DesenvolvimentoWebFullStack/static/css/main.1eb5eb05.css",
+    "main.js": "/TCC-DesenvolvimentoWebFullStack/static/js/main.4d9d81b4.js",
     "static/media/burguer_combo.jpg": "/TCC-DesenvolvimentoWebFullStack/static/media/burguer_combo.ae09939ecc5f504d17b3.jpg",
-    "static/media/pizza.jpg": "/TCC-DesenvolvimentoWebFullStack/static/media/pizza.edf84f01c5a08d4b5b99.jpg",
     "static/media/menu-lunch.jpg": "/TCC-DesenvolvimentoWebFullStack/static/media/menu-lunch.fb5b9fa0126d3a58169c.jpg",
     "static/media/menu-dinner.jpg": "/TCC-DesenvolvimentoWebFullStack/static/media/menu-dinner.ca9d2facab63d6abe208.jpg",
     "static/media/Banner_Restaurant.jpg": "/TCC-DesenvolvimentoWebFullStack/static/media/Banner_Restaurant.744608247e13bb6426cf.jpg",
@@ -14,11 +13,11 @@
     "static/media/menu-dessert.jpg": "/TCC-DesenvolvimentoWebFullStack/static/media/menu-dessert.42bff317f2667e8d702e.jpg",
     "static/media/banner-nuts-web.jpg": "/TCC-DesenvolvimentoWebFullStack/static/media/banner-nuts-web.ccbe41a227a580f1f355.jpg",
     "index.html": "/TCC-DesenvolvimentoWebFullStack/index.html",
-    "main.0ebf4990.css.map": "/TCC-DesenvolvimentoWebFullStack/static/css/main.0ebf4990.css.map",
-    "main.1653eebb.js.map": "/TCC-DesenvolvimentoWebFullStack/static/js/main.1653eebb.js.map"
+    "main.1eb5eb05.css.map": "/TCC-DesenvolvimentoWebFullStack/static/css/main.1eb5eb05.css.map",
+    "main.4d9d81b4.js.map": "/TCC-DesenvolvimentoWebFullStack/static/js/main.4d9d81b4.js.map"
   },
   "entrypoints": [
-    "static/css/main.0ebf4990.css",
-    "static/js/main.1653eebb.js"
+    "static/css/main.1eb5eb05.css",
+    "static/js/main.4d9d81b4.js"
   ]
 }
