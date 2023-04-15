@@ -9,8 +9,6 @@ import IDish from '../../../../interfaces/IDish';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 import colorTheme from '../../../../components/ColorThemes';
 
-
-
 const FormPutDish = () => {
   const params = useParams();
   const [showSucessAlert, setShowSucessAlert] = useState<boolean>(false);
