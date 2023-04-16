@@ -4,6 +4,7 @@ import ICartItem from "../../../../interfaces/ICartItem";
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import DeleteIcon from '@mui/icons-material/Delete';
+import http from "../../../../api/axios";
 
 interface ICartProps {
   onUpdate: (items: ICartItem[]) => void;
@@ -12,9 +13,41 @@ interface ICartProps {
 const Cart: React.FC<ICartProps> = ({ onUpdate }) => {
   const [cartItems, setCartItems] = useState<ICartItem[]>([]);
 
+  const getImage = async (item: ICartItem) => {
+    try {
+      const response = await http.get(`/dishes/${item.id}/image`, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Cache-Control': 'no-cache',
+        },
+        responseType: 'blob',
+      });
+      if (response.data) {
+        const imageURL = URL.createObjectURL(response.data);
+        setCartItems(prevCartItems => {
+          return prevCartItems.map(prevItem => {
+            if (prevItem.id === item.id) {
+              return {
+                ...prevItem,
+                image: imageURL
+              };
+            }
+            return prevItem;
+          });
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     const items = JSON.parse(localStorage.getItem('cartItems') || '[]') as ICartItem[];
     setCartItems(items);
+
+    items.forEach(item => {
+      getImage(item);
+    });
   }, []);
 
   const handleRemoveFromCart = (id: string) => {
@@ -77,9 +110,9 @@ const Cart: React.FC<ICartProps> = ({ onUpdate }) => {
           <Card sx={{ display: 'flex' }}>
             <CardMedia
               component="img"
-              alt="item"
-              image={`https://source.unsplash.com/random?${item.name}`}
-              sx={{ height: 120, width: 100 }}
+              alt={`${item.name}`}
+              image={`${item.image}`}
+              sx={{ height: "16vh", width: "6vw" }}
             />
             <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between' }}>
               <Typography gutterBottom variant="body1" textAlign={"center"} sx={{ mb: 1 }}>
@@ -90,7 +123,7 @@ const Cart: React.FC<ICartProps> = ({ onUpdate }) => {
                   {item.quantity}X
                 </Typography>
                 <Typography variant="body1" >
-                  R${item.price * item.quantity}
+                R${(item.price * item.quantity).toFixed(2)}
                 </Typography>
               </Box>
               <CardActions sx={{ display: 'flex', flexDirection: 'column' }}>
@@ -116,7 +149,7 @@ const Cart: React.FC<ICartProps> = ({ onUpdate }) => {
         </Typography>
         <Typography sx={{ml:0.5}}>( {totalQuantity} itens)</Typography>
         <Typography variant="body1" fontWeight='bold' sx={{ml:0.5}}>
-          R$ {total}
+        R$ {total.toFixed(2)}
         </Typography>
       </Grid>
 

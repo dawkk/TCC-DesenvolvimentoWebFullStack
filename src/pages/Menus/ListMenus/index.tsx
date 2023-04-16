@@ -24,6 +24,7 @@ const ListMenus = () => {
         name: dish.title,
         price: dish.price,
         quantity: 1,
+        image:dish.image
       });
     }
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
