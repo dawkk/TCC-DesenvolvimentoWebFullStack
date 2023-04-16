@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
-import colorTheme from "../../../components/ColorThemes";
-import Footer from "../../../components/Footer";
-import NavBar from "../../../components/NavBar";
+import colorTheme from "../../../../components/ColorThemes";
+import Footer from "../../../../components/Footer";
+import NavBar from "../../../../components/NavBar";
 import FormCreateDish from "./FormCreateDish";
 
 

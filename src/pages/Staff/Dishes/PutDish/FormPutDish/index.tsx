@@ -1,13 +1,13 @@
 import { Alert, Box, Button, FormControl, FormHelperText, Grid, IconButton, InputLabel, MenuItem, OutlinedInput, Select, Stack, Typography } from '@mui/material';
 import * as Yup from 'yup';
 import { Formik, Form } from 'formik';
-import http from '../../../../api/axios';
+import http from '../../../../../api/axios';
 import { useEffect, useState } from 'react';
-import IMenu from '../../../../interfaces/IMenu';
+import IMenu from '../../../../../interfaces/IMenu';
 import { useNavigate, useParams } from 'react-router-dom';
-import IDish from '../../../../interfaces/IDish';
+import IDish from '../../../../../interfaces/IDish';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
-import colorTheme from '../../../../components/ColorThemes';
+import colorTheme from '../../../../../components/ColorThemes';
 
 const FormPutDish = () => {
   const params = useParams();

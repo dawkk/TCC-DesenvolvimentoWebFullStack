@@ -24,7 +24,7 @@ const DropDownList = () => {
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
-        sx={{color: colorTheme.palette.primary.contrastText, my:2}}
+        sx={{ color: colorTheme.palette.primary.contrastText, my: 2 }}
       >
         Menu Administrativo
       </Button>
@@ -37,18 +37,31 @@ const DropDownList = () => {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <Link component={RouterLink} to="/dashboard"><MenuItem sx={{ p: 2, boxSizing: 'border-box' }}>
-          Dashboard
-        </MenuItem></Link>
-        <Link component={RouterLink} to="/dishes"><MenuItem sx={{ p: 2, boxSizing: 'border-box' }}>
-          Pratos
-        </MenuItem></Link>
-        <Link component={RouterLink} to="/orders"><MenuItem sx={{ p: 2, boxSizing: 'border-box' }}>
-          Pedidos
-        </MenuItem></Link>
-        <Link component={RouterLink} to="/inventory"><MenuItem sx={{ p: 2, boxSizing: 'border-box' }}>
-          Inventário
-        </MenuItem></Link>
+        <Link component={RouterLink} to="/staff/dishes">
+          <MenuItem sx={{ p: 2, boxSizing: 'border-box' }}>
+            Pratos
+          </MenuItem>
+        </Link>
+        <Link component={RouterLink} to="/staff/menus">
+          <MenuItem sx={{ p: 2, boxSizing: 'border-box' }}>
+            Menus
+          </MenuItem>
+        </Link>
+        <Link component={RouterLink} to="/staff/dashboard">
+          <MenuItem sx={{ p: 2, boxSizing: 'border-box' }}>
+            Dashboard
+          </MenuItem>
+        </Link>
+        <Link component={RouterLink} to="/staff/orders">
+          <MenuItem sx={{ p: 2, boxSizing: 'border-box' }}>
+            Pedidos
+          </MenuItem>
+        </Link>
+        <Link component={RouterLink} to="/staff/inventory">
+          <MenuItem sx={{ p: 2, boxSizing: 'border-box' }}>
+            Inventário
+          </MenuItem>
+        </Link>
       </Menu>
     </div>
   );

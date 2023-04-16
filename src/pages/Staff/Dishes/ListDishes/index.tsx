@@ -1,12 +1,12 @@
 import { Box, Button, Link, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link as RouterLink } from 'react-router-dom';
-import http from "../../../api/axios";
+import http from "../../../../api/axios";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import colorTheme from "../../../components/ColorThemes";
-import IDish from "../../../interfaces/IDish";
-import IMenu from "../../../interfaces/IMenu";
+import colorTheme from "../../../../components/ColorThemes";
+import IDish from "../../../../interfaces/IDish";
+import IMenu from "../../../../interfaces/IMenu";
 
 
 

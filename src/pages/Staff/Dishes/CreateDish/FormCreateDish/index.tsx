@@ -1,9 +1,9 @@
 import { Button, FormControl, FormHelperText, Grid, InputLabel, MenuItem, OutlinedInput, Select, Stack, Typography } from '@mui/material';
 import * as Yup from 'yup';
 import { Formik, Form } from 'formik';
-import http from '../../../../api/axios';
+import http from '../../../../../api/axios';
 import { useEffect, useState } from 'react';
-import IMenu from '../../../../interfaces/IMenu';
+import IMenu from '../../../../../interfaces/IMenu';
 import { useNavigate } from 'react-router';
 
 

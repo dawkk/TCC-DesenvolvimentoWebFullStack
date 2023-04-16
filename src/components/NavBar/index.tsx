@@ -58,7 +58,7 @@ const NavBar = () => {
                 Início
               </Button>
             </Link>
-            <Link component={RouterLink} to="/menus">
+            <Link component={RouterLink} to="/menu">
               <Button sx={{ my: 2, color: colorTheme.palette.primary.contrastText }}>
                 Menu
               </Button>

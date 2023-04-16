@@ -1,7 +1,6 @@
 import { Button, Card, CardActions, CardContent, CardMedia, Grid, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import styles from './ListMenus.module.scss'
-import menuImage1 from '../../../assets/images/menus/principal/burguer_combo.jpg'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { useEffect, useState } from "react";
 import http from '../../../api/axios';
@@ -12,13 +11,11 @@ import ICartItem from '../../../interfaces/ICartItem';
 const ListMenus = () => {
   const [dishes, setDishes] = useState<IDish[]>([])
   const [menus, setMenus] = useState<IMenu[]>([])
-  const [activeMenu, setActiveMenu] = useState<string | null>(null);
-
+  const [activeMenu, setActiveMenu] = useState<string | null>('menuId');
 
   const handleAddToCart = (dish: IDish) => {
     const cartItems: ICartItem[] = JSON.parse(localStorage.getItem('cartItems') || '[]');
     const existingCartItemIndex = cartItems.findIndex((item: ICartItem) => item.id === dish._id);
-
     if (existingCartItemIndex !== -1) {
       cartItems[existingCartItemIndex].quantity += 1;
     } else {
@@ -36,15 +33,37 @@ const ListMenus = () => {
     http.get<IMenu[]>('/menus')
       .then(response => {
         setMenus(response.data);
+        const firstMenuId = response.data.length > 0 ? response.data[0]._id : null;
+        if (firstMenuId) {
+          handleMenuClick(firstMenuId);
+        }
+        const updatedMenus = response.data.map(async (menu) => {
+          try {
+            const response = await http.get(`/menus/${menu._id}/image`, {
+              headers: {
+                'Content-Type': 'multipart/form-data',
+                'Cache-Control': 'no-cache',
+              },
+              responseType: 'blob',
+            });
+            if (response.data) {
+              const imageURL = URL.createObjectURL(response.data);
+              return { ...menu, imageURL: imageURL };
+            }
+          } catch (error) {
+            console.log('Error fetching image for menu', menu._id, error);
+          }
+          return menu;
+        });
+        Promise.all(updatedMenus).then((menusWithImages) => setMenus(menusWithImages));
       })
-  }, [])
+  }, []);
 
   const handleMenuClick = async (menuId: string) => {
     setActiveMenu(menuId);
     try {
       const response = await http.get(`/dishes/${menuId}/menu`);
-      const fetchedDishes: IDish[] = response.data; 
-
+      const fetchedDishes: IDish[] = response.data;
       const updatedDishes = await Promise.all(
         fetchedDishes.map(async (dish: IDish) => {
           const dishImageResponse = await http.get(`/dishes/${dish._id}/image`, {
@@ -54,7 +73,6 @@ const ListMenus = () => {
             },
             responseType: 'blob',
           });
-  
           if (dishImageResponse.data) {
             const imageURL = URL.createObjectURL(dishImageResponse.data);
             return { ...dish, imageURL: imageURL };
@@ -63,7 +81,6 @@ const ListMenus = () => {
           }
         })
       );
-  
       setDishes(updatedDishes);
     } catch (error) {
       console.log('Error fetching dishes:', error);
@@ -78,12 +95,12 @@ const ListMenus = () => {
           {menus.map((menu) => (
             <Grid item xs={12} sm={6} md={4} lg={3} xl={2.7} key={menu._id}>
               <Button fullWidth className={`menuButton ${activeMenu === menu._id ? 'activeMenuButton' : ''}`} style={{
-                backgroundImage: `url(${menuImage1})`,
+                backgroundImage: `url(${menu.imageURL})`,
                 backgroundRepeat: 'no-repeat',
                 backgroundPosition: 'center',
                 backgroundSize: 'cover',
                 opacity: activeMenu === menu._id ? 0.5 : 1,
-              }} onClick={() => handleMenuClick(menu._id)} sx={{height:'15vh', minHeight:'100px'}}>
+              }} onClick={() => handleMenuClick(menu._id)} sx={{ height: '15vh', minHeight: '100px' }}>
                 <div>
                   <h3 className={styles.MenuTitle}>{menu.name}</h3>
                 </div>
@@ -94,7 +111,6 @@ const ListMenus = () => {
           }
         </Grid>
 
-{/*  DISHESSSS          */}
         <Grid container>
           <Grid container spacing={4} sx={{ mt: 10, display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
             {dishes.map(dish =>
@@ -131,9 +147,6 @@ const ListMenus = () => {
             )}
           </Grid>
         </Grid>
-
-        {/*       <ListPlates /> */}
-
       </Box>
     </>
   )

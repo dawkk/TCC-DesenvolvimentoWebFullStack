@@ -1,17 +1,18 @@
 import { Box } from "@mui/material";
-import colorTheme from "../../../components/ColorThemes";
-import Footer from "../../../components/Footer";
-import NavBar from "../../../components/NavBar";
-import FormPutDish from "./FormPutDish";
+import colorTheme from "../../../../components/ColorThemes";
+import Footer from "../../../../components/Footer";
+import NavBar from "../../../../components/NavBar";
+import FormPutMenu from "./FormPutMenu";
 
-const PutDish = () => {
+
+const PutMenu = () => {
 
   return (
     <Box sx={{ backgroundColor: colorTheme.palette.primary.light, height: '100%', paddingTop: 5}}>
       <NavBar />
       <Box sx={{ p: 20 }}>
         <Box sx={{ backgroundColor: colorTheme.palette.secondary.light, boxSizing: 'border-box', p: 8, borderRadius: 5, width: '80vw' }}>
-          <FormPutDish />
+          <FormPutMenu />
         </Box>
       </Box>
       <Footer />
@@ -19,4 +20,4 @@ const PutDish = () => {
   )
 }
 
-export default PutDish;
+export default PutMenu;
