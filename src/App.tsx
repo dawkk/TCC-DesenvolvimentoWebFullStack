@@ -15,6 +15,7 @@ import Address from './pages/Profile/Address';
 import StaffMenus from './pages/Staff/Menus';
 import CreateMenu from './pages/Staff/Menus/CreateMenu';
 import PutMenu from './pages/Staff/Menus/PutMenus';
+import Checkout from './pages/Checkout';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
       <Route path='/register' element={<Register/>}/>
       <Route path='/about' element={<About/>}/>
       <Route path='/profile' element={<Profile/>}/>
+      <Route path='/checkout' element={<Checkout/>}/>
 
       <Route path='/profile/overview' element={<Overview/>}/>
       <Route path='/profile/orders' element={<OrdersProfile/>}/>
@@ -37,6 +39,10 @@ function App() {
       <Route path='/staff/menus' element={<StaffMenus/>}/>
       <Route path='/staff/menus/create' element={<CreateMenu/>}/>
       <Route path='/staff/menus/:_id' element={<PutMenu/>}/>
+
+      <Route path='/staff/dashboard' element={<OrdersProfile/>}/>
+      <Route path='/staff/orders' element={<OrdersProfile/>}/>
+      <Route path='/staff/inventory' element={<OrdersProfile/>}/>
 
       <Route path='/staff/dashboard' element={<OrdersProfile/>}/>
       <Route path='/staff/orders' element={<OrdersProfile/>}/>

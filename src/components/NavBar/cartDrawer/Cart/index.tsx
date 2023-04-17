@@ -1,10 +1,12 @@
-import { Box, Card, CardMedia, Typography, Button, CardActions, CardContent, Grid } from "@mui/material";
+import { Box, Card, CardMedia, Typography, Button, CardActions, CardContent, Grid, Link } from "@mui/material";
 import { useEffect, useState } from "react";
 import ICartItem from "../../../../interfaces/ICartItem";
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import DeleteIcon from '@mui/icons-material/Delete';
 import http from "../../../../api/axios";
+import { Link as RouterLink } from 'react-router-dom';
+import colorTheme from "../../../ColorThemes";
 
 interface ICartProps {
   onUpdate: (items: ICartItem[]) => void;
@@ -123,7 +125,7 @@ const Cart: React.FC<ICartProps> = ({ onUpdate }) => {
                   {item.quantity}X
                 </Typography>
                 <Typography variant="body1" >
-                R${(item.price * item.quantity).toFixed(2)}
+                  R${(item.price * item.quantity).toFixed(2)}
                 </Typography>
               </Box>
               <CardActions sx={{ display: 'flex', flexDirection: 'column' }}>
@@ -143,16 +145,22 @@ const Cart: React.FC<ICartProps> = ({ onUpdate }) => {
           </Card>
         </Grid>
       ))}
-      <Grid item xs={12} sx={{ display: 'flex',justifyContent: 'center', alignItems: 'center', pt: 2 }}>
+      <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexWrap:'wrap', pt: 2, pb:3 }}>
         <Typography variant="body1">
           Subtotal:
         </Typography>
-        <Typography sx={{ml:0.5}}>( {totalQuantity} itens)</Typography>
-        <Typography variant="body1" fontWeight='bold' sx={{ml:0.5}}>
-        R$ {total.toFixed(2)}
+        <Typography sx={{ ml: 0.5 }}>( {totalQuantity} itens)</Typography>
+        <Typography variant="body1" fontWeight='bold' sx={{ ml: 0.5 }}>
+          R$ {total.toFixed(2)}
         </Typography>
       </Grid>
-
+      <Grid container xs={12} sm={12} md={12} lg={12} xl={12} sx={{display:'flex', justifyContent:'center', }}>
+        <Link component={RouterLink} to="/checkout" sx={{backgroundColor:colorTheme.palette.primary.main}}>
+          <Button sx={{ m: 2, color:colorTheme.palette.primary.contrastText}}>
+            Prosseguir com pedido
+          </Button>
+        </Link>
+      </Grid>
     </Grid>
 
   );
