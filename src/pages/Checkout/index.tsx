@@ -5,7 +5,7 @@ import NavBar from '../../components/NavBar';
 import { Button, Container, Paper, Step, StepLabel, Stepper, Typography } from '@mui/material';
 import { useState } from 'react';
 import React from 'react';
-import Home from '../Home';
+import CheckoutIdentification from './Identification';
 
 const Checkout = () => {
 
@@ -20,12 +20,12 @@ const Checkout = () => {
     
   };
 
-  const steps = ['Shipping address', 'Payment details', 'Review your order'];
+  const steps = ['Identificação','Endereço para entrega' , 'Pagamento', 'Revisar Pedido'];
 
 function getStepContent(step: number) {
   switch (step) {
     case 0:
-      return <Home />;
+      return <CheckoutIdentification/>;
  /*    case 1:
       return <PaymentForm />;
     case 2:

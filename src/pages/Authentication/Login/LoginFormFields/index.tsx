@@ -29,8 +29,17 @@ const LoginFormFields = () => {
       await auth.authenticate(values.email, values.password);
       setShowSucessAlert(true);
       setShowFailAlert(false);
+
+      const currentUrl = window.location.pathname;
+      localStorage.setItem('lastVisitedUrl', currentUrl);
+
+
       setTimeout(() => {
-        navigate('/');
+
+        const lastVisitedUrl = localStorage.getItem('lastVisitedUrl') || '/';
+        navigate(lastVisitedUrl);
+        window.location.reload();
+
       }, 2000); // 2000ms = 2 seconds delay
     } catch (error) {
       console.log("Usuario ou senha errado");
