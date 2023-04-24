@@ -1,9 +1,12 @@
-import { Box, Container, FormControl, FormControlLabel, Radio, RadioGroup, Typography } from "@mui/material";
+import { Box, Button, Container, Typography, darken } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import IUser from "../../../interfaces/IUser";
 import http from "../../../api/axios";
 import LoginFormFields from "../../Authentication/Login/LoginFormFields";
 import IUserAddress from "../../../interfaces/IUserAddress";
+import StaticStepper from "../Stepper";
+import { useNavigate } from "react-router-dom";
+import colorTheme from "../../../components/ColorThemes";
 
 
 const CheckoutIdentification = () => {
@@ -12,7 +15,11 @@ const CheckoutIdentification = () => {
   const [address, setAddress] = useState<IUserAddress[]>([]);
   const userLocalStorage = JSON.parse(localStorage.getItem('user') || '{}');
   const jwtValue = userLocalStorage.jwt;
-  const [selectedAddress, setSelectedAddress] = useState<string>('');
+  const navigate = useNavigate();
+
+  const steps = ['Identificação', 'Confirmação de Endereço', 'Método de Pagamento', 'Revisão de dados'];
+  const activeStep = 0;
+
 
   const fetchUserData = async () => {
     try {
@@ -65,16 +72,30 @@ const CheckoutIdentification = () => {
     }
   }, [])
 
+  const handleButtonClick = async () => {
+    try {
+
+      navigate('/checkout/address');
+        
+      } catch (error: unknown) {
+        console.log(error);
+      }
+};
+
   return (
     <React.Fragment>
-      <Container sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}>
-        <Box>
+      <Container sx={{ m: 2 }}>
+        <div>
+          <StaticStepper steps={steps} activeStep={activeStep} />
+        </div>
+        <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' , mb:3}}>
           <Typography variant="h6" gutterBottom>
             Identificação
           </Typography>
         </Box>
         {isLoggedIn ? (
           <Container sx={{ display: 'flex', justifyContent: 'center' }}>
+
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
               <Typography variant="body1" gutterBottom>
                 <strong>Nome:</strong> {user?.firstName}
@@ -85,27 +106,22 @@ const CheckoutIdentification = () => {
               <Typography variant="body1" gutterBottom>
                 <strong>Email:</strong> {user?.email}
               </Typography>
-              <FormControl component="fieldset">
-                <RadioGroup
-                  aria-label="address"
-                  name="address"
-                  value={selectedAddress}
-                  onChange={(event) => setSelectedAddress(event.target.value)}
-                >
-                  {address.map((addr) => (
-                    <FormControlLabel
-                      key={addr._id}
-                      value={addr._id}
-                      control={<Radio />}
-                      label={`${addr.street}, ${addr.number}, ${addr.neighborhood}, ${addr.city}, ${addr.state}`}
-                    />
-                  ))}
-                </RadioGroup>
-              </FormControl>
+      
+
+              <Box sx={{ display: 'flex', justifyContent: 'center', mt:4 }}>
+                <Button onClick={handleButtonClick} sx={{
+                  backgroundColor: colorTheme.palette.primary.main, color: colorTheme.palette.secondary.light, p: 2, width: '80%',
+                  '&:hover': {
+                    backgroundColor: darken(colorTheme.palette.primary.main, 0.2),
+                  },
+                }}>
+                  Continuar
+                </Button>
+              </Box>
             </Box>
           </Container>
         ) : (
-          <Container maxWidth="md" sx={{}}>
+          <Container maxWidth="sm" sx={{}}>
             <LoginFormFields />
           </Container>
         )

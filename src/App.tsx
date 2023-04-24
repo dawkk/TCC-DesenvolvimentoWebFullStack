@@ -16,6 +16,9 @@ import StaffMenus from './pages/Staff/Menus';
 import CreateMenu from './pages/Staff/Menus/CreateMenu';
 import PutMenu from './pages/Staff/Menus/PutMenus';
 import Checkout from './pages/Checkout';
+import AddressStep from './pages/Checkout/AddressStep';
+import PaymentStep from './pages/Checkout/PaymentStep';
+import ReviewStep from './pages/Checkout/ReviewStep';
 
 function App() {
   return (
@@ -44,9 +47,10 @@ function App() {
       <Route path='/staff/orders' element={<OrdersProfile/>}/>
       <Route path='/staff/inventory' element={<OrdersProfile/>}/>
 
-      <Route path='/staff/dashboard' element={<OrdersProfile/>}/>
-      <Route path='/staff/orders' element={<OrdersProfile/>}/>
-      <Route path='/staff/inventory' element={<OrdersProfile/>}/>
+      <Route path='/checkout/identification' element={<Checkout/>}/>
+      <Route path='/checkout/address' element={<AddressStep/>}/>
+      <Route path='/checkout/payment' element={<PaymentStep/>}/>
+      <Route path='/checkout/review' element={<ReviewStep/>}/>
 
     </Routes>
   );

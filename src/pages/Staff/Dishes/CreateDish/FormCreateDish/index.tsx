@@ -50,7 +50,7 @@ const FormCreateDish = () => {
                 'Content-Type': 'application/json'
               }
             });
-            navigate('/dishes');
+            navigate('staff/dishes');
             response;
             /* console.log(response?.data); */
           } catch (err) {

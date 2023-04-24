@@ -200,7 +200,7 @@ const FormPutDish = () => {
                 },
               });
               console.log("this is response",response?.data);
-              navigate('/dishes');
+              navigate('/staff/dishes');
               setShowSucessAlert(true);
               setShowFailAlert(false);
 

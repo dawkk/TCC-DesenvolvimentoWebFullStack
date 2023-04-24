@@ -8,8 +8,6 @@ import colorTheme from "../../../../components/ColorThemes";
 import IDish from "../../../../interfaces/IDish";
 import IMenu from "../../../../interfaces/IMenu";
 
-
-
 const ListDishes: React.FC = () => {
   const [dishes, setDishes] = useState<IDish[]>([])
   const [menus, setMenus] = useState<IMenu[]>([])
@@ -68,7 +66,7 @@ const ListDishes: React.FC = () => {
     <>
       <Box sx={{ backgroundColor: colorTheme.palette.primary.light }}>
         <Box sx={{ ml: '10%', mr: '10%', mb: '12vh' }}>
-          <Link component={RouterLink} to={`/dishes/create`}><Button variant="contained" >Adicionar Novo Prato</Button></Link>
+          <Link component={RouterLink} to={`/staff/dishes/create`}><Button variant="contained" >Adicionar Novo Prato</Button></Link>
           <Box sx={{ display: 'flex', mt: 3 }}>
             <Box sx={{ backgroundColor: 'white' }}>
               <Paper>
@@ -106,7 +104,7 @@ const ListDishes: React.FC = () => {
                         <TableCell align="center">R${dish.price}</TableCell>
                         <TableCell align="center">{dish.type}</TableCell>
                         <TableCell align="center">{dish.menu?.name}</TableCell>
-                        <TableCell align="center"><Link component={RouterLink} to={`/dishes/${dish._id}`}><EditIcon /></Link></TableCell>
+                        <TableCell align="center"><Link component={RouterLink} to={`/staff/dishes/${dish._id}`}><EditIcon /></Link></TableCell>
                         <TableCell align="center"><Button onClick={() => deleteDish(dish._id)}><DeleteForeverIcon /></Button></TableCell>
                       </TableRow>
                     ))}
