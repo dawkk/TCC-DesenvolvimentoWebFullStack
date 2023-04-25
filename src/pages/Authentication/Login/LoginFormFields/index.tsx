@@ -4,8 +4,8 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import * as Yup from 'yup';
 import { Formik, Form } from 'formik';
 import { useState } from 'react';
-import { useAuth } from '../../../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../../../context/AuthProvider';
 
 const LoginFormFields = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -26,7 +26,7 @@ const LoginFormFields = () => {
 
   async function onFinish(values: { email: string, password: string }) {
     try {
-      await auth.authenticate(values.email, values.password);
+      await auth.login(values.email, values.password);
       setShowSucessAlert(true);
       setShowFailAlert(false);
 
@@ -38,7 +38,6 @@ const LoginFormFields = () => {
 
         const lastVisitedUrl = localStorage.getItem('lastVisitedUrl') || '/';
         navigate(lastVisitedUrl);
-        window.location.reload();
 
       }, 2000); // 2000ms = 2 seconds delay
     } catch (error) {

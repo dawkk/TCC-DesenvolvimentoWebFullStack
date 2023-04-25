@@ -10,9 +10,6 @@ import IMenu from "../../../../interfaces/IMenu";
 const ListMenus: React.FC = () => {
   const [menus, setMenus] = useState<IMenu[]>([])
 
-  const userLocalStorage = JSON.parse(localStorage.getItem('user') || '{}');
-  const jwtValue = userLocalStorage.jwt;
-
   useEffect(() => {
     http.get<IMenu[]>('/menus')
       .then(response => {
@@ -41,12 +38,7 @@ const ListMenus: React.FC = () => {
 
 
   const deleteMenu = (_id: string) => {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${jwtValue}`
-      },
-      data: { _id }
-    };
+    const config = { data: { _id } };
     http.delete(`/menus/${_id}`, config)
       .then(() => {
         const listMenus = menus.filter(menu => menu._id !== _id)

@@ -19,9 +19,6 @@ const FormCreateMenu = () => {
 
   const navigate = useNavigate();
 
-  const userLocalStorage = JSON.parse(localStorage.getItem('user') || '{}');
-  const jwtValue = userLocalStorage.jwt;
-
   const yupValidationSchema = Yup.object().shape({
     name: Yup.string().max(255).required('Titulo Obrigatório'),
   });
@@ -36,7 +33,6 @@ const FormCreateMenu = () => {
     try {
       const response = await http.post(`/menus/${menuId}/image`, formData, {
         headers: {
-          Authorization: `Bearer ${jwtValue}`,
           'Content-Type': 'multipart/form-data'
         }
       });
@@ -101,7 +97,6 @@ const FormCreateMenu = () => {
               setSubmitting(false);
               const response = await http.post("/menus", JSON.stringify({ name: values.name }), {
                 headers: {
-                  Authorization: `Bearer ${jwtValue}`,
                   'Content-Type': 'application/json'
                 }
               });

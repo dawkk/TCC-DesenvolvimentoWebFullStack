@@ -18,13 +18,9 @@ const FormPutMenu = () => {
   });
   const navigate = useNavigate();
 
-  const userLocalStorage = JSON.parse(localStorage.getItem('user') || '{}');
-  const jwtValue = userLocalStorage.jwt;
-
   useEffect(() => {
     http.get(`/menus/${params._id}`, {
       headers: {
-        Authorization: `Bearer ${jwtValue}`,
         'Content-Type': 'application/json'
       }
     },)
@@ -57,7 +53,6 @@ const FormPutMenu = () => {
       try {
         const response = await http.get(`/menus/${params._id}/image`, {
           headers: {
-            Authorization: `Bearer ${jwtValue}`,
             'Content-Type': 'multipart/form-data',
             'Cache-Control': 'no-cache',
           },
@@ -72,12 +67,11 @@ const FormPutMenu = () => {
       }
     };
     getImage();
-  }, [params._id, jwtValue]);
+  }, [params._id]);
 
   const updateMenuInfo = () => {
     http.get(`/menus/${params._id}`, {
       headers: {
-        Authorization: `Bearer ${jwtValue}`,
         'Content-Type': 'application/json'
       }
     })
@@ -97,7 +91,6 @@ const FormPutMenu = () => {
     try {
       const response = await http.post(`/menus/${params._id}/image`, formData, {
         headers: {
-          Authorization: `Bearer ${jwtValue}`,
           'Content-Type': 'multipart/form-data'
         }
       });
@@ -173,7 +166,6 @@ const FormPutMenu = () => {
               console.log('Values from formik', values)
               const response = await http.put(`/menus/${params._id}`, JSON.stringify(values), {
                 headers: {
-                  Authorization: `Bearer ${jwtValue}`,
                   'Content-Type': 'application/json'
                 },
               });

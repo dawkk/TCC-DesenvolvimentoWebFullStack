@@ -12,9 +12,9 @@ const ListDishes: React.FC = () => {
   const [dishes, setDishes] = useState<IDish[]>([])
   const [menus, setMenus] = useState<IMenu[]>([])
 
-  const userLocalStorage = JSON.parse(localStorage.getItem('user') || '{}');
+  /* const userLocalStorage = JSON.parse(localStorage.getItem('user') || '{}');
   const jwtValue = userLocalStorage.jwt;
-
+ */
   useEffect(() => {
     http.get<IMenu[]>('/menus')
       .then(response => {
@@ -48,7 +48,7 @@ const ListDishes: React.FC = () => {
   }, [])
 
 
-  const deleteDish = (_id: string) => {
+  /* const deleteDish = (_id: string) => {
     const config = {
       headers: {
         Authorization: `Bearer ${jwtValue}`
@@ -60,7 +60,17 @@ const ListDishes: React.FC = () => {
         const listDishes = dishes.filter(dish => dish._id !== _id)
         setDishes([...listDishes])
       })
+  } */
+
+  const deleteDish = (_id: string) => {
+    const config = { data: { _id } };
+    http.delete(`/dishes/${_id}`, config)
+      .then(() => {
+        const listDishes = dishes.filter(dish => dish._id !== _id)
+        setDishes([...listDishes])
+      })
   }
+
 
   return (
     <>

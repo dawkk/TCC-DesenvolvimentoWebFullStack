@@ -4,43 +4,40 @@ import colorTheme from '../ColorThemes';
 import { Link as RouterLink } from 'react-router-dom';
 import Logo from '../Logo';
 import { useEffect, useState } from "react";
-
 import CartDrawer from './cartDrawer';
 import DropDownList from './DropdownList';
-import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '../../context/AuthProvider';
+
 
 
 const NavBar = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [showLogoutAlert, setShowLogoutAlert] = useState<boolean>(false);
-  const user = JSON.parse(localStorage.getItem('user') || '{}');
-  const roles = user.roles || [];
-
-  const isAdmin =
-  roles.includes(3000) ||
-  roles.includes(2000) ||
-  roles.includes(1000);
-
   const auth = useAuth();
 
+  if (auth.isLoading) {
+    return null; 
+  }
+
+  const isStaff = auth.user?.isStaff;
+
+  useEffect(() => {
+    console.log("user changed", auth.user);
+    // re-render the NavBar component when the user data changes
+  }, [auth.user]);
+
+/*   console.log('navbar user during login after data response', auth.user);
+  console.log('navbar isStaff', isStaff); */
+
+
   const handleLogoutButton = () => {
-    auth.logout;
-    setIsLoggedIn(false);
+    auth.logout();
     setShowLogoutAlert(true);
-    localStorage.removeItem('user')
   };
 
   const handleCloseLogoutAlert = () => {
     setShowLogoutAlert(false);
   };
 
-  useEffect(() => {
-    const user = localStorage.getItem('user');
-
-    if (user) {
-      setIsLoggedIn(true);
-    }
-  }, [])
 
   return (
     <AppBar>
@@ -50,9 +47,7 @@ const NavBar = () => {
             <Logo />
           </Box>
           <Box sx={{ display: 'flex', justifyContent: 'space-around', alignContent: 'center', width: '100%', padding: 1, boxSizing: 'border-box' }}>
-            {isLoggedIn && isAdmin &&  (
-              <DropDownList />
-            )}
+          {isStaff && <DropDownList />}
             <Link component={RouterLink} to="/">
               <Button sx={{ my: 2, color: colorTheme.palette.primary.contrastText }}>
                 Início
@@ -68,18 +63,16 @@ const NavBar = () => {
                 Quem somos
               </Button>
             </Link>
-            {isLoggedIn ? (
+            {auth.user ? (
               <Box>
                 <Link component={RouterLink} to="/profile/overview">
                   <Button sx={{ mr: 4, my: 2, color: colorTheme.palette.primary.contrastText }}>
                     Meu Perfil
                   </Button>
                 </Link>
-                <Link component={RouterLink} to="/">
-                  <Button onClick={handleLogoutButton} sx={{ my: 2, color: colorTheme.palette.primary.contrastText }}>
-                    Logout
-                  </Button>
-                </Link>
+                <Button onClick={handleLogoutButton} sx={{ my: 2, color: colorTheme.palette.primary.contrastText }}>
+                  Logout
+                </Button>
               </Box>
             ) : (
               <Link component={RouterLink} to="/login">
@@ -87,9 +80,7 @@ const NavBar = () => {
                   Login
                 </Button>
               </Link>
-            )
-            }
-
+            )}
             <Link component={RouterLink} to="" sx={{ my: 2 }} >
               <CartDrawer />
             </Link>
@@ -98,7 +89,7 @@ const NavBar = () => {
       </Container>
       {showLogoutAlert && (
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-          <Alert onClose={handleCloseLogoutAlert} severity="success" sx={{ position:'absolute', top:'12vh',width: '25vw' }}>
+          <Alert onClose={handleCloseLogoutAlert} severity="success" sx={{ position: 'absolute', top: '12vh', width: '25vw' }}>
             Logout realizado com sucesso.
           </Alert>
         </Box>
