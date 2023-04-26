@@ -10,8 +10,6 @@ import ICartItem from "../../../../interfaces/ICartItem";
 
 
 const CheckoutAddress = () => {
-  const userLocalStorage = JSON.parse(localStorage.getItem('user') || '{}');
-  const jwtValue = userLocalStorage.jwt;
   const navigate = useNavigate();
   const [address, setAddress] = useState<IUserAddress[]>([]);
   const [selectedAddress, setSelectedAddress] = useState<string>('');
@@ -25,7 +23,7 @@ const CheckoutAddress = () => {
       try {
         const response = await http.get<IUserAddress[]>(`/users/me/addresses`, {
           headers: {
-            Authorization: `Bearer ${jwtValue}`,
+            'Content-Type': 'application/json'
           },
         });
         setAddress(response.data);
@@ -42,7 +40,7 @@ const CheckoutAddress = () => {
     } else if (selectedAddress === "") {
       setSelectedAddress(address[0]._id);
     }
-  }, [address, jwtValue, selectedAddress]);
+  }, [address, selectedAddress]);
 
   const handleButtonClick = async () => {
     try {
@@ -62,7 +60,7 @@ const CheckoutAddress = () => {
           payload
         }, {
           headers: {
-            Authorization: `Bearer ${jwtValue}`,
+            'Content-Type': 'application/json'
           },
         });
         navigate('/checkout/payment');

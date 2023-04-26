@@ -33,12 +33,15 @@ const LoginFormFields = () => {
       const currentUrl = window.location.pathname;
       localStorage.setItem('lastVisitedUrl', currentUrl);
 
-
       setTimeout(() => {
-
         const lastVisitedUrl = localStorage.getItem('lastVisitedUrl') || '/';
-        navigate(lastVisitedUrl);
-
+        if (currentUrl === '/login') {
+          navigate('/');
+        } else if (currentUrl === '/checkout') {
+          window.location.reload();
+        } else {
+          navigate(lastVisitedUrl);
+        }
       }, 2000); // 2000ms = 2 seconds delay
     } catch (error) {
       console.log("Usuario ou senha errado");

@@ -3,19 +3,18 @@ import React, { useEffect, useState } from "react";
 import IUser from "../../../interfaces/IUser";
 import http from "../../../api/axios";
 import LoginFormFields from "../../Authentication/Login/LoginFormFields";
-import IUserAddress from "../../../interfaces/IUserAddress";
 import StaticStepper from "../Stepper";
 import { useNavigate } from "react-router-dom";
 import colorTheme from "../../../components/ColorThemes";
+import { useAuth } from "../../../context/AuthProvider";
 
 
 const CheckoutIdentification = () => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-  const [user, setUser] = useState<IUser | null>(null);
-  const [address, setAddress] = useState<IUserAddress[]>([]);
-  const userLocalStorage = JSON.parse(localStorage.getItem('user') || '{}');
-  const jwtValue = userLocalStorage.jwt;
+  const [loggedUser, setLoggedUser] = useState<IUser | null>(null);
   const navigate = useNavigate();
+  const {user} = useAuth();
+
 
   const steps = ['Identificação', 'Confirmação de Endereço', 'Método de Pagamento', 'Revisão de dados'];
   const activeStep = 0;
@@ -25,13 +24,14 @@ const CheckoutIdentification = () => {
     try {
       await http.get<IUser>(`/users/me`, {
         headers: {
-          Authorization: `Bearer ${jwtValue}`,
+          'Content-Type': 'application/json'
         },
       })
         .then(response => {
           const updatingUserValues: IUser = response.data;
-          setUser(updatingUserValues);
+          setLoggedUser(updatingUserValues);
           setIsLoggedIn(true);
+          navigate('/checkout');
         })
         .catch(error => {
           console.log(error);
@@ -42,41 +42,15 @@ const CheckoutIdentification = () => {
   }
 
   useEffect(() => {
-    const fetchUpdatedAddresses = async () => {
-      try {
-        await http.get<IUserAddress[]>(`/users/me/addresses`, {
-          headers: {
-            Authorization: `Bearer ${jwtValue}`,
-          },
-        })
-          .then(response => {
-            setAddress([...response.data]);
-          })
-          .catch(error => {
-            console.log(error);
-          })
-      } catch (error: unknown) {
-        console.log(error);
-      }
-    }
 
-    if (isLoggedIn && address) {
-      fetchUpdatedAddresses();
-    }
-  }, [isLoggedIn, address])
-
-  useEffect(() => {
-
-    if (userLocalStorage) {
+    if (user) {
       fetchUserData();
     }
   }, [])
 
   const handleButtonClick = async () => {
     try {
-
       navigate('/checkout/address');
-        
       } catch (error: unknown) {
         console.log(error);
       }
@@ -98,13 +72,13 @@ const CheckoutIdentification = () => {
 
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
               <Typography variant="body1" gutterBottom>
-                <strong>Nome:</strong> {user?.firstName}
+                <strong>Nome:</strong> {loggedUser?.firstName}
               </Typography>
               <Typography variant="body1" gutterBottom>
-                <strong>Sobrenome:</strong> {user?.lastName}
+                <strong>Sobrenome:</strong> {loggedUser?.lastName}
               </Typography>
               <Typography variant="body1" gutterBottom>
-                <strong>Email:</strong> {user?.email}
+                <strong>Email:</strong> {loggedUser?.email}
               </Typography>
       
 
