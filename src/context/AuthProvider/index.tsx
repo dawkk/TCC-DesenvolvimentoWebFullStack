@@ -1,6 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import http from "../../api/axios";
-import IRole from "../../interfaces/IRoles";
 
 interface IUserCredentials {
   id: string;
@@ -9,12 +8,16 @@ interface IUserCredentials {
   isStaff: boolean;
 }
 
+export default interface IRole {
+  roleNumber: number;
+  roleName: number;
+}
+
 interface IAuthContextType {
   user: IUserCredentials | null;
   isLoading: boolean;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
-  isStaff: boolean;
 }
 
 const AuthContext = createContext<IAuthContextType | null>(null);
@@ -34,37 +37,23 @@ interface AuthProviderProps {
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<IUserCredentials | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [isStaff, setIsStaff] = useState(false); // new state variable
 
-  const fetchCurrentUser = async () => {
-    try {
-      const response = await http.get(`/users/me`);
-      setUser(response.data);
-      setIsLoading(false);
-      setIsStaff(response.data.roles.includes(1000) || response.data.roles.includes(2000) || response.data.roles.includes(3000));
-    } catch (error) {
-      setIsLoading(false);
-    }
-  };
-
-  /* useEffect(() => {
+  useEffect(() => {
     async function fetchCurrentUser() {
       try {
         const response = await http.get(`/users/me`);
-        setUser(response.data);
+        const userRoles = Object.keys(response.data.roles);
+        const isStaff = userRoles.includes('Admin') || userRoles.includes('Editor') || userRoles.includes('Employee');
+        const updatedUser = { ...response.data, isStaff };
+        setUser(updatedUser);
         setIsLoading(false);
-        setIsStaff(response.data.roles.includes(1000) || response.data.roles.includes(2000) || response.data.roles.includes(3000));
       } catch (error) {
         setIsLoading(false);
       }
     }
-  
-    fetchCurrentUser();
-  }, [setUser, setIsLoading, setIsStaff]); */
 
-  useEffect(() => {
     fetchCurrentUser();
-  }, []);
+  }, [setUser, setIsLoading]);
 
   async function login(email: string, password: string) {
     try {
@@ -83,16 +72,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   }
 
-
   function logout() {
     http.get("/auth/logout", { withCredentials: true });
     setUser(null);
   }
 
-
   return (
-    <AuthContext.Provider value={{  user, isStaff, isLoading, login, logout }}>
-       {isLoading ? <p>Loading...</p> : children}
+    <AuthContext.Provider value={{ user, isLoading, login, logout }}>
+      {isLoading ? <p>Loading...</p> : children}
     </AuthContext.Provider>
   );
 }

@@ -21,13 +21,10 @@ const NavBar = () => {
   const isStaff = auth.user?.isStaff;
 
   useEffect(() => {
-    console.log("user changed", auth.user);
-    // re-render the NavBar component when the user data changes
+   /*  This is for checking user and also not to leave the useEffect empty in order to get user
+   console.log("user changed", auth.user); */
+
   }, [auth.user]);
-
-/*   console.log('navbar user during login after data response', auth.user);
-  console.log('navbar isStaff', isStaff); */
-
 
   const handleLogoutButton = () => {
     auth.logout();
