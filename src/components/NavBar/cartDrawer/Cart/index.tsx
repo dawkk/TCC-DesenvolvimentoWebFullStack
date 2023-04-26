@@ -25,14 +25,14 @@ const Cart: React.FC<ICartProps> = ({ onUpdate }) => {
         responseType: 'blob',
       });
       if (response.data) {
-        const imageURL = URL.createObjectURL(response.data);
+        const imageURL = window.URL.createObjectURL(response.data);
         setCartItems(prevCartItems => {
           return prevCartItems.map(prevItem => {
             if (prevItem.id === item.id) {
               return {
                 ...prevItem,
                 image: imageURL
-              };
+              };  
             }
             return prevItem;
           });
@@ -154,7 +154,7 @@ const Cart: React.FC<ICartProps> = ({ onUpdate }) => {
           R$ {total.toFixed(2)}
         </Typography>
       </Grid>
-      <Grid container xs={12} sm={12} md={12} lg={12} xl={12} sx={{display:'flex', justifyContent:'center', }}>
+      <Grid container sx={{display:'flex', justifyContent:'center', }}>
         <Link component={RouterLink} to="/checkout" sx={{backgroundColor:colorTheme.palette.primary.main}}>
           <Button sx={{ m: 2, color:colorTheme.palette.primary.contrastText}}>
             Prosseguir com pedido
