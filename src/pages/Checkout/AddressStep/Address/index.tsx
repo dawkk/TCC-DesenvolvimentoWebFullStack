@@ -5,15 +5,13 @@ import http from "../../../../api/axios";
 import IUserAddress from "../../../../interfaces/IUserAddress";
 import StaticStepper from "../../Stepper";
 import colorTheme from "../../../../components/ColorThemes";
-import ICartItem from "../../../../interfaces/ICartItem";
-
-
 
 const CheckoutAddress = () => {
   const navigate = useNavigate();
   const [address, setAddress] = useState<IUserAddress[]>([]);
   const [selectedAddress, setSelectedAddress] = useState<string>('');
-  const [cartItems, setCartItems] = useState<ICartItem[]>([]);
+  const [checkoutExists, setCheckoutExists] = useState<boolean>(false);
+  const [checkoutId, setCheckoutId] = useState<string>('');
 
   const steps = ['Identificação', 'Confirmação de Endereço', 'Método de Pagamento', 'Revisão de dados'];
   const activeStep = 1;
@@ -30,9 +28,6 @@ const CheckoutAddress = () => {
       } catch (error) {
         console.log(error);
       }
-      const items = JSON.parse(localStorage.getItem('cartItems') || '[]') as ICartItem[];
-      setCartItems(items);
-    
     };
   
     if (address.length === 0) {
@@ -42,32 +37,52 @@ const CheckoutAddress = () => {
     }
   }, [address, selectedAddress]);
 
+  useEffect(() => {
+    const fetchCheckoutStatus = async () => {
+      try {
+        const response = await http.get('/checkouts/me');
+        if (response.status === 200) {
+          setCheckoutExists(true);
+          setCheckoutId(response.data[0]._id);
+        } else {
+          setCheckoutExists(false);
+          setCheckoutId('');
+        }
+      } catch (error) {
+        setCheckoutExists(false);
+        setCheckoutId('');
+      }
+    };
+
+    fetchCheckoutStatus();
+  }, []);
+
   const handleButtonClick = async () => {
     try {
-      const formattedCartItems = cartItems.map((item) => ({
-        id: item.id,
-        name: item.name,
-        price: item.price,
-        quantity: item.quantity,
-      }));
-        const payload = {
-          deliveryAddress: selectedAddress,
-          cartItems: formattedCartItems,
-        }
-        console.log('This is payload from frontend should be address ID', selectedAddress)
-        console.log('This is payload from frontend',payload)
-        await http.post('/checkouts', {
-          payload
-        }, {
+      const payload = {
+        deliveryAddress: selectedAddress,
+      };
+
+      if (checkoutExists) {
+        await http.put(`/checkouts/me/${checkoutId}`, payload, {
           headers: {
             'Content-Type': 'application/json'
           },
         });
-        navigate('/checkout/payment');
-      } catch (error: unknown) {
-        console.log(error);
+      } else {
+        await http.post('/checkouts', payload, {
+          headers: {
+            'Content-Type': 'application/json'
+          },
+        });
       }
-};
+
+      navigate('/checkout/payment');
+    } catch (error: unknown) {
+      console.log(error);
+    }
+  };
+  
 
 
   return (
