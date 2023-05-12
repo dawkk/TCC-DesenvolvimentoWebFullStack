@@ -1,13 +1,12 @@
-import { Box, Button, Container, Divider, FormControl, FormControlLabel, Grid, Paper, Radio, RadioGroup, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, darken } from "@mui/material";
+import { Box, Button, Container, Divider, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import { useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from "react";
 import http from "../../../../api/axios";
 import StaticStepper from "../../Stepper";
-import colorTheme from "../../../../components/ColorThemes";
 import ICartItem from "../../../../interfaces/ICartItem";
 import CheckoutReviewData from "../../../../interfaces/IReviewCheckout";
-import IOrder from "../../../../interfaces/IOrder";
 import IOrderItems from "../../../../interfaces/IOrderItems";
+import IOrderCreation from "../../../../interfaces/IOrderCreation";
 
 const CheckoutReview = () => {
   const navigate = useNavigate();
@@ -140,7 +139,7 @@ const CheckoutReview = () => {
 
 
   const [userInfo, setUserInfo] = useState<CheckoutReviewData | null>(null);
-  const [buildOrder, setBuildOrder] = useState<IOrder | null>(null);
+  const [buildOrder, setBuildOrder] = useState<IOrderCreation | null>(null);
 
 
   useEffect(() => {
@@ -167,7 +166,7 @@ const CheckoutReview = () => {
           },
         };
         setUserInfo(userData);
-        const orderData: IOrder = {
+        const orderData: IOrderCreation = {
           deliveryAddress: response.data[0].deliveryAddress._id,
           cartItems: response.data[0].cartItems,
           totalAmount: response.data[0].totalAmount,
