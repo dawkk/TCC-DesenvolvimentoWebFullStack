@@ -10,6 +10,13 @@ import colorTheme from '../../../components/ColorThemes';
 
 
 const Register = () => {
+
+  const handleGoogleLogin = () => {
+    // Step 1: Redirect the user to the Google OAuth authorization URL
+    window.location.href = "http://localhost:8000/api/oauth/google";
+  };
+
+
   return (
     <Box className={styles.Background} >
       <Grid
@@ -51,7 +58,7 @@ const Register = () => {
                   </Typography>
                   <Grid item xs={12} md={12} className={styles.RegisterAuthContainer}>
                     <Button variant="contained" sx={{ width: '30%', height: '50px', backgroundColor: '#44558e' }}><FacebookIcon></FacebookIcon></Button>
-                    <Button variant="contained" sx={{ width: '30%', height: '50px', backgroundColor: '#EA4335' }}><GoogleIcon></GoogleIcon></Button>
+                    <Button variant="contained" onClick={handleGoogleLogin} sx={{ width: '30%', height: '50px', backgroundColor: '#EA4335' }}><GoogleIcon></GoogleIcon></Button>
                     <Button variant="contained" sx={{ width: '30%', height: '50px', backgroundColor: '#03a9f4' }}><TwitterIcon></TwitterIcon></Button>
                   </Grid>
                   <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'center', mb: 6 }}>

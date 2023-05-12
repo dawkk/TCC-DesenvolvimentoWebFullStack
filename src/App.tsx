@@ -34,8 +34,9 @@ function App() {
       <Route path='/checkout' element={<Checkout/>}/>
 
       <Route path='/profile/overview' element={<Overview/>}/>
-      <Route path='/profile/orders' element={<OrdersProfile/>}/>
       <Route path='/profile/address' element={<Address/>}/>
+      <Route path='/profile/orders' element={<OrdersProfile/>}/>
+      <Route path='/profile/orders/:_id' element={<OrdersProfile/>}/>
 
       <Route path='/staff/dishes' element={<Dishes/>}/>
       <Route path='/staff/dishes/create' element={<CreateDish/>}/>
