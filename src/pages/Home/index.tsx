@@ -1,4 +1,4 @@
-import Banner from '../../components/Banner';
+
 import Footer from '../../components/Footer';
 import NavBar from '../../components/NavBar';
 import styles from './Home.module.scss'
@@ -11,11 +11,17 @@ import menuLunch from '../../assets/images/home/menu-lunch.jpg'
 
 
 
+
 const Home = () => {
   return (
     <>
       <NavBar></NavBar>
-      <Banner></Banner>
+      <section className={styles.BannerArea}>
+        <div className={styles.Container}>
+          <h1 className={styles.Titulo}>LA COOKERIA</h1>
+          <p>Comida que trás alegria.</p>
+        </div>
+      </section>
       <div className={styles.Background}>
         <div className={styles.MiniBanners}>
           <img src={saladImage} alt="Prato de Salada Italiana" />

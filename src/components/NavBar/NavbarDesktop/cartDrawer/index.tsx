@@ -3,10 +3,10 @@ import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import { Badge, Button, Divider, IconButton, List, ListItem, ListItemText, Typography } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-
-import colorTheme from '../../ColorThemes';
+import styles from './cartDrawer.module.scss'
+import colorTheme from '../../../ColorThemes';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import ICartItem from '../../../interfaces/ICartItem';
+import ICartItem from '../../../../interfaces/ICartItem';
 import Cart from './Cart';
 
 const CartDrawer: React.FC = () => {
@@ -49,7 +49,7 @@ const CartDrawer: React.FC = () => {
         </IconButton>
         <Box >
           <Drawer anchor="right" open={cartOpen} onClose={handleCartClose}>
-            <List sx={{ width: '20vw' }}> {/* Tamanho da drawer */}
+            <List className={styles.CartDrawer}> {/* Tamanho da drawer */}
               <ListItem>
                 <Typography gutterBottom variant="h6" component="div" sx={{pl:2}}>
                   <Divider>

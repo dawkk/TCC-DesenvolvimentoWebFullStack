@@ -5,4 +5,71 @@
   font-size: 1.5rem;
 }
 
+.MenuContainerPadding {
+  padding:2rem;
+  box-sizing: border-box;
+}
+
+.DishCardContainer {
+  width: 600px;
+  /* sx={{ width: '40vw' }} */
+}
+
+.DishCard {
+  display:flex;
+}
+
+.DishCardImage {
+  height: 300px;
+  width: 280px
+}
+
+.DishCardContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%
+}
+
+
+
+@media (max-width: 1300px) {
+
+  .DishCardContainer {
+    width: 600px;
+  
+  }
+
+  .DishCardImage {
+    max-height: 262px;
+    max-width: 280px
+  }
+
+  .DishCardContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%
+}
+
+}
+
+@media (max-width: 650px) {
+
+  .DishCard {
+    display:flex;
+    flex-direction: column;
+  }
+
+  .DishCardImage {
+    max-height: 262px;
+    max-width: 100%
+  }
+  
+
+}
+
+
 /* backgroundImage:`url(${menuImage1})` */

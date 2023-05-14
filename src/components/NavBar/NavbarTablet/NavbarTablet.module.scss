@@ -1,0 +1,9 @@
+.DrawerTabletMenu {
+  width: 350px;
+}
+
+@media (max-width: 350px) {
+  .DrawerTabletMenu {
+    width: 100vw;
+  }
+}

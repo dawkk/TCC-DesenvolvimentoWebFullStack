@@ -1,12 +1,13 @@
 import { Box, Card, CardMedia, Typography, Button, CardActions, CardContent, Grid, Link } from "@mui/material";
 import { useEffect, useState } from "react";
-import ICartItem from "../../../../interfaces/ICartItem";
+import ICartItem from "../../../../../interfaces/ICartItem";
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import DeleteIcon from '@mui/icons-material/Delete';
-import http from "../../../../api/axios";
+import http from "../../../../../api/axios";
 import { Link as RouterLink } from 'react-router-dom';
-import colorTheme from "../../../ColorThemes";
+import colorTheme from "../../../../ColorThemes";
+import styles from './cart.module.scss'
 
 interface ICartProps {
   onUpdate: (items: ICartItem[]) => void;
@@ -103,20 +104,18 @@ const Cart: React.FC<ICartProps> = ({ onUpdate }) => {
 
   return (
 
-    <Grid container>
-      <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-
-      </Grid>
+    <Grid container sx={{p:4}}>
+      
       {cartItems.map(item => (
-        <Grid item key={item.id} xs={8} sm={4} md={12} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minWidth: 300, maxWidth: 380, padding: 3, boxSizing: 'border-box' }}>
+        <Grid item key={item.id} md={12} className={styles.CartItemsGrid}>
           <Card sx={{ display: 'flex' }}>
             <CardMedia
               component="img"
               alt={`${item.name}`}
               image={`${item.image}`}
-              sx={{ height: "16vh", width: "6vw" }}
+              className={styles.ItemImage}
             />
-            <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between' }}>
+            <CardContent /* sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between' }} */ className={styles.CardContent}>
               <Typography gutterBottom variant="body1" textAlign={"center"} sx={{ mb: 1 }}>
                 {item.name}
               </Typography>

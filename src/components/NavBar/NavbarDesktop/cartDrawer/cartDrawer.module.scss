@@ -1,0 +1,16 @@
+.CartDrawer {
+  width: 30vw;
+}
+
+
+@media (max-width: 1200px) { 
+  .CartDrawer {
+    width: 400px;
+  }
+}
+
+@media (max-width: 400px) {
+  .CartDrawer {
+    width: 100vw;
+  }
+}

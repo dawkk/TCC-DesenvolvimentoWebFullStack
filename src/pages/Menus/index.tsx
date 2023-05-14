@@ -4,10 +4,11 @@ import Footer from '../../components/Footer';
 import ListMenus from './ListMenus';
 import NavBar from '../../components/NavBar';
 import BannerMenu from './Banner';
+import styles from './Banner/Banner.module.scss'
 
 const Menus = () => {
   return (
-    <Box sx={{backgroundColor:colorTheme.palette.primary.light, height:'100%', paddingTop:20 }}>
+    <Box className={styles.PageMenus}>
       <NavBar/>
       <BannerMenu/>
       <ListMenus/>

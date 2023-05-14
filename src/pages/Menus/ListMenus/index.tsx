@@ -91,17 +91,17 @@ const ListMenus = () => {
 
   return (
     <>
-      <Box sx={{ paddingLeft: 3.7, paddingBottom: 5, boxSizing: 'border-box' }}>
+      <Box className={styles.MenuContainerPadding}>
         <Grid container spacing={{ xs: 2 }} sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
           {menus.map((menu) => (
             <Grid item xs={12} sm={6} md={4} lg={3} xl={2.7} key={menu._id}>
-              <Button fullWidth className={`menuButton ${activeMenu === menu._id ? 'activeMenuButton' : ''}`} style={{
+              <Button fullWidth className={`menuButton ${activeMenu === menu._id ? 'activeMenuButton' : ''} MenuImageSize`} style={{
                 backgroundImage: `url(${menu.imageURL})`,
                 backgroundRepeat: 'no-repeat',
                 backgroundPosition: 'center',
                 backgroundSize: 'cover',
                 opacity: activeMenu === menu._id ? 0.5 : 1,
-              }} onClick={() => handleMenuClick(menu._id)} sx={{ height: '15vh', minHeight: '100px' }}>
+              }} onClick={() => handleMenuClick(menu._id)} /* sx={{ height: '15vh', minHeight: '100px' }} */>
                 <div>
                   <h3 className={styles.MenuTitle}>{menu.name}</h3>
                 </div>
@@ -116,16 +116,15 @@ const ListMenus = () => {
           <Grid container spacing={4} sx={{ mt: 10, display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
             {dishes.map(dish =>
 
-              <Grid item key={dish._id} sx={{ width: '40vw' }}>
-                <Card sx={{ display: 'flex' }}>
+              <Grid item key={dish._id}  className={styles.DishCardContainer}>
+                <Card className={styles.DishCard}>
                   <CardMedia
                     component="img"
                     alt="pizza"
-                    height="300"
-                    sx={{ maxHeight: 300, maxWidth: 280 }}
+                    className={styles.DishCardImage}
                     src={dish.imageURL}
                   />
-                  <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+                  <CardContent className={styles.DishCardContent}>
                     <Typography gutterBottom variant="h5" component="div" textAlign={"center"}>
                       {dish.title}
                     </Typography>

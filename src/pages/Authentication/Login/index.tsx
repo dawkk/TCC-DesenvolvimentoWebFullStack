@@ -6,9 +6,30 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import GoogleIcon from '@mui/icons-material/Google';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import LoginFormFields from './LoginFormFields';
+import http from '../../../api/axios';
 
 
 const Login = () => {
+
+  const handleGoogleLogin = async () => {
+    try {
+      // Make an HTTP request to your backend endpoint for Google OAuth
+     
+       // Handle the response from your backend accordingly
+      // For example, you can redirect the user to the Google OAuth URL returned by the backend
+      // this code below for some reason, generates CORS errors
+      /*  const response = await http.get('/auth/google'); */
+     /* window.location.href = response.data.authUrl; */
+     window.location.href = "http://localhost:8000/auth/google";
+    
+      
+    } catch (error) {
+      // Handle any errors that occur during the request
+      console.log('Failed to initiate Google login:', error);
+    }
+  };
+  
+
   return (
     <Box className={styles.Background} sx={{ height: '100%' }}>
       <Grid
@@ -51,7 +72,7 @@ const Login = () => {
                   </Typography>
                   <Grid item xs={12} md={12} sx={{display:'flex', justifyContent:'space-between',mb:6}}>
                     <Button variant="contained" sx={{ width: '30%', height: '50px', backgroundColor: '#44558e' }}><FacebookIcon></FacebookIcon></Button>
-                    <Button variant="contained" sx={{ width: '30%', height: '50px', backgroundColor: '#EA4335' }}><GoogleIcon></GoogleIcon></Button>
+                    <Button variant="contained" onClick={handleGoogleLogin} sx={{ width: '30%', height: '50px', backgroundColor: '#EA4335' }}><GoogleIcon></GoogleIcon></Button>
                     <Button variant="contained" sx={{ width: '30%', height: '50px', backgroundColor: '#03a9f4' }}><TwitterIcon></TwitterIcon></Button>
                   </Grid>
                 </Grid>

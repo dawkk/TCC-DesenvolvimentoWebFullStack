@@ -1,0 +1,63 @@
+.ItemImage {
+  height: 204px;
+  width: 136px;
+  min-width: 100px
+}
+
+.CartItemsGrid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 300px;
+  max-width: 380px;
+  padding: 3px;
+  box-sizing: border-box;
+  margin-bottom: 8px;
+}
+
+.CardContent {
+  display: flex;
+  flex-direction: column;
+  align-items:center;
+  justify-content: space-between
+}
+
+
+@media (max-width: 1200px) {
+  .ItemImage {
+    height: 200px;
+    width: 300px
+  }
+}
+
+@media (max-width: 600px) {
+  .ItemImage {
+    height: 150px;
+    width: 150px
+  }
+}
+
+@media (max-width: 300px) {
+  .ItemImage {
+    height: 80px;
+    width: 80px
+  }
+
+  .CartItemsGrid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    padding: 8px;
+    box-sizing: border-box
+  }
+
+  .CardContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+ 
+  }
+}

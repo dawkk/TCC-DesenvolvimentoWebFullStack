@@ -4,7 +4,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@mui/material/Link';
-import colorTheme from '../../ColorThemes';
+import colorTheme from '../../../ColorThemes';
 
 const DropDownList = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -37,6 +37,11 @@ const DropDownList = () => {
           'aria-labelledby': 'basic-button',
         }}
       >
+        <Link component={RouterLink} to="/staff/dashboard">
+          <MenuItem sx={{ p: 2, boxSizing: 'border-box' }}>
+            Dashboard
+          </MenuItem>
+        </Link>
         <Link component={RouterLink} to="/staff/dishes">
           <MenuItem sx={{ p: 2, boxSizing: 'border-box' }}>
             Pratos
@@ -45,11 +50,6 @@ const DropDownList = () => {
         <Link component={RouterLink} to="/staff/menus">
           <MenuItem sx={{ p: 2, boxSizing: 'border-box' }}>
             Menus
-          </MenuItem>
-        </Link>
-        <Link component={RouterLink} to="/staff/dashboard">
-          <MenuItem sx={{ p: 2, boxSizing: 'border-box' }}>
-            Dashboard
           </MenuItem>
         </Link>
         <Link component={RouterLink} to="/staff/orders">
