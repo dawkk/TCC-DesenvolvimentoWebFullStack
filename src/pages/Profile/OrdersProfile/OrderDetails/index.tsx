@@ -1,21 +1,20 @@
 import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Link, Button } from "@mui/material";
-import Footer from "../../../components/Footer";
-import NavBar from "../../../components/NavBar";
-import { Link as RouterLink } from 'react-router-dom';
-import colorTheme from '../../../components/ColorThemes';
+import Footer from "../../../../components/Footer";
+import NavBar from "../../../../components/NavBar";
+import { Link as RouterLink, useParams } from 'react-router-dom';
+import colorTheme from '../../../../components/ColorThemes';
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
-import NavProfile from "../NavProfile";
-import IOrder from "../../../interfaces/IOrder";
+import NavProfile from "../../NavProfile";
+import IOrder from "../../../../interfaces/IOrder";
 import { useEffect, useState } from "react";
-import http from "../../../api/axios";
+import http from "../../../../api/axios";
 
-
-const OrdersProfile = () => {
-
+const OrderDetail = () => {
+  const params = useParams();
   const [orders, setOrders] = useState<IOrder[]>([])
 
   useEffect(() => {
-    http.get<IOrder[]>('/orders/me')
+    http.get<IOrder[]>(`/dishes/${params._id}`)
       .then(response => {
         setOrders(response.data);
       })
@@ -74,4 +73,4 @@ const OrdersProfile = () => {
   )
 }
 
-export default OrdersProfile;
+export default OrderDetail;
