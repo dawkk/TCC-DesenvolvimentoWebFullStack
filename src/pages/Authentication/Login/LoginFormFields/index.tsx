@@ -97,7 +97,7 @@ const LoginFormFields = () => {
             }
             <Grid
               container spacing={2} sx={{
-                display: 'flex', flexWrap: 'wrap', pl: 2, pt: 4, boxSizing: 'border-box',
+                display: 'flex', flexWrap: 'wrap', boxSizing: 'border-box',
                 '& .MuiTextField-root': { mb: 1 },
               }}>
 

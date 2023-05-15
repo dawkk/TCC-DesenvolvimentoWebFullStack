@@ -1,6 +1,6 @@
 .Background {
   background:linear-gradient(#FE5858, #EE9617);
-  height: 100vh;
+  height: 100%;
 }
 
 .FormHeader {
@@ -42,3 +42,19 @@
   padding:4rem 0 3rem 0;
 
 }
+
+.RegisterAuthContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 3rem;
+}
+
+@media (max-width: 500px) {
+  .RegisterAuthContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-bottom: 3rem;
+  }
+
+} 

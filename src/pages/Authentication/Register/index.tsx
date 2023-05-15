@@ -6,11 +6,12 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import GoogleIcon from '@mui/icons-material/Google';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import FormFields from './FormFields';
+import colorTheme from '../../../components/ColorThemes';
 
 
 const Register = () => {
   return (
-    <Box className={styles.Background} sx={{ height: '100%' }}>
+    <Box className={styles.Background} >
       <Grid
         container
         direction="column"
@@ -30,18 +31,17 @@ const Register = () => {
           alignItems="center"
           sx={{ minHeight: { xs: 'calc(100vh - 80px)', md: 'calc(100vh - 50px)' } }}
         >
-          <Grid sx={{ width: '50%', backgroundColor: 'whitesmoke', borderRadius: 24.}}>
+          <Grid sx={{ width: '50%', backgroundColor: 'whitesmoke', borderRadius: 24. }}>
             <Paper>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 4, boxSizing: 'border-box' }}>
-                <Typography variant='h4'>Registro</Typography>
-                <Link component={RouterLink} to="/login"><Typography variant='h6'>Já possui Login?</Typography></Link>
+              <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: 4, boxSizing: 'border-box' }}>
+                <Typography variant='h4' sx={{color:colorTheme.palette.primary.main}}>Registro</Typography>
               </Box>
               <Grid container spacing={2} sx={{
                 pl: 4, pr: 4, boxSizing: 'border-box',
                 '& .MuiTextField-root': { mb: 1 },
               }}>
 
-                <FormFields/>
+                <FormFields />
 
                 <Grid item xs={12} md={12}>
                   <Typography variant="caption" display="block" gutterBottom sx={{ mb: '32px' }}>
@@ -49,10 +49,14 @@ const Register = () => {
                       Ou registre-se com
                     </Divider>
                   </Typography>
-                  <Grid item xs={12} md={12} sx={{display:'flex', justifyContent:'space-between',mb:6}}>
+                  <Grid item xs={12} md={12} className={styles.RegisterAuthContainer}>
                     <Button variant="contained" sx={{ width: '30%', height: '50px', backgroundColor: '#44558e' }}><FacebookIcon></FacebookIcon></Button>
                     <Button variant="contained" sx={{ width: '30%', height: '50px', backgroundColor: '#EA4335' }}><GoogleIcon></GoogleIcon></Button>
                     <Button variant="contained" sx={{ width: '30%', height: '50px', backgroundColor: '#03a9f4' }}><TwitterIcon></TwitterIcon></Button>
+                  </Grid>
+                  <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'center', mb: 6 }}>
+                    <Typography variant='body2' sx={{ mr: 0.5 }}>Já possui conta? Faça</Typography>
+                    <Link component={RouterLink} to="/login" underline="none"><Typography variant='body2' fontWeight='bold'>Login</Typography></Link>
                   </Grid>
                 </Grid>
               </Grid>

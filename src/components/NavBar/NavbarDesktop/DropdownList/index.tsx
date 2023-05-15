@@ -24,7 +24,7 @@ const DropDownList = () => {
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
-        sx={{ color: colorTheme.palette.primary.contrastText, my: 2 }}
+        sx={{ color: colorTheme.palette.primary.contrastText}}
       >
         Menu Administrativo
       </Button>

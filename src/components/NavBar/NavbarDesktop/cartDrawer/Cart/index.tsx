@@ -1,11 +1,11 @@
-import { Box, Card, CardMedia, Typography, Button, CardActions, CardContent, Grid, Link } from "@mui/material";
+import { Box, Card, CardMedia, Typography, Button, CardActions, CardContent, Grid, darken } from "@mui/material";
 import { useEffect, useState } from "react";
 import ICartItem from "../../../../../interfaces/ICartItem";
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import DeleteIcon from '@mui/icons-material/Delete';
 import http from "../../../../../api/axios";
-import { Link as RouterLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import colorTheme from "../../../../ColorThemes";
 import styles from './cart.module.scss'
 
@@ -15,6 +15,8 @@ interface ICartProps {
 
 const Cart: React.FC<ICartProps> = ({ onUpdate }) => {
   const [cartItems, setCartItems] = useState<ICartItem[]>([]);
+  const [isCartEmpty, setIsCartEmpty] = useState(true);
+  const navigate = useNavigate();
 
   const getImage = async (item: ICartItem) => {
     try {
@@ -33,7 +35,7 @@ const Cart: React.FC<ICartProps> = ({ onUpdate }) => {
               return {
                 ...prevItem,
                 image: imageURL
-              };  
+              };
             }
             return prevItem;
           });
@@ -45,8 +47,13 @@ const Cart: React.FC<ICartProps> = ({ onUpdate }) => {
   };
 
   useEffect(() => {
+    setIsCartEmpty(cartItems.length === 0);
+  }, [cartItems]);
+  
+  useEffect(() => {
     const items = JSON.parse(localStorage.getItem('cartItems') || '[]') as ICartItem[];
     setCartItems(items);
+    setIsCartEmpty(items.length === 0);
 
     items.forEach(item => {
       getImage(item);
@@ -90,6 +97,12 @@ const Cart: React.FC<ICartProps> = ({ onUpdate }) => {
     onUpdate(updatedCartItems);
   };
 
+  const handleProceedToCheckout = () => {
+    if (!isCartEmpty) {
+      navigate("/checkout");
+    }
+  };
+
   let total = 0;
 
   cartItems.forEach(item => {
@@ -104,18 +117,18 @@ const Cart: React.FC<ICartProps> = ({ onUpdate }) => {
 
   return (
 
-    <Grid container sx={{p:4}}>
-      
+    <Grid container className={styles.CartContainer}>
+
       {cartItems.map(item => (
-        <Grid item key={item.id} md={12} className={styles.CartItemsGrid}>
-          <Card sx={{ display: 'flex' }}>
+        <Grid item key={item.id} md={12} className={styles.CartCardContainer}>
+          <Card className={styles.CardCart}>
             <CardMedia
               component="img"
               alt={`${item.name}`}
               image={`${item.image}`}
-              className={styles.ItemImage}
+              className={styles.CartCardImage}
             />
-            <CardContent /* sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between' }} */ className={styles.CardContent}>
+            <CardContent className={styles.CartCardContent}>
               <Typography gutterBottom variant="body1" textAlign={"center"} sx={{ mb: 1 }}>
                 {item.name}
               </Typography>
@@ -144,7 +157,7 @@ const Cart: React.FC<ICartProps> = ({ onUpdate }) => {
           </Card>
         </Grid>
       ))}
-      <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexWrap:'wrap', pt: 2, pb:3 }}>
+      <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap', pt: 2, pb: 3 }}>
         <Typography variant="body1">
           Subtotal:
         </Typography>
@@ -153,12 +166,21 @@ const Cart: React.FC<ICartProps> = ({ onUpdate }) => {
           R$ {total.toFixed(2)}
         </Typography>
       </Grid>
-      <Grid container sx={{display:'flex', justifyContent:'center', }}>
-        <Link component={RouterLink} to="/checkout" sx={{backgroundColor:colorTheme.palette.primary.main}}>
-          <Button sx={{ m: 2, color:colorTheme.palette.primary.contrastText}}>
-            Prosseguir com pedido
-          </Button>
-        </Link>
+      <Grid container sx={{ display: 'flex', justifyContent: 'center', }}>
+        <Button
+          disabled={isCartEmpty}
+          onClick={handleProceedToCheckout}
+          sx={{
+            backgroundColor: isCartEmpty ? '#ccc' : colorTheme.palette.primary.main,
+            color: colorTheme.palette.secondary.light,
+            p: 2,
+            ml: 2,
+            '&:hover': {
+              backgroundColor: isCartEmpty ? '#ccc' : darken(colorTheme.palette.primary.main, 0.2),
+            },
+          }}>
+          Prosseguir com pedido
+        </Button>
       </Grid>
     </Grid>
 

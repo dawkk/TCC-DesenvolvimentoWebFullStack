@@ -19,10 +19,12 @@ import Checkout from './pages/Checkout';
 import AddressStep from './pages/Checkout/AddressStep';
 import PaymentStep from './pages/Checkout/PaymentStep';
 import ReviewStep from './pages/Checkout/ReviewStep';
+import Error401Page from './components/Error/Error401';
 
 function App() {
   return (
     <Routes>
+      <Route path='/401' element={<Error401Page/>}/>
       <Route path='/' element={<Home/>}/>
       <Route path='/menu' element={<Menus/>}/>
       <Route path='/login' element={<Login/>}/>

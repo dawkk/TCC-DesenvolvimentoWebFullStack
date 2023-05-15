@@ -4,11 +4,11 @@ export default interface IRegister {
   cellphone: string,
   email: string,
   password: string,
-  addressStreet: string,
-  addressNumber: number,
-  addressNeighborhood: string,
-  addressCity: string,
-  addressState: string,
-  addressZipcode: number,
-  addressExtra: string
+  street: string,
+  number: number,
+  neighborhood: string,
+  city: string,
+  state: string,
+  zipcode: number,
+  additionalInfo: string
 }

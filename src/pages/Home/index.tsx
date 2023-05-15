@@ -10,8 +10,6 @@ import menuDessert from '../../assets/images/home/menu-dessert.jpg'
 import menuLunch from '../../assets/images/home/menu-lunch.jpg'
 
 
-
-
 const Home = () => {
   return (
     <>

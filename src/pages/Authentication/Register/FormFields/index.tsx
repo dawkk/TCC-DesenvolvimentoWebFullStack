@@ -31,13 +31,13 @@ const FormFields = () => {
     cellphone: Yup.string().matches(celRegex, 'Este numero não é valido, o formato deveria ser (XX)XXXXXXXXX').required('Celular Obrigatório'),
     email: Yup.string().email('Formato invalido precisa ser um e-mail: email@email.com').max(255).required('Email Obrigatório'),
     password: Yup.string().max(255).required('Senha Obrigatória'),
-    addressStreet: Yup.string().max(255),
-    addressNumber: Yup.number(),
-    addressNeighborhood: Yup.string().max(255),
-    addressCity: Yup.string().max(255),
-    addressState: Yup.string().max(255),
-    addressZipcode: Yup.number(),
-    addressExtra: Yup.string().max(255),
+    street: Yup.string().max(255),
+    number: Yup.number(),
+    neighborhood: Yup.string().max(255),
+    city: Yup.string().max(255),
+    state: Yup.string().max(255),
+    zipcode: Yup.number(),
+    additionalInfo: Yup.string().max(255),
   });
 
   return (
@@ -49,13 +49,13 @@ const FormFields = () => {
           cellphone: '',
           email: '',
           password: '',
-          addressStreet: '',
-          addressNumber: '',
-          addressNeighborhood: '',
-          addressCity: '',
-          addressState: '',
-          addressZipcode: '',
-          addressExtra: '',
+          city: '',
+          street: '',
+          number: '',
+          neighborhood: '',
+          state: '',
+          zipcode: '',
+          additionalInfo: '',
           submit: null
         }}
         validationSchema={yupValidationSchema}
@@ -161,18 +161,18 @@ const FormFields = () => {
                 <Stack spacing={1}>
                   <InputLabel>Rua</InputLabel>
                   <OutlinedInput
-                    id='addressStreet'
-                    type='addressStreet'
-                    value={values.addressStreet}
-                    name='addressStreet'
+                    id='street'
+                    type='street'
+                    value={values.street}
+                    name='street'
                     placeholder='Rua Alameda Avenida'
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    error={Boolean(touched.addressStreet && errors.addressStreet)}
+                    error={Boolean(touched.street && errors.street)}
                     />
-                  {touched.addressStreet && errors.addressStreet && (
-                    <FormHelperText error id="helper-text-addressStreet-signup">
-                      {errors.addressStreet}
+                  {touched.street && errors.street && (
+                    <FormHelperText error id="helper-text-street-signup">
+                      {errors.street}
                     </FormHelperText>
                   )}
                 </Stack>
@@ -182,18 +182,18 @@ const FormFields = () => {
                 <Stack spacing={1}>
                   <InputLabel>Numero</InputLabel>
                   <OutlinedInput
-                    id='addressNumber'
-                    type='addressNumber'
-                    value={values.addressNumber}
-                    name='addressNumber'
+                    id='number'
+                    type='number'
+                    value={values.number}
+                    name='number'
                     placeholder='523'
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    error={Boolean(touched.addressNumber && errors.addressNumber)}
+                    error={Boolean(touched.number && errors.number)}
                     />
-                  {touched.addressNumber && errors.addressNumber && (
-                    <FormHelperText error id="helper-text-addressNumber-signup">
-                      {errors.addressNumber}
+                  {touched.number && errors.number && (
+                    <FormHelperText error id="helper-text-number-signup">
+                      {errors.number}
                     </FormHelperText>
                   )}
                 </Stack>
@@ -203,18 +203,18 @@ const FormFields = () => {
                 <Stack spacing={1}>
                   <InputLabel>Bairro</InputLabel>
                   <OutlinedInput
-                    id='addressNeighborhood'
-                    type='addressNeighborhood'
-                    value={values.addressNeighborhood}
-                    name='addressNeighborhood'
+                    id='neighborhood'
+                    type='neighborhood'
+                    value={values.neighborhood}
+                    name='neighborhood'
                     placeholder='Centro'
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    error={Boolean(touched.addressNeighborhood && errors.addressNeighborhood)}
+                    error={Boolean(touched.neighborhood && errors.neighborhood)}
                   />
-                  {touched.addressNeighborhood && errors.addressNeighborhood && (
-                    <FormHelperText error id="helper-text-addressNeighborhood-signup">
-                      {errors.addressNeighborhood}
+                  {touched.neighborhood && errors.neighborhood && (
+                    <FormHelperText error id="helper-text-neighborhood-signup">
+                      {errors.neighborhood}
                     </FormHelperText>
                   )}
                 </Stack>
@@ -224,18 +224,18 @@ const FormFields = () => {
                 <Stack spacing={1}>
                   <InputLabel>Cidade</InputLabel>
                   <OutlinedInput
-                    id='addressCity'
-                    type='addressCity'
-                    value={values.addressCity}
-                    name='addressCity'
+                    id='city'
+                    type='city'
+                    value={values.city}
+                    name='city'
                     placeholder='Campinas'
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    error={Boolean(touched.addressCity && errors.addressCity)}
+                    error={Boolean(touched.city && errors.city)}
                     />
-                  {touched.addressCity && errors.addressCity && (
-                    <FormHelperText error id="helper-text-addressCity-signup">
-                      {errors.addressCity}
+                  {touched.city && errors.city && (
+                    <FormHelperText error id="helper-text-city-signup">
+                      {errors.city}
                     </FormHelperText>
                   )}
                 </Stack>
@@ -245,18 +245,18 @@ const FormFields = () => {
                 <Stack spacing={1}>
                   <InputLabel>Estado</InputLabel>
                   <OutlinedInput
-                    id='addressState'
-                    type='addressState'
-                    value={values.addressState}
-                    name='addressState'
+                    id='state'
+                    type='state'
+                    value={values.state}
+                    name='state'
                     placeholder='São Paulo'
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    error={Boolean(touched.addressState && errors.addressState)}
+                    error={Boolean(touched.state && errors.state)}
                     />
-                  {touched.addressState && errors.addressState && (
-                    <FormHelperText error id="helper-text-addressState-signup">
-                      {errors.addressState}
+                  {touched.state && errors.state && (
+                    <FormHelperText error id="helper-text-state-signup">
+                      {errors.state}
                     </FormHelperText>
                   )}
                 </Stack>
@@ -266,18 +266,18 @@ const FormFields = () => {
                 <Stack spacing={1}>
                   <InputLabel>CEP</InputLabel>
                   <OutlinedInput
-                    id='addressZipcode'
-                    type='addressZipcode'
-                    value={values.addressZipcode}
-                    name='addressZipcode'
+                    id='zipcode'
+                    type='zipcode'
+                    value={values.zipcode}
+                    name='zipcode'
                     placeholder='13820-000'
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    error={Boolean(touched.addressZipcode && errors.addressZipcode)}
+                    error={Boolean(touched.zipcode && errors.zipcode)}
                   />
-                  {touched.addressZipcode && errors.addressZipcode && (
-                    <FormHelperText error id="helper-text-addressZipcode-signup">
-                      {errors.addressZipcode}
+                  {touched.zipcode && errors.zipcode && (
+                    <FormHelperText error id="helper-text-zipcode-signup">
+                      {errors.zipcode}
                     </FormHelperText>
                   )}
                 </Stack>
@@ -287,18 +287,18 @@ const FormFields = () => {
                 <Stack spacing={1}>
                   <InputLabel>Complemento</InputLabel>
                   <OutlinedInput
-                    id='addressExtra'
-                    type='addressExtra'
-                    value={values.addressExtra}
-                    name='addressExtra'
+                    id='additionalInfo'
+                    type='additionalInfo'
+                    value={values.additionalInfo}
+                    name='additionalInfo'
                     placeholder='Apartamento 15'
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    error={Boolean(touched.addressExtra && errors.addressExtra)}
+                    error={Boolean(touched.additionalInfo && errors.additionalInfo)}
                     />
-                  {touched.addressExtra && errors.addressExtra && (
-                    <FormHelperText error id="helper-text-addressExtra-signup">
-                      {errors.addressExtra}
+                  {touched.additionalInfo && errors.additionalInfo && (
+                    <FormHelperText error id="helper-text-additionalInfo-signup">
+                      {errors.additionalInfo}
                     </FormHelperText>
                   )}
                 </Stack>

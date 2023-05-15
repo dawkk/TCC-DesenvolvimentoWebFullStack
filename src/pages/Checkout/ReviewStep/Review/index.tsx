@@ -1,17 +1,21 @@
-import { Box, Button, Container, Divider, FormControl, FormControlLabel, Grid, Paper, Radio, RadioGroup, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, darken } from "@mui/material";
+import { Box, Button, Container, Divider, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, darken, useMediaQuery } from "@mui/material";
 import { useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from "react";
 import http from "../../../../api/axios";
 import StaticStepper from "../../Stepper";
-import colorTheme from "../../../../components/ColorThemes";
 import ICartItem from "../../../../interfaces/ICartItem";
 import CheckoutReviewData from "../../../../interfaces/IReviewCheckout";
 import IOrder from "../../../../interfaces/IOrder";
 import IOrderItems from "../../../../interfaces/IOrderItems";
+import VerticalStepper from "../../VerticalStepper";
+import colorTheme from "../../../../components/ColorThemes";
+
 
 const CheckoutReview = () => {
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState<ICartItem[]>([]);
+  const [isCartEmpty, setIsCartEmpty] = useState(true);
+  const isMobile = useMediaQuery('(max-width: 1100px)');
 
   const steps = ['Identificação', 'Confirmação de Endereço', 'Método de Pagamento', 'Revisão de pedido'];
   const activeStep = 3;
@@ -37,18 +41,18 @@ const CheckoutReview = () => {
         orderItemIds.push(createdOrderItemId);
       }
       setCreatedOrderItems(prevOrderItems => [...prevOrderItems, ...orderItemIds]);
-  
+
       const totalAmount = cartItems.reduce((total, item) => {
         return total + item.price * item.quantity;
       }, 0);
-  
+
       const buildOrder = {
         deliveryAddress: adrressId,
         cartItems: orderItemIds,
         totalAmount: totalAmount,
         paymentMethod: paymentMethodId,
       };
-  
+
       const orderResponse = await http.post('/orders', buildOrder, {
         headers: {
           'Content-Type': 'application/json'
@@ -66,29 +70,43 @@ const CheckoutReview = () => {
           },
         });
         console.log('this is each orderItem update with new order id', orderItemId)
+        localStorage.removeItem('cartItems');
       }
-      /* navigate('/'); */
+      navigate('/');
+    } catch (error: any) {
+      if (error.response && error.response.status === 401) {
+        navigate('/401');
+      } else {
+        console.log(error);
+      }
+    }
+  };
+
+  const handleButtonReturn = async () => {
+    try {
+      navigate('/menu');
     } catch (error: unknown) {
       console.log(error);
     }
   };
 
-  useEffect(() => {
-  setBuildOrder(prevOrder => {
-    if (prevOrder) {
-      const totalAmount = cartItems.reduce((total, item) => {
-        return total + item.price * item.quantity;
-      }, 0);
 
-      return {
-        ...prevOrder,
-        cartItems: cartItems,
-        totalAmount: totalAmount
-      };
-    }
-    return prevOrder;
-  });
-}, [createdOrderItems]);
+  useEffect(() => {
+    setBuildOrder(prevOrder => {
+      if (prevOrder) {
+        const totalAmount = cartItems.reduce((total, item) => {
+          return total + item.price * item.quantity;
+        }, 0);
+
+        return {
+          ...prevOrder,
+          cartItems: cartItems,
+          totalAmount: totalAmount
+        };
+      }
+      return prevOrder;
+    });
+  }, [createdOrderItems]);
 
 
   const getImage = async (item: ICartItem) => {
@@ -121,11 +139,12 @@ const CheckoutReview = () => {
 
   const [orderItems, setOrderItems] = useState<IOrderItems[]>([]);
 
-  
+
 
   useEffect(() => {
     const items = JSON.parse(localStorage.getItem('cartItems') || '[]') as ICartItem[];
     setCartItems(items);
+    setIsCartEmpty(items.length === 0);
 
     const orderItems = items.map((item) => ({
       dishId: item.id,
@@ -140,6 +159,7 @@ const CheckoutReview = () => {
 
 
   const [userInfo, setUserInfo] = useState<CheckoutReviewData | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [buildOrder, setBuildOrder] = useState<IOrder | null>(null);
 
 
@@ -147,7 +167,7 @@ const CheckoutReview = () => {
     const fetchUserInfo = async () => {
       try {
         const response = await http.get('/checkouts/me');
-/*         console.log('This is response.data from checkouts/me', response.data) */
+        /*         console.log('This is response.data from checkouts/me', response.data) */
         const userData = {
           userId: {
             firstName: response.data[0].userId.firstName,
@@ -191,18 +211,15 @@ const CheckoutReview = () => {
   return (
     <React.Fragment>
       <Container sx={{ m: 2 }}>
-        <div>
+        {isMobile ? (
+          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4, mb: 4 }}>
+            <VerticalStepper steps={steps} activeStep={activeStep} />
+          </Box>
+        ) : (
           <StaticStepper steps={steps} activeStep={activeStep} />
-        </div>
+        )}
         <Container sx={{ display: 'flex', justifyContent: 'center', flexDirection: 'column' }}>
           <Box sx={{ backgroundColor: 'white' }}>
-            <Paper>
-              <Box sx={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', padding: 2 }}>
-                <Typography variant="h4">Resumo do pedido</Typography>
-              </Box>
-            </Paper>
-
-
             {userInfo && (
               <Grid container spacing={2} sx={{ textAlign: 'center', fontWeight: 'bold' }}>
                 <Grid item xs={12}>
@@ -277,9 +294,41 @@ const CheckoutReview = () => {
             </TableContainer>
           </Box>
         </Container>
-        <Button onClick={handleButtonClick}>Testing button</Button>
-
+        <Container sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Button onClick={handleButtonReturn} sx={{
+              backgroundColor: colorTheme.palette.primary.main, color: colorTheme.palette.secondary.light, width: '100px',
+              '&:hover': {
+                backgroundColor: darken(colorTheme.palette.primary.main, 0.2),
+              },
+            }}>
+              Voltar
+            </Button>
+          </Box>
+          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Button
+              onClick={handleButtonClick}
+              disabled={isCartEmpty}
+              sx={{
+                backgroundColor: isCartEmpty ? '#ccc' : colorTheme.palette.primary.main,
+                color: colorTheme.palette.secondary.light,
+                p: 2,
+                ml: 2,
+                '&:hover': {
+                  backgroundColor: isCartEmpty ? '#ccc' : darken(colorTheme.palette.primary.main, 0.2),
+                },
+              }}
+            >
+              Finalizar Pedido
+            </Button>
+          </Box>
+        </Container>
       </Container>
+      {isCartEmpty && (
+        <Typography variant="body1" align="center" color="error">
+          Carrinho vazio, clique em voltar e adicione produtos.
+        </Typography>
+      )}
     </React.Fragment>
   )
 }

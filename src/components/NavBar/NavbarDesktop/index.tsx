@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import CartDrawer from './cartDrawer';
 import DropDownList from './DropdownList';
 import { useAuth } from '../../../context/AuthProvider';
+import styles from './NavbarDesktop.module.scss'
 
 
 
@@ -15,14 +16,14 @@ const NavbarDesktop = () => {
   const auth = useAuth();
 
   if (auth.isLoading) {
-    return null; 
+    return null;
   }
 
   const isStaff = auth.user?.isStaff;
 
   useEffect(() => {
-   /*  This is for checking user and also not to leave the useEffect empty in order to get user
-   console.log("user changed", auth.user); */
+    /*  This is for checking user and also not to leave the useEffect empty in order to get user
+    console.log("user changed", auth.user); */
 
   }, [auth.user]);
 
@@ -40,45 +41,65 @@ const NavbarDesktop = () => {
     <AppBar>
       <Container>
         <Toolbar>
-          <Box sx={{ boxSizing: 'border-box', paddingRight: 16 }}>
+          <Box>
             <Logo />
           </Box>
-          <Box sx={{ display: 'flex', justifyContent: 'space-around', alignContent: 'center', width: '100%', padding: 1, boxSizing: 'border-box' }}>
-          {isStaff && <DropDownList />}
-            <Link component={RouterLink} to="/">
-              <Button sx={{ my: 2, color: colorTheme.palette.primary.contrastText }}>
-                Início
-              </Button>
-            </Link>
-            <Link component={RouterLink} to="/menu">
-              <Button sx={{ my: 2, color: colorTheme.palette.primary.contrastText }}>
-                Menu
-              </Button>
-            </Link>
-            <Link component={RouterLink} to="/about">
-              <Button sx={{ my: 2, color: colorTheme.palette.primary.contrastText }}>
-                Quem somos
-              </Button>
-            </Link>
-            {auth.user ? (
-              <Box>
-                <Link component={RouterLink} to="/profile/overview">
-                  <Button sx={{ mr: 4, my: 2, color: colorTheme.palette.primary.contrastText }}>
-                    Meu Perfil
-                  </Button>
-                </Link>
-                <Button onClick={handleLogoutButton} sx={{ my: 2, color: colorTheme.palette.primary.contrastText }}>
-                  Logout
-                </Button>
+          <Box sx={{ display: 'flex', justifyContent: 'space-around', alignContent: 'center', width: '100%', ml: 12 }}>
+            {isStaff &&
+              <Box className={styles.NavFlexBox}>
+                <Box className={styles.NavLink}>
+                  <DropDownList />
+                </Box>
               </Box>
-            ) : (
-              <Link component={RouterLink} to="/login">
-                <Button sx={{ my: 2, color: colorTheme.palette.primary.contrastText }}>
-                  Login
+            }
+            <Box className={styles.NavFlexBox}>
+              <Link component={RouterLink} to="/" className={styles.NavLink}>
+                <Button sx={{ color: colorTheme.palette.primary.contrastText }}>
+                  Início
                 </Button>
               </Link>
+            </Box>
+            <Box className={styles.NavFlexBox}>
+              <Link component={RouterLink} to="/menu" className={styles.NavLink}>
+                <Button sx={{ color: colorTheme.palette.primary.contrastText }}>
+                  Menu
+                </Button>
+              </Link>
+            </Box>
+            <Box className={styles.NavFlexBox}>
+              <Link component={RouterLink} to="/about" className={styles.NavLink}>
+                <Button sx={{ color: colorTheme.palette.primary.contrastText }}>
+                  Quem somos
+                </Button>
+              </Link>
+            </Box>
+            {auth.user ? (
+              <Box className={styles.NavFlexBox}>
+                <Box className={styles.NavFlexBox}>
+                  <Link component={RouterLink} to="/profile/overview" className={styles.NavLink}>
+                    <Button sx={{ color: colorTheme.palette.primary.contrastText }}>
+                      Meu Perfil
+                    </Button>
+                  </Link>
+                </Box>
+                <Box className={styles.NavFlexBoxMarginLeft}>
+                  <Box className={styles.NavLink}>
+                    <Button onClick={handleLogoutButton} className={styles.NavLink} sx={{ color: colorTheme.palette.primary.contrastText }}>
+                      Logout
+                    </Button>
+                  </Box>
+                </Box>
+              </Box>
+            ) : (
+              <Box className={styles.NavFlexBox}>
+                <Link component={RouterLink} to="/login" className={styles.NavLink}>
+                  <Button sx={{ color: colorTheme.palette.primary.contrastText }}>
+                    Login
+                  </Button>
+                </Link>
+              </Box>
             )}
-            <Link component={RouterLink} to="" sx={{ my: 2 }} >
+            <Link component={RouterLink} to="" sx={{ my: 2 }} className={styles.NavLink}>
               <CartDrawer />
             </Link>
           </Box>
