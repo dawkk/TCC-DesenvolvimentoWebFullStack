@@ -1,5 +1,4 @@
 import { Box } from '@mui/system';
-import colorTheme from '../../components/ColorThemes';
 import Footer from '../../components/Footer';
 import ListMenus from './ListMenus';
 import NavBar from '../../components/NavBar';

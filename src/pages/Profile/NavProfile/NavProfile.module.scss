@@ -1,0 +1,72 @@
+.Container {
+  display: flex;
+  width: 25%;
+  flex-wrap: wrap;
+  margin: 0 4% 4% 0;
+}
+
+
+
+@media (max-width: 1300px) {
+  .Container {
+    width: 100%;
+    margin: 0 0 4% 0;
+  }
+
+  
+  .MenuList {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+  
+  .Link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  .MenuItem {
+    width: 100%;
+  }
+}
+
+@media (min-width: 401px) {
+  .ListItemText {
+    display: block;
+  }
+}
+
+@media (max-width: 400px) {
+  .ListItemText {
+    display: none;
+  }
+
+  .MenuItem {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 0;
+  }
+
+  .Link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 0;
+    margin-bottom: 0;
+  }
+
+  .Container {
+    margin: 0 0 4% 0;
+  }
+
+  .ListItemIcon {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+

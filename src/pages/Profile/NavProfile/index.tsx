@@ -1,6 +1,7 @@
 import { Link, Box, Paper, MenuList, MenuItem, ListItemIcon, ListItemText, Divider } from "@mui/material";
 import colorTheme from "../../../components/ColorThemes";
 import { Link as RouterLink } from 'react-router-dom';
+import styles from './NavProfile.module.scss'
 
 /* ICONS */
 import LockIcon from '@mui/icons-material/Lock';
@@ -14,52 +15,52 @@ const NavProfile = () => {
 
   return (
 
-    <Box sx={{ display: 'flex', width: '25%', flexWrap: 'wrap', mr:4 }}>
+    <Box className={styles.Container}>
       <Box>
         <Paper>
-          <MenuList sx={{ color: colorTheme.palette.primary.main }}>
-            <Link component={RouterLink} to="/profile/overview" underline="none">
-              <MenuItem sx={{mt:1,mb:1}}>
-                <ListItemIcon>
+          <MenuList sx={{ color: colorTheme.palette.primary.main }} className={styles.MenuList}>
+            <Link component={RouterLink} to="/profile/overview" underline="none" className={styles.Link}>
+              <MenuItem className={styles.MenuItem}>
+                <ListItemIcon className={styles.ListItemIcon}>
                   <HomeIcon fontSize="small" color="primary" />
                 </ListItemIcon>
-                <ListItemText>Visão geral da conta</ListItemText>
+                <ListItemText className={styles.ListItemText}>Visão geral da conta</ListItemText>
               </MenuItem>
             </Link>
             <Divider />
-            <Link component={RouterLink} to="/" underline="none">
-              <MenuItem sx={{mt:1,mb:1}}>
-                <ListItemIcon>
+            <Link component={RouterLink} to="/profile/info" underline="none" className={styles.Link}>
+              <MenuItem className={styles.MenuItem}>
+                <ListItemIcon className={styles.ListItemIcon}>
                   <EditIcon fontSize="small" color="primary" />
                 </ListItemIcon>
-                <ListItemText>Editar perfil</ListItemText>
+                <ListItemText className={styles.ListItemText}>Editar perfil</ListItemText>
               </MenuItem>
             </Link>
             <Divider />
-            <Link component={RouterLink} to="/profile/address" underline="none" >
-              <MenuItem sx={{mt:1,mb:1}}>
-                <ListItemIcon>
+            <Link component={RouterLink} to="/profile/address" underline="none" className={styles.Link}>
+              <MenuItem className={styles.MenuItem}>
+                <ListItemIcon className={styles.ListItemIcon}>
                   <AccountBoxIcon fontSize="small" color="primary" />
                 </ListItemIcon>
-                <ListItemText>Meus endereços</ListItemText>
+                <ListItemText className={styles.ListItemText}>Meus endereços</ListItemText>
               </MenuItem>
             </Link>
             <Divider />
-            <Link component={RouterLink} to="/profile/orders" underline="none">
-              <MenuItem sx={{mt:1,mb:1}}>
-                <ListItemIcon>
+            <Link component={RouterLink} to="/profile/orders" underline="none" className={styles.Link}>
+              <MenuItem className={styles.MenuItem}>
+                <ListItemIcon className={styles.ListItemIcon}>
                   <ShoppingBasketIcon fontSize="small" color="primary" />
                 </ListItemIcon>
-                <ListItemText>Meus pedidos</ListItemText>
+                <ListItemText className={styles.ListItemText}>Meus pedidos</ListItemText>
               </MenuItem>
             </Link>
             <Divider />
-            <Link component={RouterLink} to="/" underline="none">
-              <MenuItem sx={{mt:1,mb:1}}>
-                <ListItemIcon>
+            <Link component={RouterLink} to="/" underline="none" className={styles.Link}>
+              <MenuItem className={styles.MenuItem}>
+                <ListItemIcon className={styles.ListItemIcon}>
                   <LockIcon fontSize="small" color="primary" />
                 </ListItemIcon>
-                <ListItemText>Alterar senha</ListItemText>
+                <ListItemText className={styles.ListItemText}>Alterar senha</ListItemText>
               </MenuItem>
             </Link>
             <Divider />

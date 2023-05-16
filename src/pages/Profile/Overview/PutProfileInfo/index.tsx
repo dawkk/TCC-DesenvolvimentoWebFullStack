@@ -1,14 +1,14 @@
 import { Box, Paper, Typography } from "@mui/material";
-import Footer from "../../components/Footer";
-import NavBar from "../../components/NavBar";
-import colorTheme from '../../components/ColorThemes';
-import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
-import NavProfile from "./NavProfile";
-import OverviewData from "./Overview/ProfileInfo";
-import styles from './Profile.module.scss'
+import Footer from "../../../../components/Footer";
+import NavBar from "../../../../components/NavBar";
+import colorTheme from '../../../../components/ColorThemes';
+import NavProfile from "../../NavProfile";
+import FormProfileInfo from "./FormProfileInfo";
+import styles from './PutProfileInfo.module.scss'
 
 
-const Profile = () => {
+
+const PutProfileInfo = () => {
 
   return (
     <Box sx={{ backgroundColor: colorTheme.palette.primary.light, height: '100%', paddingTop: 25 }}>
@@ -20,11 +20,10 @@ const Profile = () => {
             <Box sx={{ backgroundColor: 'white' }}>
               <Paper>
                 <Box sx={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', padding: 2 }}>
-                  <ShoppingCartCheckoutIcon fontSize="large" color="primary" sx={{ mr: 6 }} />
-                  <Typography variant="h4">Resumo do seu ultimo pedido</Typography>
+                  <Typography variant="h4">Editar Perfil</Typography>
                 </Box>
               </Paper>
-              <OverviewData/>
+              <FormProfileInfo/>
             </Box>
           </Box >
         </Box >
@@ -34,4 +33,4 @@ const Profile = () => {
   )
 }
 
-export default Profile;
+export default PutProfileInfo;

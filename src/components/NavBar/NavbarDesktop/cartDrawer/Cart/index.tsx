@@ -5,9 +5,9 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import DeleteIcon from '@mui/icons-material/Delete';
 import http from "../../../../../api/axios";
-import { useNavigate } from 'react-router-dom';
 import colorTheme from "../../../../ColorThemes";
 import styles from './cart.module.scss'
+import { Link } from 'react-router-dom';
 
 interface ICartProps {
   onUpdate: (items: ICartItem[]) => void;
@@ -16,7 +16,6 @@ interface ICartProps {
 const Cart: React.FC<ICartProps> = ({ onUpdate }) => {
   const [cartItems, setCartItems] = useState<ICartItem[]>([]);
   const [isCartEmpty, setIsCartEmpty] = useState(true);
-  const navigate = useNavigate();
 
   const getImage = async (item: ICartItem) => {
     try {
@@ -49,7 +48,7 @@ const Cart: React.FC<ICartProps> = ({ onUpdate }) => {
   useEffect(() => {
     setIsCartEmpty(cartItems.length === 0);
   }, [cartItems]);
-  
+
   useEffect(() => {
     const items = JSON.parse(localStorage.getItem('cartItems') || '[]') as ICartItem[];
     setCartItems(items);
@@ -95,12 +94,6 @@ const Cart: React.FC<ICartProps> = ({ onUpdate }) => {
     setCartItems(updatedCartItems);
     localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
     onUpdate(updatedCartItems);
-  };
-
-  const handleProceedToCheckout = () => {
-    if (!isCartEmpty) {
-      navigate("/checkout");
-    }
   };
 
   let total = 0;
@@ -168,8 +161,9 @@ const Cart: React.FC<ICartProps> = ({ onUpdate }) => {
       </Grid>
       <Grid container sx={{ display: 'flex', justifyContent: 'center', }}>
         <Button
+          component={Link}
+          to="/checkout"
           disabled={isCartEmpty}
-          onClick={handleProceedToCheckout}
           sx={{
             backgroundColor: isCartEmpty ? '#ccc' : colorTheme.palette.primary.main,
             color: colorTheme.palette.secondary.light,

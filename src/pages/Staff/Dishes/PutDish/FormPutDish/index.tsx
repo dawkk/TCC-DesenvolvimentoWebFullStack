@@ -1,4 +1,4 @@
-import { Alert, Box, Button, FormControl, FormHelperText, Grid, IconButton, InputLabel, MenuItem, OutlinedInput, Select, Stack, Typography } from '@mui/material';
+import { Box, Button, FormControl, FormHelperText, Grid, IconButton, InputLabel, MenuItem, OutlinedInput, Select, Stack, Typography } from '@mui/material';
 import * as Yup from 'yup';
 import { Formik, Form } from 'formik';
 import http from '../../../../../api/axios';
@@ -8,6 +8,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import IDish from '../../../../../interfaces/IDish';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 import colorTheme from '../../../../../components/ColorThemes';
+import CustomizedSnackbars from '../../../../../components/Alerts/Snackbar';
 
 const FormPutDish = () => {
   const params = useParams();
@@ -59,11 +60,6 @@ const FormPutDish = () => {
     }),
     type: Yup.string().max(255),
   });
-
-  const handleCloseAlert = () => {
-    setShowSucessAlert(false);
-    setShowFailAlert(false);
-  };
 
   /* IMAGE HANDLING */
 
@@ -211,16 +207,22 @@ const FormPutDish = () => {
             <Form noValidate onSubmit={handleSubmit}>
               {showSucessAlert &&
                 <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                  <Alert onClose={handleCloseAlert} severity="success" sx={{ width: '40%' }}>
-                    Prato atualizado com sucesso!
-                  </Alert>
+                  <CustomizedSnackbars
+                  open={showSucessAlert}
+                  message="Prato atualizado com sucesso!"
+                  severity="success"
+                  onClose={() => setShowSucessAlert(false)}
+                />
                 </Box>
               }
               {showFailAlert &&
                 <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                  <Alert onClose={handleCloseAlert} severity="error" sx={{ width: '40%' }}>
-                    Erro: Prato não foi atualizado.
-                  </Alert>
+                  <CustomizedSnackbars
+                  open={showFailAlert}
+                  message="Erro: Prato não foi atualizado."
+                  severity="error"
+                  onClose={() => setShowFailAlert(false)}
+                />
                 </Box>
               }
 

@@ -119,11 +119,15 @@ const FormCreateDish = () => {
                 setFile(null);
               }
               navigate('/staff/dishes');
+              setShowSucessAlert(true);
+              setShowFailAlert(false);
 
             } catch (err) {
               console.error(err);
               setStatus({ success: false });
               setSubmitting(false);
+              setShowSucessAlert(false);
+              setShowFailAlert(true);
             }
           }}
 

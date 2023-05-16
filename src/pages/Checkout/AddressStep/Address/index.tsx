@@ -34,8 +34,8 @@ const CheckoutAddress = () => {
 
     if (address.length === 0) {
       fetchUpdatedAddresses();
-    } else if (selectedAddress === "") {
-      setSelectedAddress(address[0]._id);
+    } else if (!selectedAddress && address.length > 0) {
+      setSelectedAddress(address[0]._id as string);
     }
   }, [address, selectedAddress]);
 
