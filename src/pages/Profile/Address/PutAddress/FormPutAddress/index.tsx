@@ -1,14 +1,17 @@
-import { Button, FormHelperText, Grid, InputLabel, OutlinedInput, Stack } from '@mui/material';
+import { Box, Button, FormHelperText, Grid, InputLabel, OutlinedInput, Stack } from '@mui/material';
 import * as Yup from 'yup';
 import { Formik, Form } from 'formik';
 import http from '../../../../../api/axios';
 import IUserAddress from '../../../../../interfaces/IUserAddress';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { useEffect, useState } from 'react';
+import CustomizedSnackbars from '../../../../../components/Alerts/Snackbar';
 
 const FormPutAddress = () => {
-
+  const [showSucessAlert, setShowSucessAlert] = useState<boolean>(false);
+  const [showFailAlert, setShowFailAlert] = useState<boolean>(false);
   const params = useParams();
+  const navigate = useNavigate();
 
   const [initialValues, setInitialValues] = useState<IUserAddress>({
     street: '',
@@ -32,25 +35,18 @@ const FormPutAddress = () => {
   });
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        await http.get<IUserAddress>(`/users/me/addresses/${params._id}`, {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        })
-          .then(response => {
-            const updatingInitialValues: IUserAddress = response.data;
-            setInitialValues(updatingInitialValues);
-          })
-          .catch(error => {
-            console.log(error);
-          })
-      } catch (error: unknown) {
+    http.get(`/users/me/addresses/${params._id}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(response => {
+        const updatingInitialValues: IUserAddress = response.data;
+        setInitialValues(updatingInitialValues);
+      })
+      .catch(error => {
         console.log(error);
-      }
-    };
-    fetchUserData();
+      })
   }, []);
 
   return (
@@ -60,7 +56,6 @@ const FormPutAddress = () => {
         validationSchema={yupValidationSchema}
         enableReinitialize={true}
         onSubmit={async (values, { setStatus, setSubmitting }) => {
-          alert(JSON.stringify(values, null, 2));
           try {
             setStatus({ success: false });
             setSubmitting(false);
@@ -69,11 +64,17 @@ const FormPutAddress = () => {
               headers: { 'Content-Type': 'application/json' },
             });
             response;
-            console.log('this is response from create address', response.data)
+            setShowSucessAlert(true);
+            setShowFailAlert(false);
+            setTimeout(() => {
+              navigate('/profile/address');
+            }, 3000);
           } catch (err) {
             console.error(err);
             setStatus({ success: false });
             setSubmitting(false);
+            setShowSucessAlert(false);
+            setShowFailAlert(true);
           }
         }}
 
@@ -81,6 +82,27 @@ const FormPutAddress = () => {
         {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
 
           <Form noValidate onSubmit={handleSubmit}>
+
+            {showSucessAlert &&
+              <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                <CustomizedSnackbars
+                  open={showSucessAlert}
+                  message="Endereço atualizado com sucesso! Redirecionando.."
+                  severity="success"
+                  onClose={() => setShowSucessAlert(false)}
+                />
+              </Box>
+            }
+            {showFailAlert &&
+              <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                <CustomizedSnackbars
+                  open={showFailAlert}
+                  message="Erro: Endereço não foi atualizado."
+                  severity="error"
+                  onClose={() => setShowFailAlert(false)}
+                />
+              </Box>
+            }
             <Grid
               container spacing={2} sx={{
                 display: 'flex', flexWrap: 'wrap', p: 4, boxSizing: 'border-box',
@@ -209,7 +231,7 @@ const FormPutAddress = () => {
                     <FormHelperText error id="helper-text-zipcode-signup">
                       {errors.zipcode}
                     </FormHelperText>
-                  )}code
+                  )}
                 </Stack>
               </Grid>
 
@@ -234,7 +256,7 @@ const FormPutAddress = () => {
                 </Stack>
               </Grid>
 
-             
+
               <Grid item xs={12}>
                 <Button
                   disableElevation

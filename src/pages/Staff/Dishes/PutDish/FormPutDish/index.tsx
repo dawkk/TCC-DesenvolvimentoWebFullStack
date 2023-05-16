@@ -12,6 +12,7 @@ import CustomizedSnackbars from '../../../../../components/Alerts/Snackbar';
 
 const FormPutDish = () => {
   const params = useParams();
+  const navigate = useNavigate();
   const [showSucessAlert, setShowSucessAlert] = useState<boolean>(false);
   const [showFailAlert, setShowFailAlert] = useState<boolean>(false);
   const [menus, setMenus] = useState<IMenu[]>([]);
@@ -26,7 +27,7 @@ const FormPutDish = () => {
     },
     type: '',
   });
-  const navigate = useNavigate();
+  
 
 
   useEffect(() => {

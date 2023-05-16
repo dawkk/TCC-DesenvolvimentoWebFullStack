@@ -3,8 +3,8 @@ import colorTheme from '../../../../components/ColorThemes';
 import NavBar from "../../../../components/NavBar";
 import Footer from "../../../../components/Footer";
 import NavProfile from "../../NavProfile";
-import FormAddressData from "./FormCreateAddress";
 import styles from './CreateAddess.module.scss'
+import FormCreateAddress from "./FormCreateAddress";
 
 
 
@@ -23,7 +23,7 @@ const CreateAddress = () => {
                   <Typography variant="h4" fontWeight='bold'>Endereço</Typography>
                 </Box>
               </Paper>
-              <FormAddressData/>
+              <FormCreateAddress/>
             </Box>
           </Box >
         </Box >

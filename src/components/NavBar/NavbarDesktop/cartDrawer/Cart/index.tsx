@@ -1,4 +1,4 @@
-import { Box, Card, CardMedia, Typography, Button, CardActions, CardContent, Grid, darken } from "@mui/material";
+import { Box, Card, CardMedia, Typography, Button, CardActions, CardContent, Grid, darken, Skeleton } from "@mui/material";
 import { useEffect, useState } from "react";
 import ICartItem from "../../../../../interfaces/ICartItem";
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
@@ -16,9 +16,11 @@ interface ICartProps {
 const Cart: React.FC<ICartProps> = ({ onUpdate }) => {
   const [cartItems, setCartItems] = useState<ICartItem[]>([]);
   const [isCartEmpty, setIsCartEmpty] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   const getImage = async (item: ICartItem) => {
     try {
+      setIsLoading(true);
       const response = await http.get(`/dishes/${item.id}/image`, {
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -39,6 +41,7 @@ const Cart: React.FC<ICartProps> = ({ onUpdate }) => {
             return prevItem;
           });
         });
+        setIsLoading(false);
       }
     } catch (error) {
       console.error(error);
@@ -111,45 +114,79 @@ const Cart: React.FC<ICartProps> = ({ onUpdate }) => {
   return (
 
     <Grid container className={styles.CartContainer}>
-
-      {cartItems.map(item => (
-        <Grid item key={item.id} md={12} className={styles.CartCardContainer}>
-          <Card className={styles.CardCart}>
-            <CardMedia
-              component="img"
-              alt={`${item.name}`}
-              image={`${item.image}`}
-              className={styles.CartCardImage}
-            />
-            <CardContent className={styles.CartCardContent}>
-              <Typography gutterBottom variant="body1" textAlign={"center"} sx={{ mb: 1 }}>
-                {item.name}
-              </Typography>
-              <Box sx={{ display: 'flex' }}>
-                <Typography variant="body1" sx={{ mr: 6 }}>
-                  {item.quantity}X
+      {isLoading ? (
+        [...Array(3)].map((_, index) => (
+          <Grid item key={index} md={12} className={styles.CartCardContainer}>
+            <Card className={styles.CardCart}>
+              <Skeleton variant="rectangular" height={200} />
+              <CardContent className={styles.CartCardContent}>
+                <Typography gutterBottom variant="body1" textAlign="center" sx={{ mb: 1 }}>
+                  <Skeleton height={20} width="80%" />
                 </Typography>
-                <Typography variant="body1" >
-                  R${(item.price * item.quantity).toFixed(2)}
-                </Typography>
-              </Box>
-              <CardActions sx={{ display: 'flex', flexDirection: 'column' }}>
                 <Box sx={{ display: 'flex' }}>
-                  <Button sx={{ mr: 0.5 }} variant='contained' disabled={item.quantity === 1} onClick={() => handleDecreaseQuantity(item.id)}>
-                    <KeyboardArrowDownIcon />
-                  </Button>
-                  <Button sx={{ mr: 0.5 }} variant='contained' onClick={() => handleIncreaseQuantity(item.id)} >
-                    <KeyboardArrowUpIcon />
-                  </Button>
-                  <Button variant='contained' disabled={item.quantity >= 20} onClick={() => handleRemoveFromCart(item.id)}>
-                    <DeleteIcon />
-                  </Button>
+                  <Typography variant="body1" sx={{ mr: 6 }}>
+                    <Skeleton height={20} width={40} />
+                  </Typography>
+                  <Typography variant="body1">
+                    <Skeleton height={20} width={60} />
+                  </Typography>
                 </Box>
-              </CardActions>
-            </CardContent>
-          </Card>
-        </Grid>
-      ))}
+                <CardActions sx={{ display: 'flex', flexDirection: 'column' }}>
+                  <Box sx={{ display: 'flex' }}>
+                    <Button sx={{ mr: 0.5 }} variant="contained" disabled>
+                      <KeyboardArrowDownIcon />
+                    </Button>
+                    <Button sx={{ mr: 0.5 }} variant="contained" disabled>
+                      <KeyboardArrowUpIcon />
+                    </Button>
+                    <Button variant="contained" disabled>
+                      <DeleteIcon />
+                    </Button>
+                  </Box>
+                </CardActions>
+              </CardContent>
+            </Card>
+          </Grid>
+        ))
+      ) : (
+        cartItems.map(item => (
+          <Grid item key={item.id} md={12} className={styles.CartCardContainer}>
+            <Card className={styles.CardCart}>
+              <CardMedia
+                component="img"
+                alt={`${item.name}`}
+                image={`${item.image}`}
+                className={styles.CartCardImage}
+              />
+              <CardContent className={styles.CartCardContent}>
+                <Typography gutterBottom variant="body1" textAlign={"center"} sx={{ mb: 1 }}>
+                  {item.name}
+                </Typography>
+                <Box sx={{ display: 'flex' }}>
+                  <Typography variant="body1" sx={{ mr: 6 }}>
+                    {item.quantity}X
+                  </Typography>
+                  <Typography variant="body1" >
+                    R${(item.price * item.quantity).toFixed(2)}
+                  </Typography>
+                </Box>
+                <CardActions sx={{ display: 'flex', flexDirection: 'column' }}>
+                  <Box sx={{ display: 'flex' }}>
+                    <Button sx={{ mr: 0.5 }} variant='contained' disabled={item.quantity === 1} onClick={() => handleDecreaseQuantity(item.id)}>
+                      <KeyboardArrowDownIcon />
+                    </Button>
+                    <Button sx={{ mr: 0.5 }} variant='contained' onClick={() => handleIncreaseQuantity(item.id)} >
+                      <KeyboardArrowUpIcon />
+                    </Button>
+                    <Button variant='contained' disabled={item.quantity >= 20} onClick={() => handleRemoveFromCart(item.id)}>
+                      <DeleteIcon />
+                    </Button>
+                  </Box>
+                </CardActions>
+              </CardContent>
+            </Card>
+          </Grid>
+        )))}
       <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap', pt: 2, pb: 3 }}>
         <Typography variant="body1">
           Subtotal:

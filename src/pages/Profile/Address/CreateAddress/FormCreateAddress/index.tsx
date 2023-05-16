@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import CustomizedSnackbars from '../../../../../components/Alerts/Snackbar';
 import { useState } from 'react';
 
-const FormAddressData = () => {
+const FormCreateAddress = () => {
   const [showSucessAlert, setShowSucessAlert] = useState<boolean>(false);
   const [showFailAlert, setShowFailAlert] = useState<boolean>(false);
   const navigate = useNavigate();
@@ -52,14 +52,12 @@ const FormAddressData = () => {
             localStorage.setItem('lastVisitedUrl', currentUrl);
 
             setTimeout(() => {
-              const lastVisitedUrl = localStorage.getItem('lastVisitedUrl') || '/';
+        
               if (currentUrl === '/profile/address/create') {
                 navigate('/profile/address');
-              } else if (currentUrl === '/checkout') {
-                window.location.reload();
               } else {
-                navigate(lastVisitedUrl);
-              }
+                window.location.reload();
+              } 
             }, 3000);
           } catch (err) {
             console.error(err);
@@ -275,4 +273,4 @@ const FormAddressData = () => {
   )
 }
 
-export default FormAddressData;
+export default FormCreateAddress;
