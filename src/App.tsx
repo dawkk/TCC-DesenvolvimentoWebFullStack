@@ -23,6 +23,7 @@ import Error401Page from './components/Error/Error401';
 import PutProfileInfo from './pages/Profile/Overview/PutProfileInfo';
 import PutAddress from './pages/Profile/Address/PutAddress';
 import CreateAddress from './pages/Profile/Address/CreateAddress';
+import OrderReceivedStep from './pages/Checkout/OrderReceivedStep';
 
 function App() {
   return (
@@ -60,6 +61,7 @@ function App() {
       <Route path='/checkout/address' element={<AddressStep/>}/>
       <Route path='/checkout/payment' element={<PaymentStep/>}/>
       <Route path='/checkout/review' element={<ReviewStep/>}/>
+      <Route path='/checkout/received' element={<OrderReceivedStep/>}/>
 
     </Routes>
   );

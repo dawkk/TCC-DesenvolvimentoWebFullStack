@@ -1,4 +1,4 @@
-import { Box, Button, Container, FormControl, FormControlLabel, Radio, RadioGroup, Typography, darken, useMediaQuery } from "@mui/material";
+import { Box, Button, Container, FormControl, FormControlLabel, Modal, Radio, RadioGroup, Typography, darken, useMediaQuery } from "@mui/material";
 import { useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from "react";
 import http from "../../../../api/axios";
@@ -6,6 +6,7 @@ import IUserAddress from "../../../../interfaces/IUserAddress";
 import StaticStepper from "../../Stepper";
 import colorTheme from "../../../../components/ColorThemes";
 import VerticalStepper from "../../VerticalStepper";
+import FormCreateAddress from "../../../Profile/Address/CreateAddress/FormCreateAddress";
 
 const CheckoutAddress = () => {
   const navigate = useNavigate();
@@ -13,6 +14,8 @@ const CheckoutAddress = () => {
   const [selectedAddress, setSelectedAddress] = useState<string>('');
   const [checkoutExists, setCheckoutExists] = useState<boolean>(false);
   const [checkoutId, setCheckoutId] = useState<string>('');
+  const [open, setOpen] = useState(false);
+
   const isMobile = useMediaQuery('(max-width: 1100px)');
 
   const steps = ['Identificação', 'Confirmação de Endereço', 'Método de Pagamento', 'Revisão de dados'];
@@ -80,9 +83,10 @@ const CheckoutAddress = () => {
       }
 
       navigate('/checkout/payment');
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       if (error.response && error.response.status === 401) {
-        navigate('/401'); 
+        navigate('/401');
       } else {
         console.log(error);
       }
@@ -97,7 +101,16 @@ const CheckoutAddress = () => {
     }
   };
 
+  const handleModalOpen = () => {
+    setOpen(true);
+  };
+  
 
+
+  const handleModalClose = () => {
+    setOpen(false);
+  };
+  
 
   return (
     <React.Fragment>
@@ -156,6 +169,25 @@ const CheckoutAddress = () => {
                   Continuar
                 </Button>
               </Box>
+              <Button onClick={handleModalOpen} sx={{ backgroundColor: colorTheme.palette.primary.main, color: colorTheme.palette.secondary.light, p: 2, ml: 2, '&:hover': {
+                    backgroundColor: darken(colorTheme.palette.primary.main, 0.2),
+                  }, }}>
+                Adicionar novo endereço
+              </Button>
+
+              <Modal
+                open={open}
+                onClose={handleModalClose}
+                aria-labelledby="modal-title"
+                aria-describedby="modal-description"
+              >
+                <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 400, bgcolor: 'background.paper', boxShadow: 24, p: 4 }}>
+                  <Typography variant="h6" id="modal-title" sx={{ mb: 2 }}>
+                    Criar novo endereço
+                  </Typography>
+                  <FormCreateAddress/>
+                </Box>
+              </Modal>
             </Container>
           </Box>
         </Container>

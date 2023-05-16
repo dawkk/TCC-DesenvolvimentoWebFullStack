@@ -75,7 +75,7 @@ const AddressData = () => {
               <Typography variant="subtitle2" className={styles.Subtitle}>Endereço:</Typography>
               <Typography>{`${addr.street}, ${addr.number}, ${addr.neighborhood}, ${addr.city}, ${addr.state}, ${addr.additionalInfo}, ${addr.zipcode}`}</Typography>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} className={styles.GridContainerButton}>
               <Button onClick={() => addr._id && EditAddress(addr._id)} variant='contained' className={styles.Button}><EditIcon /></Button>
               <Button onClick={() => addr._id && deleteAddress(addr._id)} variant='contained' className={styles.Button}><DeleteForeverIcon /></Button>
             </Grid>
