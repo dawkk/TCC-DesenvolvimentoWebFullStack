@@ -6,6 +6,8 @@ import StaticStepper from "../../Stepper";
 import ICartItem from "../../../../interfaces/ICartItem";
 import CheckoutReviewData from "../../../../interfaces/IReviewCheckout";
 import IOrderItems from "../../../../interfaces/IOrderItems";
+import VerticalStepper from "../../VerticalStepper";
+import colorTheme from "../../../../components/ColorThemes";
 import IOrderCreation from "../../../../interfaces/IOrderCreation";
 
 const CheckoutReview = () => {

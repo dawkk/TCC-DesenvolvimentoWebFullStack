@@ -1,0 +1,32 @@
+.Container {
+  display: flex;
+  flex-direction: column;
+  padding:2rem;
+  box-sizing: border-box;
+}
+
+.GridContainer {
+  border: 2px solid;
+  border-image: linear-gradient(to right, #FF8C00, #FF4500);
+  border-image-slice: 1;
+  border-radius: 0.5rem;
+  padding: 0.4rem;
+  box-sizing: border-box;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.GridItem {
+  display: flex;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.Subtitle{
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+.Button {
+  margin: 0.3rem;
+}

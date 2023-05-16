@@ -2,16 +2,13 @@ import { Alert, Box, Button, FormHelperText, Grid, InputLabel, OutlinedInput, St
 import * as Yup from 'yup';
 import { Formik, Form } from 'formik';
 import { useEffect, useState } from 'react';
-import http from '../../../../api/axios';
-import IUser from '../../../../interfaces/IUser';
+import http from '../../../../../api/axios';
+import IUser from '../../../../../interfaces/IUser';
+import IUserProfileData from '../../../../../interfaces/IUserProfileData';
 
 const celRegex = /([0-9]{2,3})?(\([0-9]{2}\))([0-9]{4,5})([0-9]{4})/;
 
-const OverviewData = () => {
-  const userLocalStorage = JSON.parse(localStorage.getItem('user') || '{}');
-  const jwtValue = userLocalStorage.jwt;
-  const idValue: string = userLocalStorage.id;
-
+const FormProfileInfo = () => {
   const [showSucessAlert, setShowSucessAlert] = useState<boolean>(false);
   const [showFailAlert, setShowFailAlert] = useState<boolean>(false);
 
@@ -20,25 +17,24 @@ const OverviewData = () => {
     setShowFailAlert(false);
   };
 
-  const [initialValues, setInitialValues] = useState<IUser>({
+  const [initialValues, setInitialValues] = useState<IUserProfileData>({
     firstName: '',
     lastName: '',
     email: '',
     cellphone: '',
-    address: [],
   });
 
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        await http.get<IUser>(`/users/${idValue}`, {
+        await http.get<IUser>(`/users/me`, {
     headers: {
-      Authorization: `Bearer ${jwtValue}`,
+      'Content-Type': 'application/json',
     },
   })
       .then(response => {
-        const updatingInitialValues: IUser = response.data;
+        const updatingInitialValues: IUserProfileData = response.data;
         setInitialValues(updatingInitialValues);
       })
       .catch(error => {
@@ -71,9 +67,9 @@ const OverviewData = () => {
           try {
             setStatus({ success: false });
             setSubmitting(false);
-            const response = await http.put(`/users/${idValue}`, JSON.stringify(values), {
+            console.log('this is overviewData values from form', values, JSON.stringify(values))
+            const response = await http.put(`/users/me`, JSON.stringify(values), {
               headers: {
-                Authorization: `Bearer ${jwtValue}`,
                 'Content-Type': 'application/json'
               },
             });
@@ -195,41 +191,6 @@ const OverviewData = () => {
                   )}
                 </Stack>
               </Grid>
-
-              {/* <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'center', mt: 2, mb: 1 }}>
-                <Typography variant='h5'>Endereço</Typography>
-              </Grid>
-
-
-              <Grid item xs={12} md={12}>
-                <Stack spacing={1}>
-                  <InputLabel>Rua</InputLabel>
-                  <OutlinedInput
-                    id='addressStreet'
-                    type='addressStreet'
-                    value={values.addressStreet}
-                    name='addressStreet'
-                    placeholder='Rua Alameda Avenida'
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    error={Boolean(touched.addressStreet && errors.addressStreet)}
-                  />
-                  {touched.addressStreet && errors.addressStreet && (
-                    <FormHelperText error id="helper-text-addressStreet-signup">
-                      {errors.addressStreet}
-                    </FormHelperText>
-                  )}
-                </Stack>
-              </Grid>
-               {errors.submit && (
-                <Grid item xs={12}>
-                  <FormHelperText error>{errors.submit}</FormHelperText>
-                </Grid>
-              )}
-              
-              */}
-
-
               <Grid item xs={12}>
                 <Button
                   disableElevation
@@ -251,4 +212,4 @@ const OverviewData = () => {
   )
 }
 
-export default OverviewData;
+export default FormProfileInfo;

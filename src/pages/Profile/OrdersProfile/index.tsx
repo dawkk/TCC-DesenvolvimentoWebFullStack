@@ -8,6 +8,7 @@ import NavProfile from "../NavProfile";
 import IOrder from "../../../interfaces/IOrder";
 import { useEffect, useState } from "react";
 import http from "../../../api/axios";
+import styles from './OrdersProfile.module.scss'
 
 
 const OrdersProfile = () => {
@@ -28,7 +29,7 @@ const OrdersProfile = () => {
       <NavBar />
       <Box sx={{ backgroundColor: colorTheme.palette.primary.light, height: '100vh', paddingTop: 25 }}>
         <Box sx={{ ml: '20%', mr: '20%', mb: 20 }}>
-          <Box sx={{ display: 'flex' }}>
+          <Box className={styles.ContainerNavProfile}>
             <NavProfile />
             <Box sx={{ backgroundColor: 'white' }}>
               <Paper>

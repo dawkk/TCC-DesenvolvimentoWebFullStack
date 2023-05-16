@@ -1,6 +1,6 @@
 export default interface IUserAddress {
-  userId: string,
-  _id:string,
+  userId?: string,
+  _id?:string,
   city: string,
   state: string,
   neighborhood: string,
@@ -8,6 +8,6 @@ export default interface IUserAddress {
   number: number,
   zipcode: number,
   additionalInfo: string,
-  mainAddress: boolean 
+  mainAddress?: boolean 
 }
 

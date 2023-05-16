@@ -1,0 +1,10 @@
+.Container {
+  display: flex;
+}
+
+@media (max-width: 1300px) {
+  .Container {
+    display: flex;
+    flex-direction: column;
+  }
+}
