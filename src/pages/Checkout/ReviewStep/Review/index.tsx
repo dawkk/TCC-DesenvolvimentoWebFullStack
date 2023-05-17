@@ -71,7 +71,8 @@ const CheckoutReview = () => {
         console.log('this is each orderItem update with new order id', orderItemId)
         localStorage.removeItem('cartItems');
       }
-      navigate('/');
+      navigate('/checkout/received');
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       if (error.response && error.response.status === 401) {
         navigate('/401');
@@ -165,7 +166,6 @@ const CheckoutReview = () => {
     const fetchUserInfo = async () => {
       try {
         const response = await http.get('/checkouts/me');
-        /*         console.log('This is response.data from checkouts/me', response.data) */
         const userData = {
           userId: {
             firstName: response.data[0].userId.firstName,
