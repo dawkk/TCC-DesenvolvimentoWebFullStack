@@ -24,6 +24,8 @@ import PutProfileInfo from './pages/Profile/Overview/PutProfileInfo';
 import PutAddress from './pages/Profile/Address/PutAddress';
 import CreateAddress from './pages/Profile/Address/CreateAddress';
 import OrderReceivedStep from './pages/Checkout/OrderReceivedStep';
+import OrderDetailsPage from './pages/Profile/OrdersProfile/OrderDetailsPage';
+import DashboardPage from './pages/Staff/DashboardPage';
 
 function App() {
   return (
@@ -43,7 +45,7 @@ function App() {
       <Route path='/profile/address/:_id' element={<PutAddress/>}/>
       <Route path='/profile/address/create' element={<CreateAddress/>}/>
       <Route path='/profile/orders' element={<OrdersProfile/>}/>
-      <Route path='/profile/orders/:_id' element={<OrdersProfile/>}/>
+      <Route path='/profile/orders/:_id' element={<OrderDetailsPage/>}/>
 
       <Route path='/staff/dishes' element={<Dishes/>}/>
       <Route path='/staff/dishes/create' element={<CreateDish/>}/>
@@ -53,7 +55,7 @@ function App() {
       <Route path='/staff/menus/create' element={<CreateMenu/>}/>
       <Route path='/staff/menus/:_id' element={<PutMenu/>}/>
 
-      <Route path='/staff/dashboard' element={<OrdersProfile/>}/>
+      <Route path='/staff/dashboard' element={<DashboardPage/>}/>
       <Route path='/staff/orders' element={<OrdersProfile/>}/>
       <Route path='/staff/inventory' element={<OrdersProfile/>}/>
 

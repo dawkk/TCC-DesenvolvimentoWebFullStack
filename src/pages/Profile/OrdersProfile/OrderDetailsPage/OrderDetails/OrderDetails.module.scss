@@ -1,0 +1,52 @@
+.GridItemCardContainer {
+  display: flex;
+  justify-content: center;
+  padding:3rem;
+  box-sizing: border-box;
+}
+
+.ItemCard {
+  display:flex;
+  width: 500px;
+}
+
+.ItemCardImage {
+  height: 200px;
+  width: 204px;
+}
+
+.ItemCardContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%
+}
+
+
+
+@media (max-width: 1300px) {
+
+  .ItemCardImage {
+    height: 200px;
+    width: 204px;
+  }
+}
+
+@media (max-width: 740px) {
+
+  .ItemCard {
+    display:flex;
+    flex-direction: column;
+  }
+
+  .ItemCardImage {
+    max-height: 262px;
+    max-width: 100%
+  }
+  
+
+}
+
+
+/* backgroundImage:`url(${menuImage1})` */

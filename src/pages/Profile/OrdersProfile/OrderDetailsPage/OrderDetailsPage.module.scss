@@ -1,0 +1,10 @@
+.ContainerNavProfile {
+  display: flex;
+}
+
+@media (max-width: 1300px) {
+  .ContainerNavProfile {
+    display: flex;
+    flex-direction: column;
+  }
+}

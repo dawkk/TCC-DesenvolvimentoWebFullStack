@@ -96,26 +96,6 @@ const ListMenus = () => {
   return (
     <>
       <Box className={styles.MenuContainerPadding}>
-        
-        {/* <Grid container spacing={{ xs: 2 }} sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
-          {menus.map((menu) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} xl={2.7} key={menu._id}>
-              <Button fullWidth className={`menuButton ${activeMenu === menu._id ? 'activeMenuButton' : ''} MenuImageSize`} style={{
-                backgroundImage: `url(${menu.imageURL})`,
-                backgroundRepeat: 'no-repeat',
-                backgroundPosition: 'center',
-                backgroundSize: 'cover',
-                opacity: activeMenu === menu._id ? 0.5 : 1,
-              }} onClick={() => handleMenuClick(menu._id)} >
-                <div>
-                  <h3 className={styles.MenuTitle}>{menu.name}</h3>
-                </div>
-              </Button>
-            </Grid>
-
-          ))
-          }
-        </Grid> */}
 
         <Grid container spacing={{ xs: 2 }} sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
           {isLoading ? (
@@ -158,7 +138,7 @@ const ListMenus = () => {
                 <Card className={styles.DishCard}>
                   <CardMedia
                     component="img"
-                    alt="pizza"
+                    alt="Comida"
                     className={styles.DishCardImage}
                     src={dish.imageURL}
                   />

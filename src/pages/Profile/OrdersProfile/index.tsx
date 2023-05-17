@@ -9,6 +9,8 @@ import IOrder from "../../../interfaces/IOrder";
 import { useEffect, useState } from "react";
 import http from "../../../api/axios";
 import styles from './OrdersProfile.module.scss'
+import React from 'react';
+
 
 
 const OrdersProfile = () => {
@@ -18,7 +20,10 @@ const OrdersProfile = () => {
   useEffect(() => {
     http.get<IOrder[]>('/orders/me')
       .then(response => {
-        setOrders(response.data);
+        setOrders(response.data.map(order => ({
+          ...order,
+          dateOrdered: new Date(order.dateOrdered)
+        })));
       })
   }, []);
 
@@ -27,7 +32,7 @@ const OrdersProfile = () => {
   return (
     <Box>
       <NavBar />
-      <Box sx={{ backgroundColor: colorTheme.palette.primary.light, height: '100vh', paddingTop: 25 }}>
+      <Box sx={{ backgroundColor: colorTheme.palette.primary.light, height: '100%', minHeight: '100vh', paddingTop: 20 }}>
         <Box sx={{ ml: '20%', mr: '20%', mb: 20 }}>
           <Box className={styles.ContainerNavProfile}>
             <NavProfile />
@@ -39,12 +44,13 @@ const OrdersProfile = () => {
                 </Box>
               </Paper>
               <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                <Table sx={{ minWidth: 650, overflowX: 'auto' }} aria-label="simple table">
                   <TableHead>
-                    <TableRow >
+                    <TableRow>
                       <TableCell align="center">Pedido</TableCell>
                       <TableCell align="center">Valor</TableCell>
                       <TableCell align="center">Status</TableCell>
+                      <TableCell align="center">Data</TableCell>
                       <TableCell align="center"></TableCell>
                     </TableRow>
                   </TableHead>
@@ -54,6 +60,7 @@ const OrdersProfile = () => {
                         <TableCell align="center">{order._id}</TableCell>
                         <TableCell align="center">R$ {order.totalAmount}</TableCell>
                         <TableCell align="center">{order.status.status}</TableCell>
+                        <TableCell align="center">{order.dateOrdered.toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' })}</TableCell>
                         <TableCell align="center">
                           <Link component={RouterLink} to={`/profile/orders/${order._id}`}>
                             <Button variant="outlined">
