@@ -7,10 +7,12 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import colorTheme from "../../../../components/ColorThemes";
 import IDish from "../../../../interfaces/IDish";
 import IMenu from "../../../../interfaces/IMenu";
+import DishPDF from "./PDFDishes";
 
 const ListDishes: React.FC = () => {
   const [dishes, setDishes] = useState<IDish[]>([])
   const [menus, setMenus] = useState<IMenu[]>([])
+  const [showPDF, setShowPDF] = useState(false);
 
   /* const userLocalStorage = JSON.parse(localStorage.getItem('user') || '{}');
   const jwtValue = userLocalStorage.jwt;
@@ -77,6 +79,8 @@ const ListDishes: React.FC = () => {
       <Box sx={{ backgroundColor: colorTheme.palette.primary.light }}>
         <Box sx={{ ml: '10%', mr: '10%', mb: '12vh' }}>
           <Link component={RouterLink} to={`/staff/dishes/create`}><Button variant="contained" >Adicionar Novo Prato</Button></Link>
+          <Button variant="contained" onClick={() => setShowPDF(!showPDF)}>Gerar PDF</Button> 
+          {showPDF && <DishPDF dishes={dishes} />} 
           <Box sx={{ display: 'flex', mt: 3 }}>
             <Box sx={{ backgroundColor: 'white' }}>
               <Paper>
@@ -84,8 +88,8 @@ const ListDishes: React.FC = () => {
                   <Typography variant="h4">Listagem de Pratos</Typography>
                 </Box>
               </Paper>
-              <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+              <TableContainer component={Paper} sx={{ overflowX: 'auto' }}>
+                <Table /* sx={{ minWidth: 550 }} */ aria-label="simple table">
                   <TableHead>
                     <TableRow >
                       <TableCell align="center" >Imagem</TableCell>

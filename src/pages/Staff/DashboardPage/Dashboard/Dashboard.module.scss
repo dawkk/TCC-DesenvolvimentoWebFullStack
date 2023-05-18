@@ -1,0 +1,59 @@
+.GridMainContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 4rem;
+}
+
+.ChartContainer { 
+  display: flex;
+  justify-content: center;
+  background-color: white;
+  margin: auto;
+}
+
+.ButtonStatusSelect {
+  margin-right: 1rem;
+  margin: 0.5rem 1rem 0.5rem 0.5rem
+}
+
+.GridContainerOrders {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.5rem;
+  padding: 2rem;
+  box-sizing: border-box;
+  background-color: white;
+}
+
+.TypographyBorderBottom {
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.GridCard {
+  border-radius: 0.5rem;
+}
+
+.GridTitleContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin: 0 0 2rem 0;
+}
+
+.GridOrders {
+  margin-bottom: 1rem;
+  background-color: white;
+  border-radius: 0.5rem;
+}
+
+
+.GridOrderProperties {
+  margin-right: 1rem;
+}
+
