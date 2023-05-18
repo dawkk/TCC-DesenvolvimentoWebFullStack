@@ -2,6 +2,7 @@ export default interface IUserOrderDetails {
   _id: string;
   userId?: {
     firstName?: string;
+    lastName?: string;
     email?: string;
   };
   deliveryAddress?: {
