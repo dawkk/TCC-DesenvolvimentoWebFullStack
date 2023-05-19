@@ -1,31 +1,19 @@
-import { Box, Button, Divider, Grid, Link, Paper, Typography } from '@mui/material';
-import Logo from '../../../components/Logo';
-import { Link as RouterLink } from 'react-router-dom';
-import styles from './Login.module.scss'
 import FacebookIcon from '@mui/icons-material/Facebook';
 import GoogleIcon from '@mui/icons-material/Google';
 import TwitterIcon from '@mui/icons-material/Twitter';
-import LoginFormFields from './LoginFormFields';
-import http from '../../../api/axios';
+import { Box, Button, Divider, Grid, Link, Paper, Typography } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
 import colorTheme from '../../../components/ColorThemes';
+import Logo from '../../../components/Logo';
+import styles from './Login.module.scss';
+import LoginFormFields from './LoginFormFields';
 
 
 const Login = () => {
-
   const handleGoogleLogin = async () => {
     try {
-      // Make an HTTP request to your backend endpoint for Google OAuth
-
-      // Handle the response from your backend accordingly
-      // For example, you can redirect the user to the Google OAuth URL returned by the backend
-      // this code below for some reason, generates CORS errors
-      /*  const response = await http.get('/auth/google'); */
-      /* window.location.href = response.data.authUrl; */
       window.location.href = "http://localhost:8000/auth/google";
-
-
     } catch (error) {
-      // Handle any errors that occur during the request
       console.log('Failed to initiate Google login:', error);
     }
   };

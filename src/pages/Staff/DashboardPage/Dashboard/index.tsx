@@ -44,7 +44,6 @@ const Dashboard = () => {
 
   const handleRefreshChart = async () => {
     if (startDate && endDate) {
-      // Fetch sales data with the updated dates
       await fetchSalesData();
     }
   };
@@ -103,7 +102,7 @@ const Dashboard = () => {
           <ResponsiveContainer width="100%" height={400}>
             <BarChart data={salesData}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="date" />
+              <XAxis dataKey="date" reversed={true} tickFormatter={(date) => new Date(date).toLocaleDateString('en-GB')} />
               <YAxis />
               <Tooltip />
               <Legend />

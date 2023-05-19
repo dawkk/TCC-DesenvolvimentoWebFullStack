@@ -52,16 +52,21 @@ const DropDownList = () => {
             Menus
           </MenuItem>
         </Link>
+        <Link component={RouterLink} to="/staff/users">
+          <MenuItem sx={{ p: 2, boxSizing: 'border-box' }}>
+            Usuários
+          </MenuItem>
+        </Link>
         <Link component={RouterLink} to="/staff/orders">
           <MenuItem sx={{ p: 2, boxSizing: 'border-box' }}>
             Pedidos
           </MenuItem>
         </Link>
-        <Link component={RouterLink} to="/staff/inventory">
+       {/*  <Link component={RouterLink} to="/staff/inventory">
           <MenuItem sx={{ p: 2, boxSizing: 'border-box' }}>
             Inventário
           </MenuItem>
-        </Link>
+        </Link> */}
       </Menu>
     </div>
   );

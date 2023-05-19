@@ -8,15 +8,16 @@ import colorTheme from "../../../../components/ColorThemes";
 import IDish from "../../../../interfaces/IDish";
 import IMenu from "../../../../interfaces/IMenu";
 import DishPDF from "./PDFDishes";
+import jsPDF from "jspdf";
+import { useMediaQuery } from '@mui/material';
+
 
 const ListDishes: React.FC = () => {
   const [dishes, setDishes] = useState<IDish[]>([])
   const [menus, setMenus] = useState<IMenu[]>([])
   const [showPDF, setShowPDF] = useState(false);
+  const isDesktop = useMediaQuery('(min-width:1300px)');
 
-  /* const userLocalStorage = JSON.parse(localStorage.getItem('user') || '{}');
-  const jwtValue = userLocalStorage.jwt;
- */
   useEffect(() => {
     http.get<IMenu[]>('/menus')
       .then(response => {
@@ -39,7 +40,7 @@ const ListDishes: React.FC = () => {
                 if (response.data) {
                   const imageURL = URL.createObjectURL(response.data);
                   return { ...dish, imageURL: imageURL };
-                } 
+                }
               } catch (error) {
                 console.log('Error fetching image for dish', dish._id, error);
               }
@@ -48,21 +49,6 @@ const ListDishes: React.FC = () => {
           })
       })
   }, [])
-
-
-  /* const deleteDish = (_id: string) => {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${jwtValue}`
-      },
-      data: { _id }
-    };
-    http.delete(`/dishes/${_id}`, config)
-      .then(() => {
-        const listDishes = dishes.filter(dish => dish._id !== _id)
-        setDishes([...listDishes])
-      })
-  } */
 
   const deleteDish = (_id: string) => {
     const config = { data: { _id } };
@@ -73,14 +59,59 @@ const ListDishes: React.FC = () => {
       })
   }
 
+  const handleDownloadPDF = () => {
+    const doc = new jsPDF('p', 'mm', 'a4');
+    const contentHeight = doc.internal.pageSize.getHeight();
+    const lineHeight = 10;
+    const maxImagesPerPage = Math.floor((contentHeight - lineHeight) / 80);
+  
+    doc.setFontSize(20);
+    doc.text('Listagem de Pratos', 10, 10);
+  
+    let y = 35; // Adjusted starting position for text elements
+    let imageCount = 0;
+  
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    dishes.forEach((dish, index) => {
+      if (imageCount >= maxImagesPerPage) {
+        doc.addPage();
+        y = 35; //starting position for text elements
+        imageCount = 0;
+      }
+  
+      doc.setFontSize(16);
+      doc.text(dish.title, 70, y + 5); 
+      doc.text(dish.description, 70, y + 15); 
+      doc.text(`Preço: R$${dish.price}`, 70, y + 25); 
+      doc.text(`Menu: ${dish.menu?.name}`, 70, y + 35); 
+  
+      if (dish.imageURL) {
+        const imgData = dish.imageURL; 
+  
+        const imgProps = doc.getImageProperties(imgData);
+        const imgWidth = 50;
+        const imgHeight = (imgProps.height * imgWidth) / imgProps.width;
+  
+        doc.addImage(imgData, 'JPEG', 10, y, imgWidth, imgHeight);
+        imageCount++;
+      }
+  
+      y += 80;
+    });
+  
+    doc.save('pratos.pdf');
+  };
+  
+
 
   return (
     <>
       <Box sx={{ backgroundColor: colorTheme.palette.primary.light }}>
         <Box sx={{ ml: '10%', mr: '10%', mb: '12vh' }}>
-          <Link component={RouterLink} to={`/staff/dishes/create`}><Button variant="contained" >Adicionar Novo Prato</Button></Link>
-          <Button variant="contained" onClick={() => setShowPDF(!showPDF)}>Gerar PDF</Button> 
-          {showPDF && <DishPDF dishes={dishes} />} 
+         <Button variant="contained" component={RouterLink} to={`/staff/dishes/create`}  sx={{ mr: 1, mt:1 }}>Adicionar Novo Prato</Button>
+          <Button variant="contained" onClick={handleDownloadPDF} sx={{ mr: 1, mt:1 }}>Download PDF</Button>
+          <Button variant="contained" onClick={() => setShowPDF(!showPDF)} sx={{mt:1}}>Visualizar PDF</Button>
+          {showPDF && <DishPDF dishes={dishes} />}
           <Box sx={{ display: 'flex', mt: 3 }}>
             <Box sx={{ backgroundColor: 'white' }}>
               <Paper>
@@ -88,7 +119,7 @@ const ListDishes: React.FC = () => {
                   <Typography variant="h4">Listagem de Pratos</Typography>
                 </Box>
               </Paper>
-              <TableContainer component={Paper} sx={{ overflowX: 'auto' }}>
+              {isDesktop ? (<TableContainer component={Paper} sx={{ overflowX: 'auto' }}>
                 <Table /* sx={{ minWidth: 550 }} */ aria-label="simple table">
                   <TableHead>
                     <TableRow >
@@ -125,6 +156,53 @@ const ListDishes: React.FC = () => {
                   </TableBody>
                 </Table>
               </TableContainer>
+              ) : (
+                dishes.map((dish) => (
+                  <Box
+                    key={dish._id}
+                    sx={{
+                      border: '1px solid #ccc',
+                      borderRadius: '4px',
+                      marginBottom: '16px',
+                      padding: '16px',
+                    }}
+                  >
+                    <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '8px', flexWrap: 'wrap' }}>
+                      <Typography variant="h6" sx={{ flexGrow: 1 }}>
+                        {dish.title}
+                      </Typography>
+                      <Button component={RouterLink} to={`/staff/dishes/${dish._id}`} variant="contained" color="primary" sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        mr:1
+                      }}> <EditIcon />
+                      </Button>
+
+                      <Button variant="contained" color="primary" sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }} onClick={() => deleteDish(dish._id)}><DeleteForeverIcon /></Button>
+                    </Box>
+                    <Box sx={{ marginBottom: '8px' }}>
+                      <Typography variant="body1">{dish.description}</Typography>
+                    </Box>
+                    <Box sx={{ marginBottom: '8px' }}>
+                      <Typography variant="body1">Preço: R${dish.price}</Typography>
+                    </Box>
+                    <Box sx={{ marginBottom: '8px' }}>
+                      <Typography variant="body1">Tipo: {dish.type}</Typography>
+                    </Box>
+                    <Box sx={{ marginBottom: '8px' }}>
+                      <Typography variant="body1">Menu: {dish.menu?.name}</Typography>
+                    </Box>
+                    <Box sx={{ display: 'flex' }}>
+                      {dish.image && <img src={dish.imageURL} alt={dish.title} height={100} width={100} />}
+                    </Box>
+                  </Box>
+                ))
+              )}
             </Box>
           </Box >
         </Box >
