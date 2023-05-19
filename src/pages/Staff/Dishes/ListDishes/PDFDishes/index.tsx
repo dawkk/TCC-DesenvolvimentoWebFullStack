@@ -1,4 +1,4 @@
-import { Document, Page, Text, View, StyleSheet, PDFViewer } from '@react-pdf/renderer';
+import { Document, Page, Text, View, StyleSheet, PDFViewer, Image } from '@react-pdf/renderer';
 import IDish from '../../../../../interfaces/IDish';
 
 interface DishPDFProps {
@@ -40,6 +40,11 @@ const DishPDF: React.FC<DishPDFProps> = ({ dishes }) => {
       fontSize: 12,
       marginBottom: 10,
     },
+    dishImage: {
+      marginBottom: 10,
+      width: '200px',
+      height: '200px',
+    },
   });
 
   return (
@@ -52,8 +57,8 @@ const DishPDF: React.FC<DishPDFProps> = ({ dishes }) => {
               <Text style={styles.dishTitle}>{dish.title}</Text>
               <Text style={styles.dishDescription}>{dish.description}</Text>
               <Text style={styles.dishPrice}>Preço: R${dish.price}</Text>
-              <Text style={styles.dishType}>Tipo: {dish.type}</Text>
               <Text style={styles.dishMenu}>Menu: {dish.menu?.name}</Text>
+              {dish.imageURL && <Image style={styles.dishImage} src={dish.imageURL} />}
             </View>
           ))}
         </Page>

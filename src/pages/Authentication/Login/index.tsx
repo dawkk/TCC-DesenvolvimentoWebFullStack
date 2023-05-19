@@ -1,15 +1,22 @@
-import { Box, Button, Divider, Grid, Link, Paper, Typography } from '@mui/material';
-import Logo from '../../../components/Logo';
-import { Link as RouterLink } from 'react-router-dom';
-import styles from './Login.module.scss'
 import FacebookIcon from '@mui/icons-material/Facebook';
 import GoogleIcon from '@mui/icons-material/Google';
 import TwitterIcon from '@mui/icons-material/Twitter';
+import { Box, Button, Divider, Grid, Link, Paper, Typography } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
+import colorTheme from '../../../components/ColorThemes';
+import Logo from '../../../components/Logo';
+import styles from './Login.module.scss';
 import LoginFormFields from './LoginFormFields';
-import GoogleLoginButton from '../oAuth';
 
 
 const Login = () => {
+  const handleGoogleLogin = async () => {
+    try {
+      window.location.href = "http://localhost:8000/auth/google";
+    } catch (error) {
+      console.log('Failed to initiate Google login:', error);
+    }
+  };
 
 
     return (

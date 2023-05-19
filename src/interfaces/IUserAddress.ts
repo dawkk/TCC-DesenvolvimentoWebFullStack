@@ -8,6 +8,6 @@ export default interface IUserAddress {
   number: number,
   zipcode: number,
   additionalInfo: string,
-  mainAddress?: boolean 
+  mainAddress?: boolean | undefined;
 }
 

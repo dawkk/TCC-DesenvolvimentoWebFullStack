@@ -109,16 +109,21 @@ const NavbarTablet = () => {
                       <ListItemText primary="Menus" />
                     </ListItem>
                   </Link>
+                  <Link component={RouterLink} to="/staff/users" style={{ textDecoration: 'none', color: 'black' }}>
+                    <ListItem button sx={{ pl: 4 }}>
+                      <ListItemText primary="Usuários" />
+                    </ListItem>
+                  </Link>
                   <Link component={RouterLink} to="/staff/orders" style={{ textDecoration: 'none', color: 'black' }}>
                     <ListItem button sx={{ pl: 4 }}>
                       <ListItemText primary="Pedidos" />
                     </ListItem>
                   </Link>
-                  <Link component={RouterLink} to="/staff/inventory" style={{ textDecoration: 'none', color: 'black' }}>
+              {/*     <Link component={RouterLink} to="/staff/inventory" style={{ textDecoration: 'none', color: 'black' }}>
                     <ListItem button sx={{ pl: 4 }}>
                       <ListItemText primary="Inventario" />
                     </ListItem>
-                  </Link>
+                  </Link> */}
 
                 </List>
               </Collapse>

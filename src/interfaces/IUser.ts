@@ -1,9 +1,10 @@
 export default interface IUser {
-  id?: number,
+  _id?: number,
   firstName: string,
   lastName: string,
   email: string,
   cellphone: string,
-  address?: object
+  address?: object,
+  createdAt:Date
 }
 
