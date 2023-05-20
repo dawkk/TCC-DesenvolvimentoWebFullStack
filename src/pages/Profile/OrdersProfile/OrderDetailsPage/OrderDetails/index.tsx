@@ -17,8 +17,6 @@ const OrdersDetails = () => {
       try {
         const response = await http.get<IUserOrderDetails>(`/orders/me/${params._id}`);
         const order = response.data;
-        order.dateOrdered = response.data.dateOrdered ? new Date(response.data.dateOrdered) : undefined;
-        order.updatedAt = response.data.updatedAt ? new Date(response.data.updatedAt) : undefined;
         setOrders([order]);
       } catch (error) {
         console.error('Error fetching order:', error);
@@ -92,17 +90,11 @@ const OrdersDetails = () => {
             <Grid item xs={12}>
               <Typography>{`Pedido: ${orders[0]._id || ''}`}</Typography>
               <Typography>
-                {`Data do Pedido: ${orders[0].dateOrdered?.toLocaleString('pt-BR', {
-                  dateStyle: 'short',
-                  timeStyle: 'short',
-                }) || ''}`}
+              {`Data do Pedido: ${orders[0].dateOrdered || ''}`}
               </Typography>
               <Typography>{`Status: ${orders[0].status?.status || ''}`}</Typography>
               <Typography>
-                {`Última Atualização: ${orders[0].updatedAt?.toLocaleString('pt-BR', {
-                  dateStyle: 'short',
-                  timeStyle: 'short',
-                }) || ''}`}
+                {`Última Atualização: ${orders[0].updatedAt || ''}`}
               </Typography>
             </Grid>
             <Grid item xs={12}>

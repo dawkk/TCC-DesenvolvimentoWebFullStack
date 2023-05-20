@@ -11,9 +11,12 @@ import colorTheme from '../../../components/ColorThemes';
 
 const Register = () => {
 
-  const handleGoogleLogin = () => {
-    // Step 1: Redirect the user to the Google OAuth authorization URL
-    window.location.href = "http://localhost:8000/api/oauth/google";
+  const handleGoogleLogin = async () => {
+    try {
+      window.location.href = "http://localhost:8000/auth/google";
+    } catch (error) {
+      console.log('Failed to initiate Google login:', error);
+    }
   };
 
 

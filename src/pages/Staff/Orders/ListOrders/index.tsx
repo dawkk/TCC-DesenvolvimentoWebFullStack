@@ -1,88 +1,123 @@
-import { Box, Button, Card, CardContent, Grid, Paper, Typography } from "@mui/material";
-import IUserOrderDetails from "../../../../interfaces/IUserOrderDetails";
+import { Box, Button, Card, CardActions, CardContent, Grid, Paper, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import http from "../../../../api/axios";
-import styles from './ListOrders.module.scss'
-import IOrderStatus from '../../../../interfaces/IOrderStatus'
-
+import IOrderStatus from '../../../../interfaces/IOrderStatus';
+import IUserOrderDetails from "../../../../interfaces/IUserOrderDetails";
+import styles from './ListOrders.module.scss';
 
 const ListOrders = () => {
   const [orders, setOrders] = useState<IUserOrderDetails[]>([]);
   const [orderStatuses, setOrderStatuses] = useState<IOrderStatus[]>([]);
   const [selectedStatus, setSelectedStatus] = useState<string>('');
-  const [selectedStatusTitle, setSelectedStatusTitle] = useState("Pedidos Pendentes");
-  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+  const [selectedStatusTitle, setSelectedStatusTitle] = useState('Pendente');
   const [isLoading, setIsLoading] = useState(false);
 
 
-  const open = Boolean(anchorEl);
-  const id = open ? 'status-popover' : undefined;
+  const fetchOrderStatuses = async () => {
+    try {
+      const response = await http.get('/orders/status');
+      const sortedOrderStatuses = [
+        { status: "Pendente" },
+        { status: "Iniciando Preparo do Pedido" },
+        { status: "Pedido Pronto" },
+        { status: "Delivery a caminho" },
+        { status: "Completo" },
+        { status: "Cancelado" }
+      ];
+
+      const orderStatusesData = response.data;
+
+      const orderedStatuses = sortedOrderStatuses.map((sortedStatus) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const orderStatus = orderStatusesData.find((status: any) => status.status === sortedStatus.status);
+        return orderStatus ? orderStatus : sortedStatus;
+      });
+
+      setOrderStatuses(orderedStatuses);
+    } catch (error) {
+      console.error('Error fetching order statuses:', error);
+    }
+  };
+
 
 
   const fetchOrders = async () => {
     try {
+      console.log('this is selectedStatus', selectedStatus)
       setIsLoading(true);
-      const response = await http.get<IUserOrderDetails[]>('/orders');
-      const allOrders = response.data.map(order => ({
-        ...order,
-        dateOrdered: order.dateOrdered ? new Date(order.dateOrdered) : undefined,
-        updatedAt: order.updatedAt ? new Date(order.updatedAt) : undefined,
-      }));
-      const filteredOrders = selectedStatus !== ''
-        ? allOrders.filter(order => order.status?.status === selectedStatus)
-        : allOrders;
-      const sortedOrders = filteredOrders.sort((a, b) => {
-        const dateA = a.dateOrdered || new Date(0);
-        const dateB = b.dateOrdered || new Date(0);
+      const response = await http.get<IUserOrderDetails[]>(`/orders/status/query?orderStatusId=${selectedStatus}`);
+      const sortedOrders = response.data.sort((a, b) => {
+        const dateA = new Date(a.dateOrdered || '');
+        const dateB = new Date(b.dateOrdered || '');
         return dateA.getTime() - dateB.getTime();
       });
       setOrders(sortedOrders);
     } catch (error) {
       console.error('Error fetching orders:', error);
     } finally {
-      setIsLoading(false); // Reset loading state to false
+      setIsLoading(false);
     }
   };
 
-
   useEffect(() => {
-    fetchOrders();
-  }, [selectedStatus]);
-
-  useEffect(() => {
-    const fetchOrderStatuses = async () => {
-      try {
-        const response = await http.get('/orders/status');
-        setOrderStatuses(response.data);
-      } catch (error) {
-        console.error('Error fetching order statuses:', error);
-      }
-    };
     fetchOrderStatuses();
+    console.log('useEffect fetchOrderStatuses is running')
   }, []);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleClick = (event: any) => {
-    setAnchorEl(event.currentTarget);
-  };
+  useEffect(() => {
+    if (!selectedStatus) {
+      const pendingStatus = orderStatuses.find(status => status.status === 'Pendente');
+      setSelectedStatus(pendingStatus?._id || '');
+    } else {
+      fetchOrders();
+    }
+  }, [selectedStatus, orderStatuses]);
+
 
   const handleStatusClick = (status: string) => {
     setSelectedStatus(status);
-    setSelectedStatusTitle(status);
-    setAnchorEl(null);
-    setIsLoading(true);
+    const selectedStatusObject = orderStatuses.find((orderStatus) => orderStatus._id === status);
+    setSelectedStatusTitle(selectedStatusObject ? selectedStatusObject.status : '');
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
 
-  const handleAccept = async (orderId: string, selectedStatusId: string) => {
+
+  const handleAccept = async (orderId: string, currentStatus: string) => {
     try {
-      console.log('handleAccept orderID', orderId, 'handleAccept orderID', orderId)
-      const response = await http.put(`/orders/${orderId}`, { status: selectedStatusId });
-      /* setSelectedStatus(selectedStatusId); */
-      console.log('handleAccept response', response.data)
+      const selectedStatus = orderStatuses.find((status) => {
+        if (currentStatus === 'Pendente' && status.status === 'Iniciando Preparo do Pedido') {
+          return true;
+        } else if (currentStatus === 'Iniciando Preparo do Pedido' && status.status === 'Pedido Pronto') {
+          return true;
+        } else if (currentStatus === 'Pedido Pronto' && status.status === 'Delivery a caminho') {
+          return true;
+        } else if (currentStatus === 'Delivery a caminho' && status.status === 'Completo') {
+          return true;
+        }
+        return false;
+      });
+      if (selectedStatus) {
+        try {
+          console.log('This is HandleAccept orderId it should be _id', orderId);
+          console.log('This is HandleAccept selectedStatus it should be _id', selectedStatus);
+
+          const response = await http.put(`/orders/${orderId}`, { status: selectedStatus._id });
+          console.log('Response data:', response.data);
+
+          await fetchOrders();
+        } catch (error) {
+          console.error('Error updating order status:', error);
+        }
+      }
+    } catch (error) {
+      console.error('Error updating order status:', error);
+    }
+  };
+
+  const handleReject = async (orderId: string) => {
+    try {
+      const selectedStatusId = 'Cancelado';
+      await http.put(`/orders/${orderId}`, { status: selectedStatusId });
       await fetchOrders();
     } catch (error) {
       console.error('Error updating order status:', error);
@@ -103,22 +138,30 @@ const ListOrders = () => {
       case 'Cancelado':
         return styles.CancelledButton;
       default:
-        return styles.DefaultButton;
+        return '';
     }
   };
+
 
   return (
     <Box className={styles.GridMainContainer}>
       <Grid container className={styles.GridContainerOrders}>
-        {orderStatuses.map((status: IOrderStatus) => (
-          <Grid item key={status._id}>
-            <Button variant='contained' className={styles.ButtonStatusSelect} onClick={() => handleStatusClick(status.status)}
-              disabled={isLoading}
-            >
-              {status.status}
-            </Button>
+        <Grid item xs={8} sx={{ mb: 2 }}>
+          <Grid container spacing={2}  >
+            {orderStatuses.map((status: IOrderStatus) => (
+              <Grid item xs={12} key={status._id} className={styles.GridContainerOrders}>
+                <Button
+                  variant="contained"
+                  className={styles.OrderStatusButton}
+                  onClick={() => handleStatusClick(status._id)}
+                  disabled={isLoading}
+                >
+                  {status.status}
+                </Button>
+              </Grid>
+            ))}
           </Grid>
-        ))}
+        </Grid>
         <Grid item xs={8}>
           <Paper>
             <Typography variant="h4" className={styles.OrdersTitle}>
@@ -128,71 +171,70 @@ const ListOrders = () => {
         </Grid>
         {orders.map((order) => (
           <Grid item xs={8} key={order._id} className={styles.GridOrders}>
-            <Card variant="outlined" sx={{ borderRadius: "0.5rem" }}>
+            <Card variant="outlined" sx={{ borderRadius: '0.5rem' }}>
               <CardContent>
-                <Typography variant="h6" sx={{ borderBottom: "1px solid #f0f0f0", pb: 1, mb: 2 }}>
+                <Typography variant="h6" sx={{ borderBottom: '1px solid #f0f0f0', pb: 1, mb: 2 }}>
                   {order._id}
                 </Typography>
-
-                <Typography
-                  className={`${styles.PendingButton} ${getButtonTypographyStyle(order.status?.status)}`}
-                >
+                <Typography className={`${styles.PendingButton} ${getButtonTypographyStyle(order.status?.status)}`}>
                   {order.status?.status}
                 </Typography>
-                <Button></Button>
-
-               {/*  <Popover
-                  id={id}
-                  open={open}
-                  anchorEl={anchorEl}
-                  onClose={handleClose}
-                  anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'left',
-                  }}
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'left',
-                  }}
-                >
-                  <List className={styles.PopOverList}>
-                    {orderStatuses.map((status: IOrderStatus) => (
-                      <ListItem
-                        key={status._id}
-                        button
-                        onClick={() => handleAccept(order._id, status._id)}
-                      >
-                        <ListItemText primary={status.status} />
-                      </ListItem>
-                    ))}
-                  </List>
-                </Popover> */}
-
-
-
                 <Typography>Criação do Pedido: {order.dateOrdered?.toLocaleString()}</Typography>
-                <Typography sx={{ borderBottom: "1px solid #f0f0f0", pb: 1, mb: 1 }}>Total R$ {order.totalAmount}</Typography>
+                <Typography sx={{ borderBottom: '1px solid #f0f0f0', pb: 1, mb: 1 }}>
+                  Total R$ {order.totalAmount}
+                </Typography>
                 {order.cartItems?.map((cartItem) => (
-                  <Box key={cartItem._id} sx={{ borderBottom: "1px solid #f0f0f0", pb: 1, mb: 2 }}>
+                  <Box key={cartItem._id} sx={{ borderBottom: '1px solid #f0f0f0', pb: 1, mb: 2 }}>
                     <Typography>{cartItem.dishId?.title}</Typography>
                     <Typography>Quantidade {cartItem.quantity}</Typography>
                     <Typography>R$ {cartItem.dishId?.price}</Typography>
                   </Box>
                 ))}
-                <Typography>{order.userId?.firstName}, {order.userId?.lastName}</Typography>
+                <Typography>
+                  {order.userId?.firstName}, {order.userId?.lastName}
+                </Typography>
                 <Typography>
                   Endereço de entrega: {order.deliveryAddress?.street}, {order.deliveryAddress?.number},
                   {order.deliveryAddress?.neighborhood}, {order.deliveryAddress?.additionalInfo}
                 </Typography>
-
               </CardContent>
+              <CardActions>
+                <Button
+                  variant="contained"
+                  style={{
+                    backgroundColor: order.status?.status === 'Cancelado' || order.status?.status === 'Completo' ? 'gray' : 'green',
+                    color: 'white',
+                    marginRight: '1rem',
+                    cursor: order.status?.status === 'Cancelado' || order.status?.status === 'Completo' ? 'not-allowed' : 'pointer',
+                  }}
+                  onClick={() => handleAccept(order._id, order.status?.status || '')}
+                  disabled={order.status?.status === 'Cancelado' || order.status?.status === 'Completo'}
+                >
+                  Aceitar
+                </Button>
+                <Button
+                  variant="contained"
+                  style={{
+                    backgroundColor: order.status?.status === 'Cancelado' || order.status?.status === 'Completo' ? 'gray' : 'red',
+                    color: 'white',
+                    cursor: order.status?.status === 'Cancelado' || order.status?.status === 'Completo' ? 'not-allowed' : 'pointer',
+                  }}
+                  onClick={() => handleReject(order._id)}
+                  disabled={order.status?.status === 'Cancelado' || order.status?.status === 'Completo'}
+                >
+                  Rejeitar
+                </Button>
+              </CardActions>
+
+
+
+
             </Card>
           </Grid>
         ))}
       </Grid>
-
-    </Box >
-  )
-}
+    </Box>
+  );
+};
 
 export default ListOrders;

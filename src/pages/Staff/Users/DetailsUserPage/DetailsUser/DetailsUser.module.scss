@@ -1,0 +1,107 @@
+.GridContainerUserInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: white;
+  margin: 2rem 6rem 2rem 6rem;
+  border-radius: 0.8rem;
+}
+
+.GridItemUserInfo {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  box-sizing: border-box;
+  
+}
+
+.GridItemUserInfo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.TextUserInfo {
+  padding-left: 0.5rem;
+}
+
+.TitleUserInfo {
+  padding:1rem
+}
+
+.TitleContainersBackground {
+  background-color: lightgray;
+  padding: 1rem;
+  box-sizing: border-box;
+  border-radius: 0.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+
+.PendingButton {
+  color: #d46b08;
+  background: linear-gradient(#FFF9E6, #FFEDAE);
+  border: 1px solid #FFD666;
+  text-align: center;
+  border-radius: 0.5rem;
+  padding: 0.2rem;
+  box-sizing: border-box;
+  width: 100px;
+}
+
+.IniciatingButton {
+  color: #d46b08;
+  background: linear-gradient(#FFEDAE, #FFD666);
+  border: 1px solid #FFBB4F;
+  text-align: center;
+  border-radius: 0.5rem;
+  padding: 0.2rem;
+  box-sizing: border-box;
+  width: 100px;
+}
+
+.onTheWayButton {
+  background: #e1fce1;
+  color: #389e0d;
+  border: 1px solid #b7eb8f;
+  text-align: center;
+  border-radius: 0.5rem;
+  padding: 0.2rem;
+  box-sizing: border-box;
+  width: 100px;
+}
+
+.ReadyButton {
+  background: #e1fce1;
+  color: #389e0d;
+  border: 1px solid #b7eb8f;
+  text-align: center;
+  border-radius: 0.5rem;
+  padding: 0.2rem;
+  box-sizing: border-box;
+  width: 100px;
+  
+}
+
+.CompletedButton {
+  background: #f6ffed;
+  color: #389e0d;
+  border: 1px solid #b7eb8f;
+  text-align: center;
+  border-radius: 0.5rem;
+  padding: 0.2rem;
+  box-sizing: border-box;
+  width: 100px;
+  
+}
+.CancelledButton {
+  background: #fff1f0;
+  color: #cf1322;
+  border: 1px solid #ffa39e;
+  text-align: center;
+  border-radius: 0.5rem;
+  padding: 0.2rem;
+  box-sizing: border-box;
+  width: 100px;
+  
+}
