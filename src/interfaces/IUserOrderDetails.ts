@@ -30,6 +30,6 @@ export default interface IUserOrderDetails {
   status?: {
     status?: string;
   };
-  dateOrdered?: Date;
-  updatedAt?: Date;
+  dateOrdered?: string;
+  updatedAt?: string;
 }

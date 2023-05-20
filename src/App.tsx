@@ -28,6 +28,7 @@ import OrderDetailsPage from './pages/Profile/OrdersProfile/OrderDetailsPage';
 import DashboardPage from './pages/Staff/DashboardPage';
 import StaffUsers from './pages/Staff/Users';
 import StaffUserDetailsPage from './pages/Staff/Users/DetailsUserPage';
+import StaffOrders from './pages/Staff/Orders';
 
 function App() {
   return (
@@ -63,9 +64,9 @@ function App() {
 
       <Route path='/staff/dashboard' element={<DashboardPage/>}/>
 
-      <Route path='/staff/orders' element={<OrdersProfile/>}/>
+      <Route path='/staff/orders' element={<StaffOrders/>}/>
 
-      <Route path='/staff/inventory' element={<OrdersProfile/>}/>
+     {/*  <Route path='/staff/inventory' element={<OrdersProfile/>}/> */}
 
       <Route path='/checkout/identification' element={<Checkout/>}/>
       <Route path='/checkout/address' element={<AddressStep/>}/>

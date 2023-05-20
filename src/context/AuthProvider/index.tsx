@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import http from "../../api/axios";
+import { Box, CircularProgress, Typography } from "@mui/material";
 
 interface IUserCredentials {
   id: string;
@@ -79,7 +80,19 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   return (
     <AuthContext.Provider value={{ user, isLoading, login, logout }}>
-      {isLoading ? <p>Loading...</p> : children}
+      {isLoading ?   <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      height="100vh"
+    >
+      <Box textAlign="center">
+        <CircularProgress color="primary" />
+        <Typography variant="body1" mt={2}>
+          Loading...
+        </Typography>
+      </Box>
+    </Box> : children}
     </AuthContext.Provider>
   );
 }
