@@ -53,6 +53,7 @@ const CheckoutIdentification = () => {
   const handleButtonClick = async () => {
     try {
       navigate('/checkout/address');
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       if (error.response && error.response.status === 401) {
         navigate('/401');
@@ -123,7 +124,7 @@ const CheckoutIdentification = () => {
             </Box>
           </Container>
         ) : (
-          <Container maxWidth="sm" sx={{}}>
+          <Container maxWidth="sm" sx={{mb:4}}>
             <LoginFormFields />
           </Container>
         )

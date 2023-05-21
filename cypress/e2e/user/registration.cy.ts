@@ -46,8 +46,6 @@ describe('User registration', () => {
 
   });
 
-
-
   it.skip('should navigate to register, enter all user info, address info, e-mail and password, and click in register button and be registered', () => {
 
     cy.get('input#firstName').type(user.firstName);
@@ -67,19 +65,6 @@ describe('User registration', () => {
       .should('be.visible');
     cy.url().should('include', 'http://localhost:3000/login');
 
-  });
-
-  it.skip('should navigate to login, enter email and password, and click login button', () => {
-    cy.visit('http://localhost:3000/');
-    cy.get('.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-colorInherit.MuiIconButton-edgeEnd.MuiIconButton-sizeMedium').click();
-    cy.get('a.MuiTypography-root.MuiLink-root[href="/login"]').click();
-    cy.url().should('include', 'http://localhost:3000/login');
-
-    cy.get('input#email').type(user.email);
-    cy.get('input#password').type(user.password);
-    cy.get('button[type="submit"]').click();
-
-    cy.url().should('eq', 'http://localhost:3000/');
   });
 
   it.skip('should not register and display error message if email filled in form is already being used by another user account', () => {

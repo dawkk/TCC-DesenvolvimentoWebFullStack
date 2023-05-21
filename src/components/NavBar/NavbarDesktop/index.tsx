@@ -99,7 +99,7 @@ const NavbarDesktop = () => {
                 </Link>
               </Box>
             )}
-            <Link component={RouterLink} to="" sx={{ my: 2 }} className={styles.NavLink}>
+            <Link id="cart-menu-open-icon" component={RouterLink} to="" sx={{ my: 2 }} className={styles.NavLink}>
               <CartDrawer />
             </Link>
           </Box>
