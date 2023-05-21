@@ -25,6 +25,7 @@ const DropDownList = () => {
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
         sx={{ color: colorTheme.palette.primary.contrastText}}
+        data-testid={`menu-staff`}
       >
         Menu Administrativo
       </Button>
@@ -37,27 +38,27 @@ const DropDownList = () => {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <Link component={RouterLink} to="/staff/dashboard">
+        <Link component={RouterLink} to="/staff/dashboard" data-testid={`menu-staff-dashboard`}>
           <MenuItem sx={{ p: 2, boxSizing: 'border-box' }}>
             Dashboard
           </MenuItem>
         </Link>
-        <Link component={RouterLink} to="/staff/dishes">
+        <Link component={RouterLink} to="/staff/dishes" data-testid={`menu-staff-dishes`}>
           <MenuItem sx={{ p: 2, boxSizing: 'border-box' }}>
             Pratos
           </MenuItem>
         </Link>
-        <Link component={RouterLink} to="/staff/menus">
+        <Link component={RouterLink} to="/staff/menus" data-testid={`menu-staff-menus`}>
           <MenuItem sx={{ p: 2, boxSizing: 'border-box' }}>
             Menus
           </MenuItem>
         </Link>
-        <Link component={RouterLink} to="/staff/users">
+        <Link component={RouterLink} to="/staff/users" data-testid={`menu-staff-users`}>
           <MenuItem sx={{ p: 2, boxSizing: 'border-box' }}>
             Usuários
           </MenuItem>
         </Link>
-        <Link component={RouterLink} to="/staff/orders">
+        <Link component={RouterLink} to="/staff/orders" data-testid={`menu-staff-orders`}>
           <MenuItem sx={{ p: 2, boxSizing: 'border-box' }}>
             Pedidos
           </MenuItem>

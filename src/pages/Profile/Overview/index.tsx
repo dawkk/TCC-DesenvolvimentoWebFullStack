@@ -10,9 +10,9 @@ import styles from './Overview.module.scss'
 const Overview = () => {
 
   return (
-    <Box sx={{ backgroundColor: colorTheme.palette.primary.light, height: '100vh', paddingTop: 25 }}>
+    <Box sx={{ backgroundColor: colorTheme.palette.primary.light}}>
       <NavBar />
-      <Box sx={{height:'86%'}}>
+      <Box sx={{height:'100%', minHeight: '100vh', paddingTop: 15, paddingBottom:8 }}>
         <Box sx={{ ml: '20%', mr: '20%'}}>
           <Box className={styles.ContainerNavProfile}>
             <NavProfile/>

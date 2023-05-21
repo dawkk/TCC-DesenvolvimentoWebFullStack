@@ -54,7 +54,6 @@ const AddressData = () => {
   }
 
   const EditAddress = (_id: string) => {
-    const config = { data: { _id } };
     navigate(`/profile/address/${_id}`);
   }
 
@@ -67,15 +66,15 @@ const AddressData = () => {
     <>
       <Container className={styles.Container}>
         <Button onClick={CreateAddress} variant='contained'>Adicionar Novo Endereço</Button>
-        {address.map((addr) => (
+        {address.map((addr, index) => (
           <Grid container key={addr._id} className={styles.GridContainer} >
             <Grid item xs={12} className={styles.GridItem}>
               <Typography variant="subtitle2" className={styles.Subtitle}>Endereço:</Typography>
               <Typography>{`${addr.street}, ${addr.number}, ${addr.neighborhood}, ${addr.city}, ${addr.state}, ${addr.additionalInfo}, ${addr.zipcode}`}</Typography>
             </Grid>
             <Grid item xs={12} className={styles.GridContainerButton}>
-              <Button onClick={() => addr._id && EditAddress(addr._id)} variant='contained' className={styles.Button}><EditIcon /></Button>
-              <Button onClick={() => addr._id && deleteAddress(addr._id)} variant='contained' className={styles.Button}><DeleteForeverIcon /></Button>
+              <Button onClick={() => addr._id && EditAddress(addr._id)} variant='contained' className={styles.Button}data-testid={`address-edit-button-${index}`} sx={{mr:1}}><EditIcon /></Button>
+              <Button onClick={() => addr._id && deleteAddress(addr._id)} variant='contained' className={styles.Button} data-testid={`address-delete-button-${index}`}><DeleteForeverIcon /></Button>
             </Grid>
           </Grid>
         ))}
@@ -93,7 +92,7 @@ const AddressData = () => {
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <CustomizedSnackbars
               open={showFailAlert}
-              message="Erro: Endereço não pode ser removido."
+              message="Erro: Endereço não foi removido. Por favor entre em contato com a administração."
               severity="error"
               onClose={() => setShowFailAlert(false)}
             />

@@ -298,7 +298,7 @@ const CheckoutReview = () => {
               '&:hover': {
                 backgroundColor: darken(colorTheme.palette.primary.main, 0.2),
               },
-            }}>
+            }} data-testid={`checkout-review-return`}>
               Voltar
             </Button>
           </Box>
@@ -314,7 +314,7 @@ const CheckoutReview = () => {
                 '&:hover': {
                   backgroundColor: isCartEmpty ? '#ccc' : darken(colorTheme.palette.primary.main, 0.2),
                 },
-              }}
+              }} data-testid={`checkout-review-continue`}
             >
               Finalizar Pedido
             </Button>

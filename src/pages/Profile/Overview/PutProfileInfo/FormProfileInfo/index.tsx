@@ -1,8 +1,10 @@
-import { Alert, Box, Button, FormHelperText, Grid, InputLabel, OutlinedInput, Stack } from '@mui/material';
-import * as Yup from 'yup';
-import { Formik, Form } from 'formik';
+import { Box, Button, FormHelperText, Grid, InputLabel, OutlinedInput, Stack } from '@mui/material';
+import { Form, Formik } from 'formik';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import * as Yup from 'yup';
 import http from '../../../../../api/axios';
+import CustomizedSnackbars from '../../../../../components/Alerts/Snackbar';
 import IUser from '../../../../../interfaces/IUser';
 import IUserProfileData from '../../../../../interfaces/IUserProfileData';
 
@@ -12,10 +14,8 @@ const FormProfileInfo = () => {
   const [showSucessAlert, setShowSucessAlert] = useState<boolean>(false);
   const [showFailAlert, setShowFailAlert] = useState<boolean>(false);
 
-  const handleCloseAlert = () => {
-    setShowSucessAlert(false);
-    setShowFailAlert(false);
-  };
+  const navigate = useNavigate();
+
 
   const [initialValues, setInitialValues] = useState<IUserProfileData>({
     firstName: '',
@@ -29,22 +29,22 @@ const FormProfileInfo = () => {
     const fetchUserData = async () => {
       try {
         await http.get<IUser>(`/users/me`, {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-      .then(response => {
-        const updatingInitialValues: IUserProfileData = response.data;
-        setInitialValues(updatingInitialValues);
-      })
-      .catch(error => {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+          .then(response => {
+            const updatingInitialValues: IUserProfileData = response.data;
+            setInitialValues(updatingInitialValues);
+          })
+          .catch(error => {
+            console.log(error);
+          })
+      } catch (error: unknown) {
         console.log(error);
-      })
-    } catch (error:unknown) {
-      console.log(error);
-    }
-  };
-  fetchUserData();
+      }
+    };
+    fetchUserData();
   }, []);
 
 
@@ -63,7 +63,7 @@ const FormProfileInfo = () => {
         validationSchema={yupValidationSchema}
         enableReinitialize={true}
         onSubmit={async (values, { setStatus, setSubmitting }) => {
-       
+
           try {
             setStatus({ success: false });
             setSubmitting(false);
@@ -75,6 +75,9 @@ const FormProfileInfo = () => {
             response;
             setShowSucessAlert(true);
             setShowFailAlert(false);
+            setTimeout(() => {
+              navigate('/profile/overview');
+            }, 3000);
           } catch (err) {
             console.error(err);
             setStatus({ success: false });
@@ -89,16 +92,22 @@ const FormProfileInfo = () => {
           <Form noValidate onSubmit={handleSubmit}>
             {showSucessAlert &&
               <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                <Alert onClose={handleCloseAlert} severity="success" sx={{ position:'absolute', top:120,width: '60%' }}>
-                  Dados atualizados com sucesso!
-                </Alert>
+                <CustomizedSnackbars
+                  open={showSucessAlert}
+                  message="Informações atualizadas com sucesso!"
+                  severity="success"
+                  onClose={() => setShowSucessAlert(false)}
+                />
               </Box>
             }
             {showFailAlert &&
               <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                <Alert onClose={handleCloseAlert} severity="error" sx={{ position:'absolute', top:120,width: '60%'}}>
-                  Erro: Dados não foram atualizados.
-                </Alert>
+                <CustomizedSnackbars
+                  open={showFailAlert}
+                  message=" Erro: informações não foram atualizadas."
+                  severity="error"
+                  onClose={() => setShowFailAlert(false)}
+                />
               </Box>
             }
             <Grid
