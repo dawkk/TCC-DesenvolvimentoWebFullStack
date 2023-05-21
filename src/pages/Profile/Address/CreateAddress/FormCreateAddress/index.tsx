@@ -17,7 +17,7 @@ const FormCreateAddress = () => {
     neighborhood: Yup.string().max(255),
     city: Yup.string().max(255),
     state: Yup.string().max(255),
-    zipcode: Yup.number(),
+    zipcode: Yup.string().matches(/^\d{5}-\d{3}$/, 'Formato inválido, deve ser XXXXX-XXX'),
     additionalInfo: Yup.string().max(255),
   });
 
@@ -44,7 +44,6 @@ const FormCreateAddress = () => {
               headers: { 'Content-Type': 'application/json' },
             });
             response;
-            console.log('this is response from create address', response.data)
             setShowSucessAlert(true);
             setShowFailAlert(false);
 

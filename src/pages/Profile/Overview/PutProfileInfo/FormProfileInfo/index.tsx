@@ -67,7 +67,6 @@ const FormProfileInfo = () => {
           try {
             setStatus({ success: false });
             setSubmitting(false);
-            console.log('this is overviewData values from form', values, JSON.stringify(values))
             const response = await http.put(`/users/me`, JSON.stringify(values), {
               headers: {
                 'Content-Type': 'application/json'

@@ -6,7 +6,7 @@ export default interface IUserAddress {
   neighborhood: string,
   street: string,
   number: number,
-  zipcode: number,
+  zipcode: string,
   additionalInfo: string,
   mainAddress?: boolean | undefined;
 }

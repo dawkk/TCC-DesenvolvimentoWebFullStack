@@ -11,7 +11,7 @@ export default interface IUserOrderDetails {
     neighborhood?: string;
     street?: string;
     number?: number;
-    zipcode?: number;
+    zipcode?: string;
     additionalInfo?: string;
   };
   paymentMethod?: {

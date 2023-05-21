@@ -9,6 +9,6 @@ export default interface IRegister {
   neighborhood: string,
   city: string,
   state: string,
-  zipcode: number,
+  zipcode: string,
   additionalInfo: string
 }

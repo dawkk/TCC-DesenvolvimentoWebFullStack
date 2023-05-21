@@ -57,10 +57,9 @@ const CheckoutReview = () => {
           'Content-Type': 'application/json'
         },
       });
-      console.log('this is order response', orderResponse.data)
+
       const createdOrderId = orderResponse.data._id;
       for (const orderItemId of orderItemIds) {
-        console.log('this is each orderItem starting the function for update', orderItemId)
         await http.put(`/orderItems/me/order/${orderItemId}`, {
           orderId: createdOrderId
         }, {
@@ -68,7 +67,6 @@ const CheckoutReview = () => {
             'Content-Type': 'application/json'
           },
         });
-        console.log('this is each orderItem update with new order id', orderItemId)
         localStorage.removeItem('cartItems');
       }
       navigate('/checkout/received');
@@ -195,7 +193,6 @@ const CheckoutReview = () => {
         setAddressId(response.data[0].deliveryAddress._id)
         setPaymentMethodId(response.data[0].paymentMethod._id)
         setBuildOrder(orderData);
-        console.log('console log orderData from useEffect', orderData)
       } catch (error) {
         console.error('Error fetching user info:', error);
       }

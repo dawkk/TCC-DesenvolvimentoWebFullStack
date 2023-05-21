@@ -46,7 +46,6 @@ const FormCreateDish = () => {
           'Content-Type': 'multipart/form-data'
         }
       });
-      console.log('uploadDishImage response data', response.data);
       return response.data;
     } catch (error) {
       console.error('uploadMenuImage error', error);

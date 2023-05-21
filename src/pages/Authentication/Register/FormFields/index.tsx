@@ -1,11 +1,12 @@
-import { Alert, Box, Button, FormHelperText, Grid, IconButton, InputAdornment, InputLabel, OutlinedInput, Stack, Typography } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import * as Yup from 'yup';
-import { Formik, Form } from 'formik';
+import { Box, Button, FormHelperText, Grid, IconButton, InputAdornment, InputLabel, OutlinedInput, Stack, Typography } from '@mui/material';
+import { Form, Formik } from 'formik';
 import { useState } from 'react';
-import http from '../../../../api/axios';
 import { useNavigate } from 'react-router-dom';
+import * as Yup from 'yup';
+import http from '../../../../api/axios';
+import CustomizedSnackbars from '../../../../components/Alerts/Snackbar';
 
 const celRegex = /([0-9]{2,3})?(\([0-9]{2}\))([0-9]{4,5})([0-9]{4})/;
 
@@ -20,11 +21,6 @@ const FormFields = () => {
 
   const navigate = useNavigate();
 
-  const handleCloseAlert = () => {
-    setShowSucessAlert(false);
-    setShowFailAlert(false);
-  };
-
   const yupValidationSchema = Yup.object().shape({
     firstName: Yup.string().max(255).required('Nome Obrigatório'),
     lastName: Yup.string().max(255).required('Sobrenome Obrigatório'),
@@ -36,7 +32,7 @@ const FormFields = () => {
     neighborhood: Yup.string().max(255),
     city: Yup.string().max(255),
     state: Yup.string().max(255),
-    zipcode: Yup.number(),
+    zipcode: Yup.string().matches(/^\d{5}-\d{3}$/, 'Formato inválido, deve ser XXXXX-XXX'),
     additionalInfo: Yup.string().max(255),
   });
 
@@ -64,14 +60,17 @@ const FormFields = () => {
             setStatus({ success: false });
             setSubmitting(false);
 
-            const response = await http.post("/users", JSON.stringify(values), {
+             await http.post("/users", JSON.stringify(values), {
               headers: { 'Content-Type': 'application/json' },
-              /* withCredentials:true }*/
+        
             });
-            navigate('/login');
+
             setShowSucessAlert(true);
             setShowFailAlert(false);
-            console.log(response?.data);
+
+            setTimeout(() => {
+              navigate('/login');
+            }, 3000);
           } catch (err) {
             console.error(err);
             setStatus({ success: false });
@@ -102,7 +101,7 @@ const FormFields = () => {
                     onBlur={handleBlur}
                     onChange={handleChange}
                     error={Boolean(touched.firstName && errors.firstName)}
-                    />
+                  />
                   {touched.firstName && errors.firstName && (
                     <FormHelperText error id="helper-text-firstname-signup">
                       {errors.firstName}
@@ -144,7 +143,7 @@ const FormFields = () => {
                     onBlur={handleBlur}
                     onChange={handleChange}
                     error={Boolean(touched.cellphone && errors.cellphone)}
-                    />
+                  />
                   {touched.cellphone && errors.cellphone && (
                     <FormHelperText error id="helper-text-cellphone-signup">
                       {errors.cellphone}
@@ -169,7 +168,7 @@ const FormFields = () => {
                     onBlur={handleBlur}
                     onChange={handleChange}
                     error={Boolean(touched.street && errors.street)}
-                    />
+                  />
                   {touched.street && errors.street && (
                     <FormHelperText error id="helper-text-street-signup">
                       {errors.street}
@@ -190,7 +189,7 @@ const FormFields = () => {
                     onBlur={handleBlur}
                     onChange={handleChange}
                     error={Boolean(touched.number && errors.number)}
-                    />
+                  />
                   {touched.number && errors.number && (
                     <FormHelperText error id="helper-text-number-signup">
                       {errors.number}
@@ -232,7 +231,7 @@ const FormFields = () => {
                     onBlur={handleBlur}
                     onChange={handleChange}
                     error={Boolean(touched.city && errors.city)}
-                    />
+                  />
                   {touched.city && errors.city && (
                     <FormHelperText error id="helper-text-city-signup">
                       {errors.city}
@@ -253,7 +252,7 @@ const FormFields = () => {
                     onBlur={handleBlur}
                     onChange={handleChange}
                     error={Boolean(touched.state && errors.state)}
-                    />
+                  />
                   {touched.state && errors.state && (
                     <FormHelperText error id="helper-text-state-signup">
                       {errors.state}
@@ -295,7 +294,7 @@ const FormFields = () => {
                     onBlur={handleBlur}
                     onChange={handleChange}
                     error={Boolean(touched.additionalInfo && errors.additionalInfo)}
-                    />
+                  />
                   {touched.additionalInfo && errors.additionalInfo && (
                     <FormHelperText error id="helper-text-additionalInfo-signup">
                       {errors.additionalInfo}
@@ -320,7 +319,7 @@ const FormFields = () => {
                     onBlur={handleBlur}
                     onChange={handleChange}
                     error={Boolean(touched.email && errors.email)}
-                    />
+                  />
                   {touched.email && errors.email && (
                     <FormHelperText error id="helper-text-email-signup">
                       {errors.email}
@@ -351,12 +350,12 @@ const FormFields = () => {
                           onClick={handleClickShowPassword}
                           edge="end"
                           size="large"
-                          >
+                        >
                           {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
                         </IconButton>
                       </InputAdornment>
                     }
-                    />
+                  />
                   {touched.password && errors.password && (
                     <FormHelperText error id="helper-text-password-signup">
                       {errors.password}
@@ -381,20 +380,27 @@ const FormFields = () => {
                 >
                   Criar Conta
                 </Button>
-            {showSucessAlert &&
-              <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                <Alert onClose={handleCloseAlert} severity="success" sx={{ position: 'absolute', bottom: -50, width: '45%' }}>
-                  Registro realizado com sucesso!
-                </Alert>
-              </Box>
-            }
-            {showFailAlert &&
-              <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                <Alert onClose={handleCloseAlert} severity="error" sx={{ position: 'absolute', bottom: -50, width: '45%' }}>
-                  Erro: Registro não concluido. Este e-mail já esta em uso em usuario ativo.
-                </Alert>
-              </Box>
-            }
+
+                {showSucessAlert &&
+                  <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <CustomizedSnackbars
+                      open={showSucessAlert}
+                      message="Registro realizado com sucesso!"
+                      severity="success"
+                      onClose={() => setShowSucessAlert(false)}
+                    />
+                  </Box>
+                }
+                {showFailAlert &&
+                  <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <CustomizedSnackbars
+                      open={showFailAlert}
+                      message=" Erro: Registro não concluido. Este e-mail já esta em uso em usuario ativo. Por favor utilize ou e-mail ou entre em contato com a adminstração"
+                      severity="error"
+                      onClose={() => setShowFailAlert(false)}
+                    />
+                  </Box>
+                }
               </Grid>
             </Grid>
           </Form>

@@ -43,7 +43,6 @@ const ListOrders = () => {
 
   const fetchOrders = async () => {
     try {
-      console.log('this is selectedStatus', selectedStatus)
       setIsLoading(true);
       const response = await http.get<IUserOrderDetails[]>(`/orders/status/query?orderStatusId=${selectedStatus}`);
       const sortedOrders = response.data.sort((a, b) => {
@@ -61,7 +60,6 @@ const ListOrders = () => {
 
   useEffect(() => {
     fetchOrderStatuses();
-    console.log('useEffect fetchOrderStatuses is running')
   }, []);
 
   useEffect(() => {
@@ -98,12 +96,7 @@ const ListOrders = () => {
       });
       if (selectedStatus) {
         try {
-          console.log('This is HandleAccept orderId it should be _id', orderId);
-          console.log('This is HandleAccept selectedStatus it should be _id', selectedStatus);
-
-          const response = await http.put(`/orders/${orderId}`, { status: selectedStatus._id });
-          console.log('Response data:', response.data);
-
+          await http.put(`/orders/${orderId}`, { status: selectedStatus._id });
           await fetchOrders();
         } catch (error) {
           console.error('Error updating order status:', error);

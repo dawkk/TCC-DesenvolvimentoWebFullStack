@@ -13,7 +13,7 @@ const FormPutMenu = () => {
   const [showSucessAlert, setShowSucessAlert] = useState<boolean>(false);
   const [showFailAlert, setShowFailAlert] = useState<boolean>(false);
   const [initialValues, setInitialValues] = useState<IMenu>({
-    _id:'',
+    _id: '',
     name: '',
   });
   const navigate = useNavigate();
@@ -94,7 +94,6 @@ const FormPutMenu = () => {
           'Content-Type': 'multipart/form-data'
         }
       });
-      console.log(response.data);
       updateMenuInfo();
       return response.data;
     } catch (error) {
@@ -163,13 +162,11 @@ const FormPutMenu = () => {
             try {
               setStatus({ success: false });
               setSubmitting(false);
-              console.log('Values from formik', values)
-              const response = await http.put(`/menus/${params._id}`, JSON.stringify(values), {
+              await http.put(`/menus/${params._id}`, JSON.stringify(values), {
                 headers: {
                   'Content-Type': 'application/json'
                 },
               });
-              console.log("this is response", response?.data);
               navigate('/staff/menus');
               setShowSucessAlert(true);
               setShowFailAlert(false);

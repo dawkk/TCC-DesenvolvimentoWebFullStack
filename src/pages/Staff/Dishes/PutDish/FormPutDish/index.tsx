@@ -114,7 +114,6 @@ const FormPutDish = () => {
           'Content-Type': 'multipart/form-data'
         }
       });
-      console.log(response.data);
       updateDishInfo();
       return response.data;
     } catch (error) {
@@ -183,13 +182,11 @@ const FormPutDish = () => {
             try {
               setStatus({ success: false });
               setSubmitting(false);
-              console.log('Values from formik', values)
               const response = await http.put(`/dishes/${params._id}`, JSON.stringify(values), {
                 headers: {
                   'Content-Type': 'application/json'
                 },
               });
-              console.log("this is response",response?.data);
               navigate('/staff/dishes');
               setShowSucessAlert(true);
               setShowFailAlert(false);

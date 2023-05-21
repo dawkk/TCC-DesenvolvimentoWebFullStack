@@ -62,10 +62,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
       const { id, email: userEmail, roles, jwt } = response.data;
       const isStaff = roles.includes(1000) || roles.includes(2000) || roles.includes(3000);
       setUser({ id, email: userEmail, roles, isStaff });
-      /* console.log('AuthProvider isStaff', isStaff)
-      console.log('AuthProvider roles', roles)
-      console.log('AuthProvider user during login after data response', user);
-      console.log('AuthProvider data response', response.data) */
       http.defaults.headers.common["Authorization"] = `Bearer ${jwt}; SameSite=None; Secure`;
     } catch (error) {
       console.error("Failed to login", error);
