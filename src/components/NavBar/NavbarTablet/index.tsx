@@ -66,7 +66,7 @@ const NavbarTablet = () => {
             <IconButton edge="end" color="inherit" onClick={handleDrawerToggle} sx={{mr:2}}>
               <MenuIcon />
             </IconButton>
-            <Link component={RouterLink} to="">
+            <Link id="cart-menu-open-icon" component={RouterLink} to="">
               <CartDrawer />
             </Link>
           </Box>

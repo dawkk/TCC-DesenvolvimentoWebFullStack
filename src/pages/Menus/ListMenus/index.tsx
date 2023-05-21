@@ -114,7 +114,7 @@ const ListMenus = () => {
           ) : (
             menus.map((menu) => (
               <Grid item xs={12} sm={6} md={4} lg={3} xl={2.7} key={menu._id}>
-                <Button fullWidth className={`menuButton ${activeMenu === menu._id ? 'activeMenuButton' : ''} MenuImageSize`} style={{
+                <Button fullWidth id={menu.name} className={`menuButton ${activeMenu === menu._id ? 'activeMenuButton' : ''} MenuImageSize`} style={{
                   backgroundImage: `url(${menu.imageURL})`,
                   backgroundRepeat: 'no-repeat',
                   backgroundPosition: 'center',
@@ -154,7 +154,7 @@ const ListMenus = () => {
                     </Typography>
                     <CardActions sx={{ display: 'flex', flexDirection: 'column' }}>
                       <Box sx={{ display: 'flex', width: '100%' }}>
-                        <Button onClick={() => handleAddToCart(dish)} sx={{ border: 'solid', pl: 8, pr: 8, alignSelf: 'flex-end' }}>
+                        <Button id={dish.title} onClick={() => handleAddToCart(dish)} sx={{ border: 'solid', pl: 8, pr: 8, alignSelf: 'flex-end' }}>
                           <AddShoppingCartIcon fontSize="large" />
                         </Button>
                       </Box>

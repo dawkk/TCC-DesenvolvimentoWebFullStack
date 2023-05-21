@@ -149,7 +149,7 @@ const Cart: React.FC<ICartProps> = ({ onUpdate }) => {
           </Grid>
         ))
       ) : (
-        cartItems.map(item => (
+        cartItems.map((item, index) => (
           <Grid item key={item.id} md={12} className={styles.CartCardContainer}>
             <Card className={styles.CardCart}>
               <CardMedia
@@ -172,13 +172,13 @@ const Cart: React.FC<ICartProps> = ({ onUpdate }) => {
                 </Box>
                 <CardActions sx={{ display: 'flex', flexDirection: 'column' }}>
                   <Box sx={{ display: 'flex' }}>
-                    <Button sx={{ mr: 0.5 }} variant='contained' disabled={item.quantity === 1} onClick={() => handleDecreaseQuantity(item.id)}>
+                    <Button sx={{ mr: 0.5 }} variant='contained' disabled={item.quantity === 1} onClick={() => handleDecreaseQuantity(item.id)}  data-testid={`decrease-button-${index + 1}`}>
                       <KeyboardArrowDownIcon />
                     </Button>
-                    <Button sx={{ mr: 0.5 }} variant='contained' onClick={() => handleIncreaseQuantity(item.id)} >
+                    <Button sx={{ mr: 0.5 }} variant='contained' onClick={() => handleIncreaseQuantity(item.id)} data-testid={`increase-button-${index + 1}`}>
                       <KeyboardArrowUpIcon />
                     </Button>
-                    <Button variant='contained' disabled={item.quantity >= 20} onClick={() => handleRemoveFromCart(item.id)}>
+                    <Button variant='contained' disabled={item.quantity >= 20} onClick={() => handleRemoveFromCart(item.id)} data-testid={`remove-button-${index + 1}`}>
                       <DeleteIcon />
                     </Button>
                   </Box>
@@ -198,6 +198,8 @@ const Cart: React.FC<ICartProps> = ({ onUpdate }) => {
       </Grid>
       <Grid container sx={{ display: 'flex', justifyContent: 'center', }}>
         <Button
+          id="cart-button-navigate-checkout"
+          data-testid="cart-button-navigate-checkout"
           component={Link}
           to="/checkout"
           disabled={isCartEmpty}

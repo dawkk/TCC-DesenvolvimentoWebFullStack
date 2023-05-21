@@ -57,7 +57,7 @@ const CartDrawer: React.FC = () => {
                   </Divider>
                 </Typography>
                 <ListItemText primary="" />
-                <Button onClick={handleCartClose}>
+                <Button id="cart-menu-close-icon" onClick={handleCartClose}>
                   <CloseIcon />
                 </Button>
               </ListItem>

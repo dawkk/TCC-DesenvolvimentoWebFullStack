@@ -1,13 +1,27 @@
-import { Alert, Box, Button, FormHelperText, Grid, IconButton, InputAdornment, InputLabel, OutlinedInput, Stack } from '@mui/material';
+import { Link, Divider, Alert, Box, Button, FormHelperText, Grid, IconButton, InputAdornment, InputLabel, OutlinedInput, Stack, Typography } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import * as Yup from 'yup';
 import { Formik, Form } from 'formik';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import {  Link as RouterLink,  useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../../context/AuthProvider';
+import CustomizedSnackbars from '../../../../components/Alerts/Snackbar';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import GoogleIcon from '@mui/icons-material/Google';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import styles from '../Login.module.scss';
 
 const LoginFormFields = () => {
+  const handleGoogleLogin = async () => {
+    try {
+      window.location.href = "http://localhost:8000/auth/google";
+    } catch (error) {
+      console.log('Failed to initiate Google login:', error);
+    }
+  };
+
+
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -15,11 +29,6 @@ const LoginFormFields = () => {
 
   const [showSucessAlert, setShowSucessAlert] = useState<boolean>(false);
   const [showFailAlert, setShowFailAlert] = useState<boolean>(false);
-
-  const handleCloseAlert = () => {
-    setShowSucessAlert(false);
-    setShowFailAlert(false);
-  };
 
   const auth = useAuth();
   const navigate = useNavigate();
@@ -42,7 +51,7 @@ const LoginFormFields = () => {
         } else {
           navigate(lastVisitedUrl);
         }
-      }, 2000); // 2000ms = 2 seconds delay
+      }, 5000);
     } catch (error) {
       console.log("Usuario ou senha errado");
       setShowFailAlert(true);
@@ -68,7 +77,6 @@ const LoginFormFields = () => {
           try {
             setStatus({ success: false });
             setSubmitting(false);
-            /* FUNÇÃO LOGIN ABAIXO */
             onFinish(values);
           } catch (err) {
             console.error(err);
@@ -83,16 +91,22 @@ const LoginFormFields = () => {
           <Form noValidate onSubmit={handleSubmit}>
             {showSucessAlert &&
               <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                <Alert onClose={handleCloseAlert} severity="success" sx={{ position: 'absolute', top: 120, width: '60%' }}>
-                  Login realizado com sucesso! Redirecionando..
-                </Alert>
+                <CustomizedSnackbars
+                  open={showSucessAlert}
+                  message="Login realizado com sucesso! Redirecionando.."
+                  severity="success"
+                  onClose={() => setShowSucessAlert(false)}
+                />
               </Box>
             }
             {showFailAlert &&
               <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                <Alert onClose={handleCloseAlert} severity="error" sx={{ position: 'absolute', top: 120, width: '60%' }}>
-                  Erro: E-mail ou senha incorreto(a).
-                </Alert>
+                <CustomizedSnackbars
+                  open={showFailAlert}
+                  message="Erro: E-mail ou senha incorreto(a)."
+                  severity="error"
+                  onClose={() => setShowFailAlert(false)}
+                />
               </Box>
             }
             <Grid
@@ -181,6 +195,22 @@ const LoginFormFields = () => {
           </Form>
         )}
       </Formik>
+      <Grid item xs={12} md={12} sx={{ mt: 4 }}>
+        <Typography variant="caption" display="block" gutterBottom sx={{ mb: '32px' }}>
+          <Divider>
+            Ou faça Login com
+          </Divider>
+        </Typography>
+        <Grid item xs={12} md={12} className={styles.LoginAuthContainer}>
+          <Button variant="contained" sx={{ width: '30%', height: '50px', backgroundColor: '#44558e' }}><FacebookIcon></FacebookIcon></Button>
+          <Button variant="contained" onClick={handleGoogleLogin} sx={{ width: '30%', height: '50px', backgroundColor: '#EA4335' }}><GoogleIcon></GoogleIcon></Button>
+          <Button variant="contained" sx={{ width: '30%', height: '50px', backgroundColor: '#03a9f4' }}><TwitterIcon></TwitterIcon></Button>
+        </Grid>
+        <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'center', mb: 6, mt: 4 }}>
+          <Typography variant='body2' sx={{ mr: 1 }}>Não possui conta?</Typography>
+          <Link component={RouterLink} to="/register" underline="none"><Typography variant='body2' fontWeight='bold'>Registre-se</Typography></Link>
+        </Grid>
+      </Grid>
     </>
   )
 }
