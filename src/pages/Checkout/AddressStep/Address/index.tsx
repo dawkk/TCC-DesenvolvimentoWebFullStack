@@ -104,13 +104,13 @@ const CheckoutAddress = () => {
   const handleModalOpen = () => {
     setOpen(true);
   };
-  
+
 
 
   const handleModalClose = () => {
     setOpen(false);
   };
-  
+
 
   return (
     <React.Fragment>
@@ -137,13 +137,14 @@ const CheckoutAddress = () => {
                 value={selectedAddress}
                 onChange={(event) => setSelectedAddress(event.target.value)}
               >
-                {address.map((addr) => (
+                {address.map((addr, index) => (
                   <FormControlLabel
                     key={addr._id}
                     value={addr._id}
                     control={<Radio />}
                     label={`${addr.street}, ${addr.number}, ${addr.neighborhood}, ${addr.city}, ${addr.state}`}
                     sx={{ border: '1px solid black', p: 1, mb: 2 }}
+                    data-testid={`address-${index}`}
                   />
                 ))}
               </RadioGroup>
@@ -155,25 +156,27 @@ const CheckoutAddress = () => {
                   '&:hover': {
                     backgroundColor: darken(colorTheme.palette.primary.main, 0.2),
                   },
-                }}>
+                }} data-testid={`checkout-address-return`}>
                   Voltar
                 </Button>
               </Box>
+              <Button onClick={handleModalOpen} sx={{
+                backgroundColor: colorTheme.palette.primary.main, color: colorTheme.palette.secondary.light, p: 2, ml: 2, '&:hover': {
+                  backgroundColor: darken(colorTheme.palette.primary.main, 0.2),
+                },
+              }} data-testid={`checkout-address-create-address`}>
+                Adicionar novo endereço
+              </Button>
               <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                 <Button onClick={handleButtonClick} sx={{
                   backgroundColor: colorTheme.palette.primary.main, color: colorTheme.palette.secondary.light, p: 2, ml: 2,
                   '&:hover': {
                     backgroundColor: darken(colorTheme.palette.primary.main, 0.2),
                   },
-                }}>
+                }} data-testid={`checkout-address-continue`}>
                   Continuar
                 </Button>
               </Box>
-              <Button onClick={handleModalOpen} sx={{ backgroundColor: colorTheme.palette.primary.main, color: colorTheme.palette.secondary.light, p: 2, ml: 2, '&:hover': {
-                    backgroundColor: darken(colorTheme.palette.primary.main, 0.2),
-                  }, }}>
-                Adicionar novo endereço
-              </Button>
 
               <Modal
                 open={open}
@@ -185,7 +188,7 @@ const CheckoutAddress = () => {
                   <Typography variant="h6" id="modal-title" sx={{ mb: 2 }}>
                     Criar novo endereço
                   </Typography>
-                  <FormCreateAddress/>
+                  <FormCreateAddress />
                 </Box>
               </Modal>
             </Container>

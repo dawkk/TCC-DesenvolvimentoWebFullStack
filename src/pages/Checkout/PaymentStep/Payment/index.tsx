@@ -50,6 +50,7 @@ const CheckoutPayment = () => {
         },
       });
       navigate('/checkout/review');
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       if (error.response && error.response.status === 401) {
         navigate('/401'); 
@@ -93,13 +94,14 @@ const CheckoutPayment = () => {
                 value={selectedPaymentMethod}
                 onChange={(event) => setSelectedPaymentMethod(event.target.value)}
               >
-                {paymentMethod.map((payment) => (
+                {paymentMethod.map((payment, index) => (
                   <FormControlLabel
                     key={payment._id}
                     value={payment._id}
                     control={<Radio />}
                     label={`${payment.name}`}
                     sx={{ border: '1px solid black', p: 1, mb: 2 }}
+                    data-testid={`paymentMethod-${index}`}
                   />
                 ))}
               </RadioGroup>
@@ -113,7 +115,8 @@ const CheckoutPayment = () => {
               '&:hover': {
                 backgroundColor: darken(colorTheme.palette.primary.main, 0.2),
               },
-            }}>
+            }}
+            data-testid={`checkout-payment-return`}>
               Voltar
             </Button>
           </Box>
@@ -123,7 +126,7 @@ const CheckoutPayment = () => {
               '&:hover': {
                 backgroundColor: darken(colorTheme.palette.primary.main, 0.2),
               },
-            }}>
+            }} data-testid={`checkout-payment-continue`}>
               Continuar
             </Button>
           </Box>

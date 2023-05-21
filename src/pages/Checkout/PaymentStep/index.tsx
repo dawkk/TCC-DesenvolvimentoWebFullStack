@@ -9,9 +9,9 @@ import NavbarCheckout from '../../../components/NavBar/NavbarCheckout';
 const PaymentStep = () => {
 
   return (
-    <Box sx={{ backgroundColor: colorTheme.palette.primary.light, paddingTop: 10, height: '100%' }}>
+    <Box sx={{ backgroundColor: colorTheme.palette.primary.light}}>
       <NavbarCheckout />
-      <Box sx={{ height: '100vh', mb: 4 }}>
+      <Box sx={{backgroundColor: colorTheme.palette.primary.light,  minHeight: '100vh', mb: 4, paddingTop: 10, height: '100%'  }}>
         <Container component="main" maxWidth="lg">
           <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
             <CheckoutPayment />

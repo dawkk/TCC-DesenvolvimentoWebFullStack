@@ -60,14 +60,14 @@ const NavbarDesktop = () => {
               </Link>
             </Box>
             <Box className={styles.NavFlexBox}>
-              <Link component={RouterLink} to="/menu" className={styles.NavLink}>
+              <Link component={RouterLink} to="/menu" className={styles.NavLink} data-testid={`menu-cardapio`}>
                 <Button sx={{ color: colorTheme.palette.primary.contrastText }}>
                   Menu
                 </Button>
               </Link>
             </Box>
             <Box className={styles.NavFlexBox}>
-              <Link component={RouterLink} to="/about" className={styles.NavLink}>
+              <Link component={RouterLink} to="/about" className={styles.NavLink} data-testid={`menu-about`}>
                 <Button sx={{ color: colorTheme.palette.primary.contrastText }}>
                   Quem somos
                 </Button>
@@ -76,7 +76,7 @@ const NavbarDesktop = () => {
             {auth.user ? (
               <Box className={styles.NavFlexBox}>
                 <Box className={styles.NavFlexBox}>
-                  <Link component={RouterLink} to="/profile/overview" className={styles.NavLink}>
+                  <Link component={RouterLink} to="/profile/overview" className={styles.NavLink} data-testid={`menu-profile`}>
                     <Button sx={{ color: colorTheme.palette.primary.contrastText }}>
                       Meu Perfil
                     </Button>
@@ -84,7 +84,7 @@ const NavbarDesktop = () => {
                 </Box>
                 <Box className={styles.NavFlexBoxMarginLeft}>
                   <Box className={styles.NavLink}>
-                    <Button onClick={handleLogoutButton} className={styles.NavLink} sx={{ color: colorTheme.palette.primary.contrastText }}>
+                    <Button onClick={handleLogoutButton} className={styles.NavLink} sx={{ color: colorTheme.palette.primary.contrastText }} data-testid={`menu-logout`}>
                       Logout
                     </Button>
                   </Box>
@@ -93,7 +93,7 @@ const NavbarDesktop = () => {
             ) : (
               <Box className={styles.NavFlexBox}>
                 <Link component={RouterLink} to="/login" className={styles.NavLink}>
-                  <Button sx={{ color: colorTheme.palette.primary.contrastText }}>
+                  <Button sx={{ color: colorTheme.palette.primary.contrastText }} data-testid={`menu-login`}>
                     Login
                   </Button>
                 </Link>

@@ -8,9 +8,9 @@ import NavbarCheckout from '../../../components/NavBar/NavbarCheckout';
 const AddressStep = () => {
 
   return (
-    <Box sx={{ backgroundColor: colorTheme.palette.primary.light, paddingTop: 10, height:'100%' }}>
+    <Box sx={{ backgroundColor: colorTheme.palette.primary.light}}>
       <NavbarCheckout />
-      <Box sx={{ height: '100vh',mb:4 }}>
+      <Box sx={{ paddingTop: 10, height:'100%', minHeight: '100vh',mb:4 }}>
         <Container component="main" maxWidth="lg">
           <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
             <CheckoutAddress />

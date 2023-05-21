@@ -87,34 +87,34 @@ const NavbarTablet = () => {
           <Divider />
           {isStaff &&
             <React.Fragment>
-              <ListItem button onClick={() => setMenuAdministrativoOpen(!menuAdministrativoOpen)}>
+              <ListItem button data-testid={`menu-staff-expand-collapse`} onClick={() => setMenuAdministrativoOpen(!menuAdministrativoOpen)}>
                 <AdminPanelSettingsIcon sx={{ ml: 1, mr: 1 }}/>
                 <ListItemText primary="Menu Administrativo" />
                 {menuAdministrativoOpen ? <ExpandLess /> : <ExpandMore />}
               </ListItem>
               <Collapse in={menuAdministrativoOpen} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                  <Link component={RouterLink} to="/staff/dashboard" style={{ textDecoration: 'none', color: 'black' }}>
+                  <Link component={RouterLink} to="/staff/dashboard" style={{ textDecoration: 'none', color: 'black' }} data-testid={`menu-staff-dashboard`}>
                     <ListItem button sx={{ pl: 4 }}>
                       <ListItemText primary="Dashboard" />
                     </ListItem>
                   </Link>
-                  <Link component={RouterLink} to="/staff/dishes" style={{ textDecoration: 'none', color: 'black' }}>
+                  <Link component={RouterLink} to="/staff/dishes" style={{ textDecoration: 'none', color: 'black' }} data-testid={`menu-staff-dishes`}>
                     <ListItem button sx={{ pl: 4 }}>
                       <ListItemText primary="Pratos" />
                     </ListItem>
                   </Link>
-                  <Link component={RouterLink} to="/staff/menus" style={{ textDecoration: 'none', color: 'black' }}>
+                  <Link component={RouterLink} to="/staff/menus" style={{ textDecoration: 'none', color: 'black' }} data-testid={`menu-staff-menus`}>
                     <ListItem button sx={{ pl: 4 }}>
                       <ListItemText primary="Menus" />
                     </ListItem>
                   </Link>
-                  <Link component={RouterLink} to="/staff/users" style={{ textDecoration: 'none', color: 'black' }}>
+                  <Link component={RouterLink} to="/staff/users" style={{ textDecoration: 'none', color: 'black' }} data-testid={`menu-staff-users`}>
                     <ListItem button sx={{ pl: 4 }}>
                       <ListItemText primary="Usuários" />
                     </ListItem>
                   </Link>
-                  <Link component={RouterLink} to="/staff/orders" style={{ textDecoration: 'none', color: 'black' }}>
+                  <Link component={RouterLink} to="/staff/orders" style={{ textDecoration: 'none', color: 'black' }} data-testid={`menu-staff-orders`}>
                     <ListItem button sx={{ pl: 4 }}>
                       <ListItemText primary="Pedidos" />
                     </ListItem>
@@ -137,14 +137,14 @@ const NavbarTablet = () => {
             </ListItem>
           </Link>
           <Divider />
-          <Link component={RouterLink} to="/menu" style={{ textDecoration: 'none', color: 'black' }}>
+          <Link component={RouterLink} to="/menu" style={{ textDecoration: 'none', color: 'black' }} data-testid={`menu-cardapio`}>
             <ListItem button>
               <LunchDiningIcon sx={{ ml: 1, mr: 1 }} />
               <ListItemText primary="Cardápio" />
             </ListItem>
           </Link>
           <Divider />
-          <Link component={RouterLink} to="/about" style={{ textDecoration: 'none', color: 'black' }}>
+          <Link component={RouterLink} to="/about" style={{ textDecoration: 'none', color: 'black' }} data-testid={`menu-about`}>
             <ListItem button>
               <InfoIcon sx={{ ml: 1, mr: 1 }} />
               <ListItemText primary="Quem Somos" />
@@ -153,7 +153,7 @@ const NavbarTablet = () => {
           <Divider />
           {auth.user ? (
             <List sx={{ pt: 0, pb: 0 }}>
-              <Link component={RouterLink} to="/profile/overview" style={{ textDecoration: 'none', color: 'black' }}>
+              <Link component={RouterLink} to="/profile/overview" style={{ textDecoration: 'none', color: 'black' }} data-testid={`menu-profile`} >
                 <ListItem button>
                   <AccountCircleIcon sx={{ ml: 1, mr: 1 }} />
                   <ListItemText primary="Meu Perfil" />
