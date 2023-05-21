@@ -150,3 +150,5 @@ yarn-debug.log*
 yarn-error.log*
 
 README-secret.md
+cypress/cypress.env.json
+cypress.env.json

@@ -55,8 +55,6 @@ const AddressData = () => {
 
   const EditAddress = (_id: string) => {
     const config = { data: { _id } };
-    console.log('this is edit address config', config)
-    console.log('this is edit address _id', _id)
     navigate(`/profile/address/${_id}`);
   }
 

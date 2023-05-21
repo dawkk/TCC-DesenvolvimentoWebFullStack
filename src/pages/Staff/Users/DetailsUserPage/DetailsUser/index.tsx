@@ -26,11 +26,9 @@ const DetailsUser: React.FC = () => {
   };
 
   useEffect(() => {
-    console.log('this is DetailsUser params._id', params._id)
     const fetchUserData = async () => {
       try {
         const response = await http.get<IUserDetailed>(`/users/${params._id}`);
-        console.log('this is DetailsUser response.data', response.data);
         setUser({
           ...response.data,
           createdAt: new Date(response.data.createdAt).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' })
@@ -48,7 +46,6 @@ const DetailsUser: React.FC = () => {
     const fetchOrders = async () => {
       try {
         const response = await http.get<IUserOrderDetails[]>(`/orders/user/${params._id}`);
-        console.log('fetch Orders from user response.data', response.data)
         setOrders(response.data);
       } catch (error) {
         console.error(error);

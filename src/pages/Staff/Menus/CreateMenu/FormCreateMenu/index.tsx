@@ -36,7 +36,6 @@ const FormCreateMenu = () => {
           'Content-Type': 'multipart/form-data'
         }
       });
-      console.log('uploadMenuImage response data' ,response.data);
       return response.data;
     } catch (error) {
       console.error('uploadMenuImage error', error);

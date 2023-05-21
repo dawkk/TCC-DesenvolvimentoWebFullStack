@@ -56,7 +56,6 @@ const Dashboard = () => {
           endDate: endDate?.toISOString(),
         },
       });
-      console.log('fetchSalesData', response.data)
       const { salesData, totalSales, orderCount } = response.data;
       setSalesData(salesData);
       setTotalSales(totalSales);

@@ -19,7 +19,7 @@ const FormPutAddress = () => {
     neighborhood: '',
     city: '',
     state: '',
-    zipcode: 0,
+    zipcode: '',
     additionalInfo: '',
   });
 
@@ -30,7 +30,7 @@ const FormPutAddress = () => {
     neighborhood: Yup.string().max(255),
     city: Yup.string().max(255),
     state: Yup.string().max(255),
-    zipcode: Yup.number(),
+    zipcode: Yup.string().matches(/^\d{5}-\d{3}$/, 'Formato inválido, deve ser XXXXX-XXX'),
     additionalInfo: Yup.string().max(255),
   });
 
