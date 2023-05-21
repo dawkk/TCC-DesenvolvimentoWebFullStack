@@ -1,18 +1,20 @@
-import { Alert, AppBar, Box, Button, Link, Toolbar } from '@mui/material';
+import { AppBar, Box, Button, Link, Toolbar } from '@mui/material';
 import { Container } from '@mui/system';
-import colorTheme from '../../ColorThemes';
-import { Link as RouterLink } from 'react-router-dom';
-import Logo from '../../Logo';
 import { useEffect, useState } from "react";
-import CartDrawer from './cartDrawer';
-import DropDownList from './DropdownList';
+import { Link as RouterLink } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthProvider';
-import styles from './NavbarDesktop.module.scss'
+import CustomizedSnackbars from '../../Alerts/Snackbar';
+import colorTheme from '../../ColorThemes';
+import Logo from '../../Logo';
+import DropDownList from './DropdownList';
+import styles from './NavbarDesktop.module.scss';
+import CartDrawer from './cartDrawer';
 
 
 
 const NavbarDesktop = () => {
-  const [showLogoutAlert, setShowLogoutAlert] = useState<boolean>(false);
+  const [showSucessAlert, setShowSucessAlert] = useState<boolean>(false);
+  const [showFailAlert, setShowFailAlert] = useState<boolean>(false);
   const auth = useAuth();
 
   if (auth.isLoading) {
@@ -28,12 +30,18 @@ const NavbarDesktop = () => {
   }, [auth.user]);
 
   const handleLogoutButton = () => {
-    auth.logout();
-    setShowLogoutAlert(true);
-  };
+    try {
+      auth.logout();
+      setShowSucessAlert(true);
+      setShowFailAlert(false);
+    } catch(error) {
+      console.log(error)
+      setShowSucessAlert(false);
+      setShowFailAlert(true);
+    }
 
-  const handleCloseLogoutAlert = () => {
-    setShowLogoutAlert(false);
+    setShowSucessAlert(true);
+    setShowFailAlert(false);
   };
 
 
@@ -105,13 +113,27 @@ const NavbarDesktop = () => {
           </Box>
         </Toolbar>
       </Container>
-      {showLogoutAlert && (
+
+      {showSucessAlert &&
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-          <Alert onClose={handleCloseLogoutAlert} severity="success" sx={{ position: 'absolute', top: '12vh', width: '25vw' }}>
-            Logout realizado com sucesso.
-          </Alert>
+          <CustomizedSnackbars
+            open={showSucessAlert}
+            message="Logout realizado com sucesso!"
+            severity="success"
+            onClose={() => setShowSucessAlert(false)}
+          />
         </Box>
-      )}
+      }
+      {showFailAlert &&
+        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+          <CustomizedSnackbars
+            open={showFailAlert}
+            message="Erro: Falha ao realizar logout. Por favor entre em contato com a administração."
+            severity="error"
+            onClose={() => setShowFailAlert(false)}
+          />
+        </Box>
+      }
     </AppBar>
   )
 }

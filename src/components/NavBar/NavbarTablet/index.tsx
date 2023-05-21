@@ -1,25 +1,28 @@
-import { Alert, AppBar, Box, Button, Collapse, Divider, Drawer, IconButton, Link, List, ListItem, ListItemText, Toolbar, Typography } from '@mui/material';
-import LogoutIcon from '@mui/icons-material/Logout';
-import InfoIcon from '@mui/icons-material/Info';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import LunchDiningIcon from '@mui/icons-material/LunchDining';
-import HomeIcon from '@mui/icons-material/Home';
-import LoginIcon from '@mui/icons-material/Login';
-import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
-import { Link as RouterLink } from 'react-router-dom';
-import Logo from '../../Logo';
-import { useEffect, useState } from "react";
-import MenuIcon from '@mui/icons-material/Menu';
-import CartDrawer from '../NavbarDesktop/cartDrawer';
-import CloseIcon from '@mui/icons-material/Close';
-import { useAuth } from '../../../context/AuthProvider';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
-import React from 'react';
-import styles from './NavbarTablet.module.scss'
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import CloseIcon from '@mui/icons-material/Close';
+import HomeIcon from '@mui/icons-material/Home';
+import InfoIcon from '@mui/icons-material/Info';
+import LoginIcon from '@mui/icons-material/Login';
+import LogoutIcon from '@mui/icons-material/Logout';
+import LunchDiningIcon from '@mui/icons-material/LunchDining';
+import MenuIcon from '@mui/icons-material/Menu';
+import { AppBar, Box, Button, Collapse, Divider, Drawer, IconButton, Link, List, ListItem, ListItemText, Toolbar, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
+import { useAuth } from '../../../context/AuthProvider';
+import CustomizedSnackbars from '../../Alerts/Snackbar';
+import Logo from '../../Logo';
+import CartDrawer from '../NavbarDesktop/cartDrawer';
+import styles from './NavbarTablet.module.scss';
 
 
 
 const NavbarTablet = () => {
+  const [showSucessAlert, setShowSucessAlert] = useState<boolean>(false);
+  const [showFailAlert, setShowFailAlert] = useState<boolean>(false);
+
   const [open, setOpen] = useState(false);
   const [menuAdministrativoOpen, setMenuAdministrativoOpen] = useState(false);
 
@@ -29,8 +32,7 @@ const NavbarTablet = () => {
 
   const handleCloseDrawer = () => {
     setOpen(false);
-  }
-  const [showLogoutAlert, setShowLogoutAlert] = useState<boolean>(false);
+  };
   const auth = useAuth();
 
   if (auth.isLoading) {
@@ -46,12 +48,18 @@ const NavbarTablet = () => {
   }, [auth.user]);
 
   const handleLogoutButton = () => {
-    auth.logout();
-    setShowLogoutAlert(true);
-  };
+    try {
+      auth.logout();
+      setShowSucessAlert(true);
+      setShowFailAlert(false);
+    } catch (error) {
+      console.log(error)
+      setShowSucessAlert(false);
+      setShowFailAlert(true);
+    }
 
-  const handleCloseLogoutAlert = () => {
-    setShowLogoutAlert(false);
+    setShowSucessAlert(true);
+    setShowFailAlert(false);
   };
 
 
@@ -59,11 +67,11 @@ const NavbarTablet = () => {
     <div>
       <AppBar>
         <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Box sx={{ boxSizing: 'border-box'}}>
+          <Box sx={{ boxSizing: 'border-box' }}>
             <Logo />
           </Box>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', m:2.5 }}>
-            <IconButton edge="end" color="inherit" onClick={handleDrawerToggle} sx={{mr:2}}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', m: 2.5 }}>
+            <IconButton edge="end" color="inherit" onClick={handleDrawerToggle} sx={{ mr: 2 }}>
               <MenuIcon />
             </IconButton>
             <Link id="cart-menu-open-icon" component={RouterLink} to="">
@@ -88,7 +96,7 @@ const NavbarTablet = () => {
           {isStaff &&
             <React.Fragment>
               <ListItem button data-testid={`menu-staff-expand-collapse`} onClick={() => setMenuAdministrativoOpen(!menuAdministrativoOpen)}>
-                <AdminPanelSettingsIcon sx={{ ml: 1, mr: 1 }}/>
+                <AdminPanelSettingsIcon sx={{ ml: 1, mr: 1 }} />
                 <ListItemText primary="Menu Administrativo" />
                 {menuAdministrativoOpen ? <ExpandLess /> : <ExpandMore />}
               </ListItem>
@@ -119,7 +127,7 @@ const NavbarTablet = () => {
                       <ListItemText primary="Pedidos" />
                     </ListItem>
                   </Link>
-              {/*     <Link component={RouterLink} to="/staff/inventory" style={{ textDecoration: 'none', color: 'black' }}>
+                  {/*     <Link component={RouterLink} to="/staff/inventory" style={{ textDecoration: 'none', color: 'black' }}>
                     <ListItem button sx={{ pl: 4 }}>
                       <ListItemText primary="Inventario" />
                     </ListItem>
@@ -174,13 +182,26 @@ const NavbarTablet = () => {
               </ListItem>
             </Link>
           )}
-          {showLogoutAlert && (
+          {showSucessAlert &&
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-              <Alert onClose={handleCloseLogoutAlert} severity="success" sx={{ position: 'absolute', top: '12vh', width: '25vw' }}>
-                Logout realizado com sucesso.
-              </Alert>
+              <CustomizedSnackbars
+                open={showSucessAlert}
+                message="Logout realizado com sucesso!"
+                severity="success"
+                onClose={() => setShowSucessAlert(false)}
+              />
             </Box>
-          )}
+          }
+          {showFailAlert &&
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+              <CustomizedSnackbars
+                open={showFailAlert}
+                message="Erro: Falha ao realizar logout. Por favor entre em contato com a administração."
+                severity="error"
+                onClose={() => setShowFailAlert(false)}
+              />
+            </Box>
+          }
           <Divider />
         </List>
       </Drawer>
