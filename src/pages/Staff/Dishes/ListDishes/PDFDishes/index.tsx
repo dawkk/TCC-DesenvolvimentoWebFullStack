@@ -32,10 +32,6 @@ const DishPDF: React.FC<DishPDFProps> = ({ dishes }) => {
       fontSize: 12,
       marginBottom: 3,
     },
-    dishType: {
-      fontSize: 12,
-      marginBottom: 3,
-    },
     dishMenu: {
       fontSize: 12,
       marginBottom: 10,

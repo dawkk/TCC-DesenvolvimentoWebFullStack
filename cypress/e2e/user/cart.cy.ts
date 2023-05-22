@@ -2,7 +2,7 @@ import { user } from "./user";
 
 describe('User adding items to and using cart', () => {
 
-  it.skip('should open menu and', () => {
+  it('should open menu and', () => {
     cy.visit('http://localhost:3000/');
     cy.get('.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-colorInherit.MuiIconButton-edgeEnd.MuiIconButton-sizeMedium').click();
     cy.get('a.MuiTypography-root.MuiLink-root[href="/login"]').click();
@@ -14,7 +14,7 @@ describe('User adding items to and using cart', () => {
 
   });
 
-  it.skip('should open cart without items, try to click on the button to navigate to checkout, and then close the cart', () => {
+  it('should open cart without items, try to click on the button to navigate to checkout, and then close the cart', () => {
     cy.visit('http://localhost:3000/');
     cy.get('#cart-menu-open-icon').click();
     cy.wait(4000);

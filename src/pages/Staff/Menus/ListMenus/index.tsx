@@ -9,11 +9,14 @@ import IMenu from "../../../../interfaces/IMenu";
 import { useMediaQuery } from '@mui/material';
 import MenuPDF from "./PDFMenus";
 import jsPDF from "jspdf";
+import CustomizedSnackbars from "../../../../components/Alerts/Snackbar";
 
 
 const ListMenus: React.FC = () => {
   const [menus, setMenus] = useState<IMenu[]>([])
   const [showPDF, setShowPDF] = useState(false);
+  const [showSucessAlert, setShowSucessAlert] = useState<boolean>(false);
+  const [showFailAlert, setShowFailAlert] = useState<boolean>(false);
   const isDesktop = useMediaQuery('(min-width:700px)');
 
   useEffect(() => {
@@ -44,12 +47,22 @@ const ListMenus: React.FC = () => {
 
 
   const deleteMenu = (_id: string) => {
+    try{
+
+    
     const config = { data: { _id } };
     http.delete(`/menus/${_id}`, config)
       .then(() => {
         const listMenus = menus.filter(menu => menu._id !== _id)
         setMenus([...listMenus])
       })
+      setShowSucessAlert(true);
+      setShowFailAlert(false);
+    } catch(error) {
+      console.log(error);
+      setShowSucessAlert(false);
+      setShowFailAlert(true);
+    }
   }
 
   const handleDownloadPDF = () => {
@@ -85,7 +98,7 @@ const ListMenus: React.FC = () => {
       y += 80;
     });
   
-    doc.save('menu.pdf');
+    doc.save('menus.pdf');
   };
 
 
@@ -94,9 +107,29 @@ const ListMenus: React.FC = () => {
       <Box sx={{ backgroundColor: colorTheme.palette.primary.light, mb: '22vh', display: 'flex', justifyContent: 'center' }}>
         <Box>
           <Button variant="contained" component={RouterLink} to={`/staff/menus/create`} sx={{ mr: 1, mt: 1 }}>Adicionar Novo Menu</Button>
-          <Button variant="contained" onClick={handleDownloadPDF} sx={{ mr: 1, mt: 1 }}>Download PDF</Button>
-          <Button variant="contained" onClick={() => setShowPDF(!showPDF)} sx={{ mt: 1 }}>Visualizar PDF</Button>
+          <Button variant="contained" onClick={handleDownloadPDF} sx={{ mr: 1, mt: 1 }}data-testid={`menu-pdf-download`}>Download PDF</Button>
+          <Button variant="contained" onClick={() => setShowPDF(!showPDF)} sx={{ mt: 1 }}data-testid={`menu-pdf-view`}>Visualizar PDF</Button>
           {showPDF && <MenuPDF menus={menus} />}
+          {showSucessAlert &&
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+              <CustomizedSnackbars
+                open={showSucessAlert}
+                message="Login realizado com sucesso! Redirecionando.."
+                severity="success"
+                onClose={() => setShowSucessAlert(false)}
+              />
+            </Box>
+          }
+          {showFailAlert &&
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+              <CustomizedSnackbars
+                open={showFailAlert}
+                message="Erro: E-mail ou senha incorreto(a)."
+                severity="error"
+                onClose={() => setShowFailAlert(false)}
+              />
+            </Box>
+          }
           <Box sx={{ display: 'flex', mt: 3 }}>
             <Box sx={{ backgroundColor: 'white' }}>
               <Paper>
@@ -116,7 +149,7 @@ const ListMenus: React.FC = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {menus.map((menu) => (
+                    {menus.map((menu, index) => (
                       <TableRow
                         key={menu._id}
                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -126,15 +159,15 @@ const ListMenus: React.FC = () => {
                         <TableCell component="th" scope="row" align="center">
                           {menu.name}
                         </TableCell>
-                        <TableCell align="center"><Link component={RouterLink} to={`/staff/menus/${menu._id}`}><EditIcon /></Link></TableCell>
-                        <TableCell align="center"><Button onClick={() => deleteMenu(menu._id)}><DeleteForeverIcon /></Button></TableCell>
+                        <TableCell align="center"><Link component={RouterLink} to={`/staff/menus/${menu._id}`} data-testid={`menu-edit-${index}`}><EditIcon /></Link></TableCell>
+                        <TableCell align="center"><Button onClick={() => deleteMenu(menu._id)}data-testid={`menu-delete-${index}`}><DeleteForeverIcon /></Button></TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
                 </Table>
               </TableContainer>
               ) : (
-                menus.map((menu) => (
+                menus.map((menu, index) => (
                   <Box
                     key={menu._id}
                     sx={{
@@ -153,13 +186,13 @@ const ListMenus: React.FC = () => {
                         alignItems: 'center',
                         justifyContent: 'center',
                         mr: 1
-                      }}> <EditIcon />
+                      }} data-testid={`menu-edit-${index}`}> <EditIcon />
                       </Button>
                       <Button variant="contained" color="primary" sx={{
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                      }} onClick={() => deleteMenu(menu._id)}><DeleteForeverIcon /></Button>
+                      }} onClick={() => deleteMenu(menu._id)} data-testid={`menu-delete-${index}`}><DeleteForeverIcon /></Button>
                     </Box>
                     <Box sx={{ display: 'flex' }}>
                       {menu.image && <img src={menu.imageURL} alt={menu.name} height={100} width={100} />}

@@ -10,7 +10,7 @@ describe('User registration', () => {
     cy.url().should('include', 'http://localhost:3000/register');
   });
 
-  it.skip('should display error messages for missing mandatory fields', () => {
+  it('should display error messages for missing mandatory fields', () => {
 
     cy.get('button[type="submit"]').click();
     cy.get('#helper-text-firstname-signup').should('be.visible').contains('Nome Obrigatório');
@@ -21,7 +21,7 @@ describe('User registration', () => {
 
   });
 
-  it.skip('should display error messages for incorrect field formats', () => {
+  it('should display error messages for incorrect field formats', () => {
 
     cy.get('input#firstName').type(user.firstName);
     cy.get('input#lastName').type(user.lastName)
@@ -46,7 +46,7 @@ describe('User registration', () => {
 
   });
 
-  it.skip('should navigate to register, enter all user info, address info, e-mail and password, and click in register button and be registered', () => {
+  it('should navigate to register, enter all user info, address info, e-mail and password, and click in register button and be registered', () => {
 
     cy.get('input#firstName').type(user.firstName);
     cy.get('input#lastName').type(user.lastName);
@@ -67,7 +67,7 @@ describe('User registration', () => {
 
   });
 
-  it.skip('should not register and display error message if email filled in form is already being used by another user account', () => {
+  it('should not register and display error message if email filled in form is already being used by another user account', () => {
 
     cy.get('input#firstName').type(user.firstName);
     cy.get('input#lastName').type(user.lastName);
@@ -86,19 +86,4 @@ describe('User registration', () => {
       .should('be.visible');
 
   });
-
-  it.skip('should log in as an admin user', () => {
-    cy.visit('http://localhost:3000/');
-    cy.get('.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-colorInherit.MuiIconButton-edgeEnd.MuiIconButton-sizeMedium').click();
-    cy.get('a.MuiTypography-root.MuiLink-root[href="/login"]').click();
-    cy.url().should('include', 'http://localhost:3000/login');
-
-    const adminUsername = Cypress.env('ADMIN_USERNAME');
-    const adminPassword = Cypress.env('ADMIN_PASSWORD');
-
-    cy.get('input#email').type(adminUsername);
-    cy.get('input#password').type(adminPassword);
-    cy.get('button[type="submit"]').click();
-  });
-
 });

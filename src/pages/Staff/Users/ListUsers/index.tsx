@@ -63,7 +63,7 @@ const ListUsers: React.FC = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {users.map((user) => (
+                    {users.map((user, index) => (
                       <TableRow
                         key={user._id}
                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -81,7 +81,7 @@ const ListUsers: React.FC = () => {
                         alignItems: 'center',
                         justifyContent: 'center',
                         mr:1
-                      }}> <VisibilityIcon />
+                      }} data-testid={`button-user-details-${index}`}> <VisibilityIcon />
                       </Button></TableCell>
 
                       </TableRow>

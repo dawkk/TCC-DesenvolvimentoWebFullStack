@@ -1,23 +1,19 @@
-import { Alert, Box, Button, FormControl, FormHelperText, Grid, IconButton, InputLabel, MenuItem, OutlinedInput, Select, Stack, Typography } from '@mui/material';
-import * as Yup from 'yup';
-import { Formik, Form } from 'formik';
-import http from '../../../../../api/axios';
-import { useEffect, useState } from 'react';
-import IMenu from '../../../../../interfaces/IMenu';
-import { useNavigate } from 'react-router';
-import colorTheme from '../../../../../components/ColorThemes';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
+import { Box, Button, FormControl, FormHelperText, Grid, IconButton, InputLabel, MenuItem, OutlinedInput, Select, Stack, Typography } from '@mui/material';
+import { Form, Formik } from 'formik';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
+import * as Yup from 'yup';
+import http from '../../../../../api/axios';
+import CustomizedSnackbars from '../../../../../components/Alerts/Snackbar';
+import colorTheme from '../../../../../components/ColorThemes';
+import IMenu from '../../../../../interfaces/IMenu';
 
 
 
 const FormCreateDish = () => {
   const [showSucessAlert, setShowSucessAlert] = useState<boolean>(false);
   const [showFailAlert, setShowFailAlert] = useState<boolean>(false);
-
-  const handleCloseAlert = () => {
-    setShowSucessAlert(false);
-    setShowFailAlert(false);
-  };
 
   const [menus, setMenus] = useState<IMenu[]>([])
   const navigate = useNavigate();
@@ -74,9 +70,10 @@ const FormCreateDish = () => {
                 borderRadius: 1, color: colorTheme.palette.primary.contrastText, backgroundColor: colorTheme.palette.primary.main, "&:hover": {
                   backgroundColor: colorTheme.palette.secondary.dark
                 }
-              }}>
+              }} data-testid={`button-image-upload`}>
                 <PhotoCameraIcon />
                 <input
+                  
                   type="file"
                   onChange={handleFileChange}
                   accept="image/*"
@@ -85,7 +82,7 @@ const FormCreateDish = () => {
               </IconButton>
 
               {preview ? (
-                <img src={preview} alt="Imagem" width="250" height="270" loading="lazy" />
+                <img src={preview} alt="Imagem" width="250" height="270" loading="lazy" data-testid={`image-uploaded-preview`} />
               ) : (
                 <Typography variant="body1">Sem Imagem</Typography>
               )}
@@ -99,7 +96,6 @@ const FormCreateDish = () => {
             description: '',
             price: '',
             menu: '',
-            type: '',
             submit: null
           }}
           validationSchema={yupValidationSchema}
@@ -117,10 +113,12 @@ const FormCreateDish = () => {
                 await uploadDishImage(file, _id);
                 setFile(null);
               }
-              navigate('/staff/dishes');
+
               setShowSucessAlert(true);
               setShowFailAlert(false);
-
+              setTimeout(() => {
+                navigate('/staff/dishes');
+              }, 3000);
             } catch (err) {
               console.error(err);
               setStatus({ success: false });
@@ -135,16 +133,22 @@ const FormCreateDish = () => {
             <Form noValidate onSubmit={handleSubmit}>
               {showSucessAlert &&
                 <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                  <Alert onClose={handleCloseAlert} severity="success" sx={{ width: '40%' }}>
-                    Prato atualizado com sucesso!
-                  </Alert>
+                  <CustomizedSnackbars
+                    open={showSucessAlert}
+                    message="Prato criado com sucesso!"
+                    severity="success"
+                    onClose={() => setShowSucessAlert(false)}
+                  />
                 </Box>
               }
               {showFailAlert &&
                 <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                  <Alert onClose={handleCloseAlert} severity="error" sx={{ width: '40%' }}>
-                    Erro: Prato não foi atualizado.
-                  </Alert>
+                  <CustomizedSnackbars
+                    open={showFailAlert}
+                    message="Erro: Falha durante a criação de prato."
+                    severity="error"
+                    onClose={() => setShowFailAlert(false)}
+                  />
                 </Box>
               }
               <Grid
@@ -195,27 +199,6 @@ const FormCreateDish = () => {
                   </Stack>
                 </Grid>
 
-                <Grid item xs={12} md={4}>
-                  <Stack spacing={1}>
-                    <InputLabel>Tipo</InputLabel>
-                    <OutlinedInput
-                      id='type'
-                      type='type'
-                      value={values.type}
-                      name='type'
-                      placeholder='Bovinos'
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      error={Boolean(touched.type && errors.type)}
-                    />
-                    {touched.type && errors.type && (
-                      <FormHelperText error id="helper-text-type">
-                        {errors.type}
-                      </FormHelperText>
-                    )}
-                  </Stack>
-                </Grid>
-
                 <Grid item xs={12} md={12}>
                   <Stack spacing={1}>
                     <InputLabel>Descrição</InputLabel>
@@ -242,6 +225,7 @@ const FormCreateDish = () => {
                     <FormControl fullWidth>
                       <InputLabel id="menu-select-label">Menu</InputLabel>
                       <Select
+                        data-testid={`button-select-menus`}
                         labelId="menu-select-label"
                         id="menu"
                         type="menu"
@@ -252,8 +236,8 @@ const FormCreateDish = () => {
                         onChange={handleChange}
                         error={Boolean(touched.menu && errors.menu)}
                       >
-                        {menus.map((menu) => (
-                          <MenuItem key={menu._id} value={menu._id}>{menu.name}</MenuItem>
+                        {menus.map((menu, index) => (
+                          <MenuItem key={menu._id} value={menu._id} data-testid={`menu-created-${index}`}>{menu.name}</MenuItem>
                         ))}
                       </Select>
                       {touched.menu && errors.menu && (
@@ -272,6 +256,7 @@ const FormCreateDish = () => {
 
                 <Grid item xs={4} sx={{ mt: 8 }}>
                   <Button
+                    data-testid={`button-create-dish`}
                     disableElevation
                     disabled={isSubmitting}
                     fullWidth

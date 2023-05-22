@@ -25,9 +25,8 @@ const FormPutDish = () => {
       _id: '',
       name: '',
     },
-    type: '',
   });
-  
+
 
 
   useEffect(() => {
@@ -59,7 +58,6 @@ const FormPutDish = () => {
       _id: Yup.string().required('Menu Obrigatório'),
       name: Yup.string(),
     }),
-    type: Yup.string().max(255),
   });
 
   /* IMAGE HANDLING */
@@ -143,7 +141,7 @@ const FormPutDish = () => {
         <Typography variant='h2'>Atualizar Prato</Typography>
       </Grid>
       <Box sx={{ display: 'flex' }}>
-        <Box sx={{mt:4, mr:2}}>
+        <Box sx={{ mt: 4, mr: 2 }}>
           <form onSubmit={handleSubmit} encType="multipart/form-data">
             <Box sx={{ display: 'flex', flexDirection: 'column', width: 250 }}>
 
@@ -151,7 +149,7 @@ const FormPutDish = () => {
                 borderRadius: 1, color: colorTheme.palette.primary.contrastText, backgroundColor: colorTheme.palette.primary.main, "&:hover": {
                   backgroundColor: colorTheme.palette.secondary.dark
                 }
-              }}>
+              }} data-testid={`button-image-upload`}>
                 <PhotoCameraIcon />
                 <input
                   type="file"
@@ -166,7 +164,7 @@ const FormPutDish = () => {
               ) : (
                 <Typography variant="body1">Sem Imagem</Typography>
               )}
-              <Button type="submit" variant="contained" color="primary">
+              <Button type="submit" variant="contained" color="primary" data-testid={`save-image-button`}>
                 Salvar Imagem
               </Button>
             </Box>
@@ -182,15 +180,16 @@ const FormPutDish = () => {
             try {
               setStatus({ success: false });
               setSubmitting(false);
-              const response = await http.put(`/dishes/${params._id}`, JSON.stringify(values), {
+              await http.put(`/dishes/${params._id}`, JSON.stringify(values), {
                 headers: {
                   'Content-Type': 'application/json'
                 },
               });
-              navigate('/staff/dishes');
               setShowSucessAlert(true);
               setShowFailAlert(false);
-
+              setTimeout(() => {
+                navigate('/staff/dishes');
+              }, 3000);
             } catch (err) {
               console.error(err);
               setStatus({ success: false });
@@ -206,21 +205,21 @@ const FormPutDish = () => {
               {showSucessAlert &&
                 <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                   <CustomizedSnackbars
-                  open={showSucessAlert}
-                  message="Prato atualizado com sucesso!"
-                  severity="success"
-                  onClose={() => setShowSucessAlert(false)}
-                />
+                    open={showSucessAlert}
+                    message="Prato atualizado com sucesso!"
+                    severity="success"
+                    onClose={() => setShowSucessAlert(false)}
+                  />
                 </Box>
               }
               {showFailAlert &&
                 <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                   <CustomizedSnackbars
-                  open={showFailAlert}
-                  message="Erro: Prato não foi atualizado."
-                  severity="error"
-                  onClose={() => setShowFailAlert(false)}
-                />
+                    open={showFailAlert}
+                    message="Erro: Prato não foi atualizado."
+                    severity="error"
+                    onClose={() => setShowFailAlert(false)}
+                  />
                 </Box>
               }
 
@@ -272,27 +271,6 @@ const FormPutDish = () => {
                   </Stack>
                 </Grid>
 
-                <Grid item xs={12} md={4}>
-                  <Stack spacing={1}>
-                    <InputLabel>Tipo</InputLabel>
-                    <OutlinedInput
-                      id='type'
-                      type='type'
-                      value={values.type}
-                      name='type'
-                      placeholder='Bovinos'
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      error={Boolean(touched.type && errors.type)}
-                    />
-                    {touched.type && errors.type && (
-                      <FormHelperText error id="helper-text-type">
-                        {errors.type}
-                      </FormHelperText>
-                    )}
-                  </Stack>
-                </Grid>
-
                 <Grid item xs={12} md={12}>
                   <Stack spacing={1}>
                     <InputLabel>Descrição</InputLabel>
@@ -321,6 +299,7 @@ const FormPutDish = () => {
                     <FormControl fullWidth>
                       <InputLabel id="menu-select-label">Menu</InputLabel>
                       <Select
+                        data-testid={`button-select-menus`}
                         labelId="menu-select-label"
                         id="menu._id"
                         type="menu"
@@ -332,8 +311,8 @@ const FormPutDish = () => {
                         error={Boolean(touched.menu && errors.menu)}
                         disabled={isSubmitting}
                       >
-                        {menus.map((menu) => (
-                          <MenuItem key={menu._id} value={menu._id}>{menu.name}</MenuItem>
+                        {menus.map((menu, index) => (
+                          <MenuItem key={menu._id} value={menu._id} data-testid={`menu-created-${index}`}>{menu.name}</MenuItem>
                         ))}
                       </Select>
                       {touched.menu && errors.menu && (
@@ -348,6 +327,7 @@ const FormPutDish = () => {
                 </Grid>
                 <Grid item xs={4} sx={{ mt: 1.5 }}>
                   <Button
+                    data-testid={`button-edit-dish`}
                     disableElevation
                     disabled={isSubmitting}
                     fullWidth
