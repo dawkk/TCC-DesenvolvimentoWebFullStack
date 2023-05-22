@@ -28,12 +28,16 @@ import DashboardPage from './pages/Staff/DashboardPage';
 import StaffUsers from './pages/Staff/Users';
 import StaffUserDetailsPage from './pages/Staff/Users/DetailsUserPage';
 import StaffOrders from './pages/Staff/Orders';
+import TermsOfPrivacy from './pages/Terms/TermsOfPrivacy';
+import TermsOfService from './pages/Terms/TermsOfService';
 
 function App() {
   return (
     <Routes>
       <Route path='/401' element={<Error401Page/>}/>
       <Route path='/' element={<Home/>}/>
+      <Route path='/terms_of_privacy' element={<TermsOfPrivacy/>}/>
+      <Route path='/terms_of_service' element={<TermsOfService/>}/>
       <Route path='/menu' element={<Menus/>}/>
       <Route path='/login' element={<Login/>}/>
       <Route path='/register' element={<Register/>}/>
