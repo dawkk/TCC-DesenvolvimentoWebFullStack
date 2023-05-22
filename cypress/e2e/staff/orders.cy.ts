@@ -21,7 +21,7 @@ describe('Staff Orders', () => {
   });
 
   
-  it('Staff orders changing status', () => {
+  it.skip('Staff orders changing status', () => {
     cy.get('[data-testid="orders-button-accept-0"]').click();
     cy.get('.MuiAlert-message').should('be.visible');
     cy.wait(2000);

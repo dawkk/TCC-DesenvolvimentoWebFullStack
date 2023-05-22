@@ -46,7 +46,7 @@
     "eject": "react-scripts eject",
     "test:e2e": "cypress run",
     "cy:run": "cypress run --headed --browser electron && npm run generate:report",
-    "generate:report": "mochawesome-merge cypress/reports/*.json > cypress/reports/mochawesome.json && marge cypress/reports/mochawesome.json -o cypress/reports"
+    "generate:report": "mochawesome-merge cypress/reports/*.json > cypress/reports/mochawesome.json && npx marge cypress/reports/mochawesome.json -o cypress/reports"
   },
   "eslintConfig": {
     "extends": [

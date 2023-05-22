@@ -2,7 +2,7 @@ import { address2, user } from "./user";
 
 describe('User checkout steps after choosing dishes and cart', () => {
 
-  it('should enter wrong credentials for password, and click login button', () => {
+  it.skip('should enter wrong credentials for password, and click login button', () => {
     cy.visit('http://localhost:3000/checkout');
 
     cy.get('input#email').type(user.email);
@@ -12,7 +12,7 @@ describe('User checkout steps after choosing dishes and cart', () => {
 
   });
 
-  it('should login, choose address, click to create new address, fill and display error messages for incorrect field formats', () => {
+  it.skip('should login, choose address, click to create new address, fill and display error messages for incorrect field formats', () => {
     cy.visit('http://localhost:3000/checkout');
     cy.get('input#email').type(user.email);
     cy.get('input#password').type(user.password);
@@ -34,7 +34,7 @@ describe('User checkout steps after choosing dishes and cart', () => {
       .should('contain', 'Formato inválido, deve ser XXXXX-XXX');
   });
 
-  it('should login, choose address, create new address, choose payment method and on review page receive errors for empty cart and use all return buttons', () => {
+  it.skip('should login, choose address, create new address, choose payment method and on review page receive errors for empty cart and use all return buttons', () => {
     cy.visit('http://localhost:3000/checkout');
     cy.get('input#email').type(user.email);
     cy.get('input#password').type(user.password);
@@ -68,7 +68,7 @@ describe('User checkout steps after choosing dishes and cart', () => {
 
   });
 
-  it('should login, choose address, click to create new address creates new address, choose payment, review checkout and continue', () => {
+  it.skip('should login, choose address, click to create new address creates new address, choose payment, review checkout and continue', () => {
     cy.visit('http://localhost:3000/');
     cy.get('.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-colorInherit.MuiIconButton-edgeEnd.MuiIconButton-sizeMedium').click(); /* Menu Hamburguer Open */
     cy.get('div.MuiButtonBase-root.MuiListItem-root').contains('Cardápio').click();

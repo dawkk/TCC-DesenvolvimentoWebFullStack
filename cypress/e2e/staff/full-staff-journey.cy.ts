@@ -102,7 +102,7 @@ describe('Staff ', () => {
     /* Staff menu creation */
 
     cy.contains('a.MuiButtonBase-root.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary.MuiButton-sizeMedium.MuiButton-containedSizeMedium', 'Adicionar Novo Menu').click();
-    cy.get('input#name').type('Doces');
+    cy.get('input#name').type('Tortas');
 
     cy.get('[data-testid="button-create-menu"]').click();
     cy.get('.MuiAlert-message').should('be.visible');
@@ -112,7 +112,7 @@ describe('Staff ', () => {
     /* Staff menu edit */
 
     cy.get('[data-testid="menu-edit-0"]').click();
-    cy.get('input#name').clear().type('Massas');
+    cy.get('input#name').clear().type('Pizzas');
 
     cy.get('[data-testid="button-edit-menu"]').click();
     cy.get('.MuiAlert-message').should('be.visible');
@@ -143,11 +143,10 @@ describe('Staff ', () => {
     cy.url().should('include', 'http://localhost:3000/staff/orders');
 
     /* Changing orders status */
-    cy.wait(3000);
 
     cy.get('[data-testid="orders-button-accept-0"]').click();
     cy.get('.MuiAlert-message').should('be.visible');
-    cy.wait(2000);
+    cy.wait(4000);
     cy.get('[data-testid="orders-status-button-sort-1"]').click();
     cy.get('[data-testid="orders-button-reject-0"]').click();
     cy.get('.MuiAlert-message').should('be.visible');

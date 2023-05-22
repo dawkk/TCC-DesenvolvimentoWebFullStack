@@ -2,7 +2,7 @@ import { address2, user, user2 } from "./user";
 
 describe('User full journey in one go', () => {
 
-  it.skip('should register, login, add items to cart, go through checkout create new address, select it, create order, go to profile, go to orders details, change user profile, change user address, add user address, delete user address, all sucessfully', () => {
+  it('should register, login, add items to cart, go through checkout create new address, select it, create order, go to profile, go to orders details, change user profile, change user address, add user address, delete user address, all sucessfully', () => {
 
     /* REGISTRATION */
 

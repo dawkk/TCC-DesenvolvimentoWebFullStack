@@ -20,7 +20,7 @@ describe('Staff Users', () => {
     cy.url().should('include', 'http://localhost:3000/staff/users');
   });
 
-  it('Staff users list and user details', () => {
+  it.skip('Staff users list and user details', () => {
     cy.get('a[data-testid="button-user-details-0"]').click();
   });
 

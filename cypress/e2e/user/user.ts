@@ -9,7 +9,7 @@ export const user = {
   state: 'São Paulo',
   zipcode: '13820-000',
   additionalInfo: 'Apartment 15',
-  email: 'test@example3.com',
+  email: 'test@example6.com',
   password: 'password123',
 };
 
@@ -24,7 +24,7 @@ export const user2 = {
   state: 'New York',
   zipcode: '13820-395',
   additionalInfo: 'Suite 23',
-  email: 'jane.smith@example4.com',
+  email: 'jane.smith@example6.com',
   password: 'randompassword123',
 };
 
