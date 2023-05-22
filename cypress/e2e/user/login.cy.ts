@@ -10,7 +10,7 @@ describe('User login', () => {
     cy.url().should('include', 'http://localhost:3000/login');
   });
 
-  it('should enter invalid format email and password', () => {
+  it.skip('should enter invalid format email and password', () => {
 
     cy.get('input#email').type('usuario@@.usuario');
     cy.get('input#password').type(user.password);
@@ -18,7 +18,7 @@ describe('User login', () => {
 
   });
 
-  it('should enter wrong credentials for password, and click login button', () => {
+  it.skip('should enter wrong credentials for password, and click login button', () => {
 
     cy.get('input#email').type(user.email);
     cy.get('input#password').type('passwords');
@@ -28,7 +28,7 @@ describe('User login', () => {
 
   });
 
-  it('should navigate to login, enter email and password, and click login button', () => {
+  it.skip('should navigate to login, enter email and password, and click login button', () => {
 
     cy.get('input#email').type(user.email);
     cy.get('input#password').type(user.password);

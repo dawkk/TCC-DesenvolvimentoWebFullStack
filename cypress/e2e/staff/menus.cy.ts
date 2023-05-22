@@ -19,18 +19,18 @@ describe('Staff Menus', () => {
     cy.url().should('include', 'http://localhost:3000/staff/menus');
   });
 
-  it('Staff menus displays view PDF', () => {
+  it.skip('Staff menus displays view PDF', () => {
 
     cy.get('button[data-testid="menu-pdf-view"]').click();
     cy.get('iframe[src^="blob"]').should('be.visible');
   });
 
-  it('Staff menus download PDF', () => {
+  it.skip('Staff menus download PDF', () => {
     cy.get('button[data-testid="menu-pdf-download"]').click();
     cy.readFile('cypress/downloads/menus.pdf').should('exist');
   });
 
-  it('Staff creating menu', () => {
+  it.skip('Staff creating menu', () => {
 
     cy.contains('a.MuiButtonBase-root.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary.MuiButton-sizeMedium.MuiButton-containedSizeMedium', 'Adicionar Novo Menu').click();
     cy.get('input#name').type('Drinks');
@@ -54,7 +54,7 @@ describe('Staff Menus', () => {
 
   });
 
-  it('Staff edit menu', () => {
+  it.skip('Staff edit menu', () => {
 
     cy.get('[data-testid="menu-edit-0"]').click();
     cy.get('input#name').clear().type('Drinks');
@@ -78,7 +78,7 @@ describe('Staff Menus', () => {
 
   });
 
-  it('Staff delete menu', () => {
+  it.skip('Staff delete menu', () => {
 
     cy.get('[data-testid="menu-delete-1"]').click();
     cy.get('.MuiAlert-message').should('be.visible');

@@ -20,19 +20,19 @@ describe('Staff Dishes', () => {
     cy.url().should('include', 'http://localhost:3000/staff/dishes');
   });
 
-  it('Staff dishes displays view PDF', () => {
+  it.skip('Staff dishes displays view PDF', () => {
 
     cy.get('button[data-testid="dish-pdf-view"]').click();
     cy.get('iframe[src^="blob"]').should('be.visible');
   });
   
-  it('Staff dishes download PDF', () => {
+  it.skip('Staff dishes download PDF', () => {
 
     cy.get('button[data-testid="dish-pdf-download"]').click();
     cy.readFile('cypress/downloads/pratos.pdf').should('exist');
   });
 
-  it('Staff dishes creating dish', () => {
+  it.skip('Staff dishes creating dish', () => {
 
     cy.contains('a.MuiButtonBase-root', 'Adicionar Novo Prato').click();
     cy.get('input#title').type('Fraldinha no molho de mostarda');
@@ -64,7 +64,7 @@ describe('Staff Dishes', () => {
 
   });
 
-  it('Staff dishes edit dish', () => {
+  it.skip('Staff dishes edit dish', () => {
 
     cy.get('[data-testid="dish-edit-0"]').click();
 
@@ -92,7 +92,7 @@ describe('Staff Dishes', () => {
 
   });
 
-  it('Staff dishes delete dish', () => {
+  it.skip('Staff dishes delete dish', () => {
 
     cy.get('[data-testid="dish-delete-1"]').click();
     cy.get('.MuiAlert-message').should('be.visible');

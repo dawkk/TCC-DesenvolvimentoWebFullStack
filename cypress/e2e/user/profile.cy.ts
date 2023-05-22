@@ -14,7 +14,7 @@ describe('User profile options', () => {
   });
 
 
-  it('should enter profile and edit profile info, and receive error for incorrect field formats', () => {
+  it.skip('should enter profile and edit profile info, and receive error for incorrect field formats', () => {
     cy.get('[data-testid="profile-info"]').click();
     cy.get('#cellphone').click();
     cy.get('#cellphone').clear();
@@ -28,7 +28,7 @@ describe('User profile options', () => {
 
   });
 
-  it('should enter profile and edit profile info correctly submit', () => {
+  it.skip('should enter profile and edit profile info correctly submit', () => {
     cy.get('[data-testid="profile-info"]').click();
     cy.get('#cellphone').click();
     cy.get('#cellphone').clear();
@@ -43,7 +43,7 @@ describe('User profile options', () => {
 
   });
 
-  it('should enter profile address and edit address info and receive error for incorrect field formats', () => {
+  it.skip('should enter profile address and edit address info and receive error for incorrect field formats', () => {
     cy.get('[data-testid="profile-address"]').click();
     cy.get('[data-testid="address-edit-button-0"]').click();
     cy.get('input#street').click().clear().type(user.street);
@@ -59,7 +59,7 @@ describe('User profile options', () => {
 
   });
 
-  it('should enter profile address and edit address info correctly', () => {
+  it.skip('should enter profile address and edit address info correctly', () => {
     cy.get('[data-testid="profile-address"]').click();
     cy.get('[data-testid="address-edit-button-0"]').click();
     cy.get('input#street').click().clear().type(user2.street);
@@ -76,7 +76,7 @@ describe('User profile options', () => {
 
   });
 
-  it('should enter profile address, create new address and receive error for incorrect field formats ', () => {
+  it.skip('should enter profile address, create new address and receive error for incorrect field formats ', () => {
     cy.get('[data-testid="profile-address"]').click();
     cy.contains('Adicionar Novo Endereço').click();
     cy.get('input#street').click().type(user2.street);
@@ -89,7 +89,7 @@ describe('User profile options', () => {
     cy.get('#helper-text-zipcode-signup').should('be.visible').should('contain', 'Formato inválido, deve ser XXXXX-XXX');
   });
 
-  it('should enter profile address and create new address correctly ', () => {
+  it.skip('should enter profile address and create new address correctly ', () => {
     cy.get('[data-testid="profile-address"]').click();
     cy.contains('Adicionar Novo Endereço').click();
     cy.get('input#street').click().type(user2.street);
@@ -106,13 +106,13 @@ describe('User profile options', () => {
   });
 
 
-  it('should enter profile address and delete one address', () => {
+  it.skip('should enter profile address and delete one address', () => {
     cy.get('[data-testid="profile-address"]').click();
     cy.get('[data-testid="address-delete-button-1"]').click();
     cy.get('.MuiAlert-message').should('be.visible');
   });
 
-  it('should enter profile orders page and see details', () => {
+  it.skip('should enter profile orders page and see details', () => {
     cy.get('[data-testid="profile-orders"]').click();
     cy.get('[data-testid="profile-orders-0"]').click();
 

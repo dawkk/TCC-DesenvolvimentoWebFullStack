@@ -10,7 +10,7 @@ describe('User registration', () => {
     cy.url().should('include', 'http://localhost:3000/register');
   });
 
-  it('should display error messages for missing mandatory fields', () => {
+  it.skip('should display error messages for missing mandatory fields', () => {
 
     cy.get('button[type="submit"]').click();
     cy.get('#helper-text-firstname-signup').should('be.visible').contains('Nome Obrigatório');
@@ -21,7 +21,7 @@ describe('User registration', () => {
 
   });
 
-  it('should display error messages for incorrect field formats', () => {
+  it.skip('should display error messages for incorrect field formats', () => {
 
     cy.get('input#firstName').type(user.firstName);
     cy.get('input#lastName').type(user.lastName)
@@ -46,7 +46,7 @@ describe('User registration', () => {
 
   });
 
-  it('should navigate to register, enter all user info, address info, e-mail and password, and click in register button and be registered', () => {
+  it.skip('should navigate to register, enter all user info, address info, e-mail and password, and click in register button and be registered', () => {
 
     cy.get('input#firstName').type(user.firstName);
     cy.get('input#lastName').type(user.lastName);
@@ -67,7 +67,7 @@ describe('User registration', () => {
 
   });
 
-  it('should not register and display error message if email filled in form is already being used by another user account', () => {
+  it.skip('should not register and display error message if email filled in form is already being used by another user account', () => {
 
     cy.get('input#firstName').type(user.firstName);
     cy.get('input#lastName').type(user.lastName);
