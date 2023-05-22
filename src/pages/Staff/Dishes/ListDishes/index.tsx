@@ -10,12 +10,15 @@ import IMenu from "../../../../interfaces/IMenu";
 import DishPDF from "./PDFDishes";
 import jsPDF from "jspdf";
 import { useMediaQuery } from '@mui/material';
+import CustomizedSnackbars from "../../../../components/Alerts/Snackbar";
 
 
 const ListDishes: React.FC = () => {
   const [dishes, setDishes] = useState<IDish[]>([])
   const [menus, setMenus] = useState<IMenu[]>([])
   const [showPDF, setShowPDF] = useState(false);
+  const [showSucessAlert, setShowSucessAlert] = useState<boolean>(false);
+  const [showFailAlert, setShowFailAlert] = useState<boolean>(false);
   const isDesktop = useMediaQuery('(min-width:1300px)');
 
   useEffect(() => {
@@ -51,12 +54,20 @@ const ListDishes: React.FC = () => {
   }, [])
 
   const deleteDish = (_id: string) => {
+    try{
     const config = { data: { _id } };
     http.delete(`/dishes/${_id}`, config)
       .then(() => {
         const listDishes = dishes.filter(dish => dish._id !== _id)
         setDishes([...listDishes])
       })
+      setShowSucessAlert(true);
+      setShowFailAlert(false);
+    } catch(error) {
+      console.log(error);
+      setShowSucessAlert(false);
+      setShowFailAlert(true);
+      }
   }
 
   const handleDownloadPDF = () => {
@@ -64,13 +75,13 @@ const ListDishes: React.FC = () => {
     const contentHeight = doc.internal.pageSize.getHeight();
     const lineHeight = 10;
     const maxImagesPerPage = Math.floor((contentHeight - lineHeight) / 80);
-  
+
     doc.setFontSize(20);
     doc.text('Listagem de Pratos', 10, 10);
-  
-    let y = 35; // Adjusted starting position for text elements
+
+    let y = 35; // Adjusts starting position for text elements
     let imageCount = 0;
-  
+
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     dishes.forEach((dish, index) => {
       if (imageCount >= maxImagesPerPage) {
@@ -78,40 +89,60 @@ const ListDishes: React.FC = () => {
         y = 35; //starting position for text elements
         imageCount = 0;
       }
-  
+
       doc.setFontSize(16);
-      doc.text(dish.title, 70, y + 5); 
-      doc.text(dish.description, 70, y + 15); 
-      doc.text(`Preço: R$${dish.price}`, 70, y + 25); 
-      doc.text(`Menu: ${dish.menu?.name}`, 70, y + 35); 
-  
+      doc.text(dish.title, 70, y + 5);
+      doc.text(dish.description, 70, y + 15);
+      doc.text(`Preço: R$${dish.price}`, 70, y + 25);
+      doc.text(`Menu: ${dish.menu?.name}`, 70, y + 35);
+
       if (dish.imageURL) {
-        const imgData = dish.imageURL; 
-  
+        const imgData = dish.imageURL;
+
         const imgProps = doc.getImageProperties(imgData);
         const imgWidth = 50;
         const imgHeight = (imgProps.height * imgWidth) / imgProps.width;
-  
+
         doc.addImage(imgData, 'JPEG', 10, y, imgWidth, imgHeight);
         imageCount++;
       }
-  
+
       y += 80;
     });
-  
+
     doc.save('pratos.pdf');
   };
-  
+
 
 
   return (
     <>
       <Box sx={{ backgroundColor: colorTheme.palette.primary.light }}>
         <Box sx={{ ml: '10%', mr: '10%', mb: '12vh' }}>
-         <Button variant="contained" component={RouterLink} to={`/staff/dishes/create`}  sx={{ mr: 1, mt:1 }}>Adicionar Novo Prato</Button>
-          <Button variant="contained" onClick={handleDownloadPDF} sx={{ mr: 1, mt:1 }}>Download PDF</Button>
-          <Button variant="contained" onClick={() => setShowPDF(!showPDF)} sx={{mt:1}}>Visualizar PDF</Button>
+          <Button variant="contained" component={RouterLink} to={`/staff/dishes/create`} sx={{ mr: 1, mt: 1 }}>Adicionar Novo Prato</Button>
+          <Button variant="contained" onClick={handleDownloadPDF} sx={{ mr: 1, mt: 1 }}data-testid={`dish-pdf-download`}>Download PDF</Button>
+          <Button variant="contained" onClick={() => setShowPDF(!showPDF)} sx={{ mt: 1 }}data-testid={`dish-pdf-view`}>Visualizar PDF</Button>
           {showPDF && <DishPDF dishes={dishes} />}
+          {showSucessAlert &&
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+              <CustomizedSnackbars
+                open={showSucessAlert}
+                message="Login realizado com sucesso! Redirecionando.."
+                severity="success"
+                onClose={() => setShowSucessAlert(false)}
+              />
+            </Box>
+          }
+          {showFailAlert &&
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+              <CustomizedSnackbars
+                open={showFailAlert}
+                message="Erro: E-mail ou senha incorreto(a)."
+                severity="error"
+                onClose={() => setShowFailAlert(false)}
+              />
+            </Box>
+          }
           <Box sx={{ display: 'flex', mt: 3 }}>
             <Box sx={{ backgroundColor: 'white' }}>
               <Paper>
@@ -135,7 +166,7 @@ const ListDishes: React.FC = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {dishes.map((dish) => (
+                    {dishes.map((dish, index) => (
                       <TableRow
                         key={dish._id}
                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -147,17 +178,16 @@ const ListDishes: React.FC = () => {
                         </TableCell>
                         <TableCell align="center">{dish.description}</TableCell>
                         <TableCell align="center">R${dish.price}</TableCell>
-                        <TableCell align="center">{dish.type}</TableCell>
                         <TableCell align="center">{dish.menu?.name}</TableCell>
-                        <TableCell align="center"><Link component={RouterLink} to={`/staff/dishes/${dish._id}`}><EditIcon /></Link></TableCell>
-                        <TableCell align="center"><Button onClick={() => deleteDish(dish._id)}><DeleteForeverIcon /></Button></TableCell>
+                        <TableCell align="center"><Link component={RouterLink} to={`/staff/dishes/${dish._id}`} data-testid={`dish-edit-${index}`}><EditIcon /></Link></TableCell>
+                        <TableCell align="center"><Button onClick={() => deleteDish(dish._id)} data-testid={`dish-delete-${index}`}><DeleteForeverIcon /></Button></TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
                 </Table>
               </TableContainer>
               ) : (
-                dishes.map((dish) => (
+                dishes.map((dish, index) => (
                   <Box
                     key={dish._id}
                     sx={{
@@ -175,24 +205,21 @@ const ListDishes: React.FC = () => {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        mr:1
-                      }}> <EditIcon />
+                        mr: 1
+                      }} data-testid={`dish-edit-${index}`}> <EditIcon />
                       </Button>
 
                       <Button variant="contained" color="primary" sx={{
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                      }} onClick={() => deleteDish(dish._id)}><DeleteForeverIcon /></Button>
+                      }} onClick={() => deleteDish(dish._id)} data-testid={`dish-delete-${index}`}><DeleteForeverIcon /></Button>
                     </Box>
                     <Box sx={{ marginBottom: '8px' }}>
                       <Typography variant="body1">{dish.description}</Typography>
                     </Box>
                     <Box sx={{ marginBottom: '8px' }}>
                       <Typography variant="body1">Preço: R${dish.price}</Typography>
-                    </Box>
-                    <Box sx={{ marginBottom: '8px' }}>
-                      <Typography variant="body1">Tipo: {dish.type}</Typography>
                     </Box>
                     <Box sx={{ marginBottom: '8px' }}>
                       <Typography variant="body1">Menu: {dish.menu?.name}</Typography>

@@ -10,7 +10,7 @@ describe('User login', () => {
     cy.url().should('include', 'http://localhost:3000/login');
   });
 
-  it.skip('should enter invalid format email and password', () => {
+  it('should enter invalid format email and password', () => {
 
     cy.get('input#email').type('usuario@@.usuario');
     cy.get('input#password').type(user.password);
@@ -18,7 +18,7 @@ describe('User login', () => {
 
   });
 
-  it.skip('should enter wrong credentials for password, and click login button', () => {
+  it('should enter wrong credentials for password, and click login button', () => {
 
     cy.get('input#email').type(user.email);
     cy.get('input#password').type('passwords');
@@ -28,7 +28,7 @@ describe('User login', () => {
 
   });
 
-  it.skip('should navigate to login, enter email and password, and click login button', () => {
+  it('should navigate to login, enter email and password, and click login button', () => {
 
     cy.get('input#email').type(user.email);
     cy.get('input#password').type(user.password);
@@ -37,20 +37,6 @@ describe('User login', () => {
 
     cy.wait(5000);
     cy.url().should('eq', 'http://localhost:3000/');
-  });
-
-  it.skip('should log in as an admin user', () => {
-    cy.visit('http://localhost:3000/');
-    cy.get('.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-colorInherit.MuiIconButton-edgeEnd.MuiIconButton-sizeMedium').click();
-    cy.get('a.MuiTypography-root.MuiLink-root[href="/login"]').click();
-    cy.url().should('include', 'http://localhost:3000/login');
-
-    const adminUsername = Cypress.env('ADMIN_USERNAME');
-    const adminPassword = Cypress.env('ADMIN_PASSWORD');
-
-    cy.get('input#email').type(adminUsername);
-    cy.get('input#password').type(adminPassword);
-    cy.get('button[type="submit"]').click();
   });
 
 });

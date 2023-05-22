@@ -1,21 +1,17 @@
-import { Alert, Box, Button, FormHelperText, Grid, IconButton, InputLabel, OutlinedInput, Stack, Typography } from '@mui/material';
-import * as Yup from 'yup';
-import { Formik, Form } from 'formik';
-import http from '../../../../../api/axios';
+import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
+import { Box, Button, FormHelperText, Grid, IconButton, InputLabel, OutlinedInput, Stack, Typography } from '@mui/material';
+import { Form, Formik } from 'formik';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
-import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
+import * as Yup from 'yup';
+import http from '../../../../../api/axios';
+import CustomizedSnackbars from '../../../../../components/Alerts/Snackbar';
 import colorTheme from '../../../../../components/ColorThemes';
 
 
 const FormCreateMenu = () => {
   const [showSucessAlert, setShowSucessAlert] = useState<boolean>(false);
   const [showFailAlert, setShowFailAlert] = useState<boolean>(false);
-
-  const handleCloseAlert = () => {
-    setShowSucessAlert(false);
-    setShowFailAlert(false);
-  };
 
   const navigate = useNavigate();
 
@@ -27,7 +23,7 @@ const FormCreateMenu = () => {
   const [preview, setPreview] = useState<string>('');
 
 
-  const uploadMenuImage = async (file:File, menuId:string) => {
+  const uploadMenuImage = async (file: File, menuId: string) => {
     const formData = new FormData();
     formData.append('image', file);
     try {
@@ -57,14 +53,14 @@ const FormCreateMenu = () => {
       </Grid>
       <Box sx={{ display: 'flex' }}>
         <Box sx={{ mt: 4, mr: 2 }}>
-          <form  encType="multipart/form-data">
+          <form encType="multipart/form-data">
             <Box sx={{ display: 'flex', flexDirection: 'column', width: 250 }}>
 
               <IconButton component="label" sx={{
                 borderRadius: 1, color: colorTheme.palette.primary.contrastText, backgroundColor: colorTheme.palette.primary.main, "&:hover": {
                   backgroundColor: colorTheme.palette.secondary.dark
                 }
-              }}>
+              }} data-testid={`button-image-upload`}>
                 <PhotoCameraIcon />
                 <input
                   type="file"
@@ -75,7 +71,7 @@ const FormCreateMenu = () => {
               </IconButton>
 
               {preview ? (
-                <img src={preview} alt="Imagem" width="250" height="270" loading="lazy" />
+                <img src={preview} alt="Imagem" width="250" height="270" loading="lazy" data-testid={`image-uploaded-preview`}/>
               ) : (
                 <Typography variant="body1">Sem Imagem</Typography>
               )}
@@ -104,30 +100,41 @@ const FormCreateMenu = () => {
                 await uploadMenuImage(file, _id);
                 setFile(null);
               }
-              navigate('/staff/menus');
-              
+              setShowSucessAlert(true);
+              setShowFailAlert(false);
+              setTimeout(() => {
+                navigate('/staff/menus');
+              }, 3000);
             } catch (err) {
               console.error(err);
               setStatus({ success: false });
               setSubmitting(false);
+              setShowSucessAlert(false);
+              setShowFailAlert(true);
             }
           }}
 
         >
           {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
             <Form noValidate onSubmit={handleSubmit}>
-              {showSucessAlert &&
+               {showSucessAlert &&
                 <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                  <Alert onClose={handleCloseAlert} severity="success" sx={{ width: '40%' }}>
-                    Menu atualizado com sucesso!
-                  </Alert>
+                  <CustomizedSnackbars
+                    open={showSucessAlert}
+                    message="Menu criado com sucesso!"
+                    severity="success"
+                    onClose={() => setShowSucessAlert(false)}
+                  />
                 </Box>
               }
               {showFailAlert &&
                 <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                  <Alert onClose={handleCloseAlert} severity="error" sx={{ width: '40%' }}>
-                    Erro: Menu não foi atualizado.
-                  </Alert>
+                  <CustomizedSnackbars
+                    open={showFailAlert}
+                    message="Erro: Falha durante a criação de menu, por favor escolha outro nome."
+                    severity="error"
+                    onClose={() => setShowFailAlert(false)}
+                  />
                 </Box>
               }
 
@@ -160,6 +167,7 @@ const FormCreateMenu = () => {
 
                 <Grid item xs={4} md={12} sx={{ mt: 23 }}>
                   <Button
+                    data-testid={`button-create-menu`}
                     disableElevation
                     disabled={isSubmitting}
                     fullWidth

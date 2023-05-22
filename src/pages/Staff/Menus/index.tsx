@@ -7,9 +7,11 @@ import ListMenus from "./ListMenus";
 const StaffMenus = () => {
 
   return (
-    <Box sx={{ backgroundColor: colorTheme.palette.primary.light, height: '100%', paddingTop: 20 }}>
+    <Box sx={{ backgroundColor: colorTheme.palette.primary.light}}>
       <NavBar />
-      <ListMenus/>
+      <Box sx={{backgroundColor: colorTheme.palette.primary.light, height: '100%', minHeight: '100vh', paddingTop: 20, paddingBottom:20 }}>
+        <ListMenus />
+      </Box>
       <Footer />
     </Box>
   )

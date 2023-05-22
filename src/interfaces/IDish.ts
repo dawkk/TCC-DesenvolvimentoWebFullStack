@@ -7,7 +7,6 @@ export default interface IDish {
     _id: string,
     name: string,
   },
-  type: string,
   image?: string,
   imageURL?: string
 }

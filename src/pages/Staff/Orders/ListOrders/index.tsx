@@ -4,6 +4,7 @@ import http from "../../../../api/axios";
 import IOrderStatus from '../../../../interfaces/IOrderStatus';
 import IUserOrderDetails from "../../../../interfaces/IUserOrderDetails";
 import styles from './ListOrders.module.scss';
+import CustomizedSnackbars from "../../../../components/Alerts/Snackbar";
 
 const ListOrders = () => {
   const [orders, setOrders] = useState<IUserOrderDetails[]>([]);
@@ -11,6 +12,8 @@ const ListOrders = () => {
   const [selectedStatus, setSelectedStatus] = useState<string>('');
   const [selectedStatusTitle, setSelectedStatusTitle] = useState('Pendente');
   const [isLoading, setIsLoading] = useState(false);
+  const [showSucessAlert, setShowSucessAlert] = useState<boolean>(false);
+  const [showFailAlert, setShowFailAlert] = useState<boolean>(false);
 
 
   const fetchOrderStatuses = async () => {
@@ -98,24 +101,38 @@ const ListOrders = () => {
         try {
           await http.put(`/orders/${orderId}`, { status: selectedStatus._id });
           await fetchOrders();
+          setShowSucessAlert(true);
+          setShowFailAlert(false);
         } catch (error) {
+          setShowSucessAlert(false);
+          setShowFailAlert(true);
           console.error('Error updating order status:', error);
         }
       }
     } catch (error) {
+      setShowSucessAlert(false);
+      setShowFailAlert(true);
       console.error('Error updating order status:', error);
     }
   };
 
   const handleReject = async (orderId: string) => {
     try {
-      const selectedStatusId = 'Cancelado';
-      await http.put(`/orders/${orderId}`, { status: selectedStatusId });
-      await fetchOrders();
+      const canceladoStatus = orderStatuses.find((status) => status.status === 'Cancelado');
+      if (canceladoStatus) {
+        const selectedStatusId = canceladoStatus._id;
+        await http.put(`/orders/${orderId}`, { status: selectedStatusId });
+        await fetchOrders();
+        setShowSucessAlert(true);
+        setShowFailAlert(false);
+      }
     } catch (error) {
+      setShowSucessAlert(false);
+      setShowFailAlert(true);
       console.error('Error updating order status:', error);
     }
   };
+  
 
 
   const getButtonTypographyStyle = (status: string | undefined) => {
@@ -141,13 +158,34 @@ const ListOrders = () => {
       <Grid container className={styles.GridContainerOrders}>
         <Grid item xs={8} sx={{ mb: 2 }}>
           <Grid container spacing={2}  >
-            {orderStatuses.map((status: IOrderStatus) => (
+            {showSucessAlert &&
+              <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                <CustomizedSnackbars
+                  open={showSucessAlert}
+                  message="Pedido alterado com sucesso!"
+                  severity="success"
+                  onClose={() => setShowSucessAlert(false)}
+                />
+              </Box>
+            }
+            {showFailAlert &&
+              <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                <CustomizedSnackbars
+                  open={showFailAlert}
+                  message="Erro: O Pedido não foi alterado."
+                  severity="error"
+                  onClose={() => setShowFailAlert(false)}
+                />
+              </Box>
+            }
+            {orderStatuses.map((status: IOrderStatus, index) => (
               <Grid item xs={12} key={status._id} className={styles.GridContainerOrders}>
                 <Button
                   variant="contained"
                   className={styles.OrderStatusButton}
                   onClick={() => handleStatusClick(status._id)}
                   disabled={isLoading}
+                  data-testid={`orders-status-button-sort-${index}`}
                 >
                   {status.status}
                 </Button>
@@ -162,7 +200,7 @@ const ListOrders = () => {
             </Typography>
           </Paper>
         </Grid>
-        {orders.map((order) => (
+        {orders.map((order, index) => (
           <Grid item xs={8} key={order._id} className={styles.GridOrders}>
             <Card variant="outlined" sx={{ borderRadius: '0.5rem' }}>
               <CardContent>
@@ -202,6 +240,7 @@ const ListOrders = () => {
                   }}
                   onClick={() => handleAccept(order._id, order.status?.status || '')}
                   disabled={order.status?.status === 'Cancelado' || order.status?.status === 'Completo'}
+                  data-testid={`orders-button-accept-${index}`}
                 >
                   Aceitar
                 </Button>
@@ -214,7 +253,7 @@ const ListOrders = () => {
                   }}
                   onClick={() => handleReject(order._id)}
                   disabled={order.status?.status === 'Cancelado' || order.status?.status === 'Completo'}
-                >
+                  data-testid={`orders-button-reject-${index}`}>
                   Rejeitar
                 </Button>
               </CardActions>

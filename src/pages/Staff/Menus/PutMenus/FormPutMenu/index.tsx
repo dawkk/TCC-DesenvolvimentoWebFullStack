@@ -1,12 +1,13 @@
-import { Alert, Box, Button, FormHelperText, Grid, IconButton, InputLabel, OutlinedInput, Stack, Typography } from '@mui/material';
-import * as Yup from 'yup';
-import { Formik, Form } from 'formik';
-import http from '../../../../../api/axios';
-import { useEffect, useState } from 'react';
-import IMenu from '../../../../../interfaces/IMenu';
-import { useNavigate, useParams } from 'react-router-dom';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
+import { Box, Button, FormHelperText, Grid, IconButton, InputLabel, OutlinedInput, Stack, Typography } from '@mui/material';
+import { Form, Formik } from 'formik';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import * as Yup from 'yup';
+import http from '../../../../../api/axios';
+import CustomizedSnackbars from '../../../../../components/Alerts/Snackbar';
 import colorTheme from '../../../../../components/ColorThemes';
+import IMenu from '../../../../../interfaces/IMenu';
 
 const FormPutMenu = () => {
   const params = useParams();
@@ -37,10 +38,6 @@ const FormPutMenu = () => {
     name: Yup.string().max(255).required('Titulo Obrigatório'),
   });
 
-  const handleCloseAlert = () => {
-    setShowSucessAlert(false);
-    setShowFailAlert(false);
-  };
 
   /* IMAGE HANDLING */
 
@@ -120,7 +117,7 @@ const FormPutMenu = () => {
   return (
     <>
       <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'center', mt: 2, mb: 1 }}>
-        <Typography variant='h2'>Atualizar Prato</Typography>
+        <Typography variant='h2'>Atualizar Menu</Typography>
       </Grid>
       <Box sx={{ display: 'flex' }}>
         <Box sx={{ mt: 4, mr: 2 }}>
@@ -131,7 +128,7 @@ const FormPutMenu = () => {
                 borderRadius: 1, color: colorTheme.palette.primary.contrastText, backgroundColor: colorTheme.palette.primary.main, "&:hover": {
                   backgroundColor: colorTheme.palette.secondary.dark
                 }
-              }}>
+              }} data-testid={`button-image-upload`}>
                 <PhotoCameraIcon />
                 <input
                   type="file"
@@ -142,11 +139,12 @@ const FormPutMenu = () => {
               </IconButton>
 
               {preview ? (
-                <img src={preview} alt="Imagem" width="250" height="270" loading="lazy" />
+                <img src={preview} alt="Imagem" width="250" height="270" loading="lazy" data-testid={`image-uploaded-preview`}/>
               ) : (
                 <Typography variant="body1">Sem Imagem</Typography>
               )}
-              <Button type="submit" variant="contained" color="primary">
+              <Button type="submit" variant="contained" color="primary"
+                data-testid={`save-image-button`}>
                 Salvar Imagem
               </Button>
             </Box>
@@ -167,10 +165,12 @@ const FormPutMenu = () => {
                   'Content-Type': 'application/json'
                 },
               });
-              navigate('/staff/menus');
+              
               setShowSucessAlert(true);
               setShowFailAlert(false);
-
+              setTimeout(() => {
+                navigate('/staff/menus');
+              }, 3000);
             } catch (err) {
               console.error(err);
               setStatus({ success: false });
@@ -185,19 +185,24 @@ const FormPutMenu = () => {
             <Form noValidate onSubmit={handleSubmit}>
               {showSucessAlert &&
                 <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                  <Alert onClose={handleCloseAlert} severity="success" sx={{ width: '40%' }}>
-                    Menu atualizado com sucesso!
-                  </Alert>
+                  <CustomizedSnackbars
+                    open={showSucessAlert}
+                    message="Menu atualizado com sucesso!"
+                    severity="success"
+                    onClose={() => setShowSucessAlert(false)}
+                  />
                 </Box>
               }
               {showFailAlert &&
                 <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                  <Alert onClose={handleCloseAlert} severity="error" sx={{ width: '40%' }}>
-                    Erro: Menu não foi atualizado.
-                  </Alert>
+                  <CustomizedSnackbars
+                    open={showFailAlert}
+                    message="Erro: Menu não foi atualizado, não podem ser criados dois menus com um mesmo nome."
+                    severity="error"
+                    onClose={() => setShowFailAlert(false)}
+                  />
                 </Box>
               }
-
               <Grid
                 container spacing={2} sx={{
                   display: 'flex', flexWrap: 'wrap', pl: 8, pt: 4, boxSizing: 'border-box',
@@ -229,6 +234,7 @@ const FormPutMenu = () => {
                 </Grid>
                 <Grid item xs={4} md={12} sx={{ mt: 21 }}>
                   <Button
+                    data-testid={`button-edit-menu`}
                     disableElevation
                     disabled={isSubmitting}
                     fullWidth

@@ -82,7 +82,7 @@ const CheckoutPayment = () => {
         )}
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
           <Typography variant="h6" gutterBottom>
-            Confirmação de Endereço
+            Método de Pagamento
           </Typography>
         </Box>
         <Container sx={{ display: 'flex', justifyContent: 'center' }}>
