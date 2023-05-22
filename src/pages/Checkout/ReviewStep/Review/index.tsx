@@ -9,6 +9,10 @@ import IOrderItems from "../../../../interfaces/IOrderItems";
 import VerticalStepper from "../../VerticalStepper";
 import colorTheme from "../../../../components/ColorThemes";
 import IOrderCreation from "../../../../interfaces/IOrderCreation";
+<<<<<<< HEAD
+=======
+
+>>>>>>> order-progression-merge-oAuthTry
 
 const CheckoutReview = () => {
   const navigate = useNavigate();
@@ -157,6 +161,10 @@ const CheckoutReview = () => {
 
 
   const [userInfo, setUserInfo] = useState<CheckoutReviewData | null>(null);
+<<<<<<< HEAD
+=======
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+>>>>>>> order-progression-merge-oAuthTry
   const [buildOrder, setBuildOrder] = useState<IOrderCreation | null>(null);
 
 
