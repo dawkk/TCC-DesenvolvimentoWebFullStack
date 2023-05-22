@@ -7,15 +7,15 @@ import { useState } from 'react';
 import {  Link as RouterLink,  useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../../context/AuthProvider';
 import CustomizedSnackbars from '../../../../components/Alerts/Snackbar';
-import FacebookIcon from '@mui/icons-material/Facebook';
 import GoogleIcon from '@mui/icons-material/Google';
-import TwitterIcon from '@mui/icons-material/Twitter';
 import styles from '../Login.module.scss';
+/* import FacebookIcon from '@mui/icons-material/Facebook'; */
+/* import TwitterIcon from '@mui/icons-material/Twitter'; */
 
 const LoginFormFields = () => {
   const handleGoogleLogin = async () => {
     try {
-      window.location.href = "http://localhost:8000/auth/google";
+      window.location.href = process.env.REACT_APP_GOOGLE_AUTH_URL as string;
     } catch (error) {
       console.log('Failed to initiate Google login:', error);
     }
@@ -202,9 +202,9 @@ const LoginFormFields = () => {
           </Divider>
         </Typography>
         <Grid item xs={12} md={12} className={styles.LoginAuthContainer}>
-          <Button variant="contained" sx={{ width: '30%', height: '50px', backgroundColor: '#44558e' }}><FacebookIcon></FacebookIcon></Button>
+         {/*  <Button variant="contained" sx={{ width: '30%', height: '50px', backgroundColor: '#44558e' }}><FacebookIcon></FacebookIcon></Button> */}
           <Button variant="contained" onClick={handleGoogleLogin} sx={{ width: '30%', height: '50px', backgroundColor: '#EA4335' }}><GoogleIcon></GoogleIcon></Button>
-          <Button variant="contained" sx={{ width: '30%', height: '50px', backgroundColor: '#03a9f4' }}><TwitterIcon></TwitterIcon></Button>
+          {/* <Button variant="contained" sx={{ width: '30%', height: '50px', backgroundColor: '#03a9f4' }}><TwitterIcon></TwitterIcon></Button> */}
         </Grid>
         <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'center', mb: 6, mt: 4 }}>
           <Typography variant='body2' sx={{ mr: 1 }}>Não possui conta?</Typography>
@@ -216,23 +216,3 @@ const LoginFormFields = () => {
 }
 
 export default LoginFormFields;
-
-/* 
-<div>
-<p className={styles.Text}>E-mail</p>
-<TextField
-  id="outlined-required"
-  defaultValue="email@email.com"
-/>
-<p className={styles.Text}>Senha</p>
-<TextField
-  id="outlined-password-input"
-  label="Senha"
-  type="password"
-  autoComplete="current-password"
-/>
-<div className={styles.Flex}>
-  <FormControlLabel control={<Checkbox defaultChecked />} label="Me mantenha logado" />
-  <p>Esqueci minha senha</p>
-</div>
-<Button variant="contained" sx={{ width: '100%', height: '50px', mb: '32px' }}>Login</Button> */
