@@ -144,6 +144,5 @@ $ docker-compose up --build
 
 Este projeto esta sobe a licença [MIT](./LICENSE).
 
-Feito com ❤️ por Thiago Marinho 👋🏽 [Entre em contato!](https://www.linkedin.com/in/gmarconato/)
-
+Feito com ❤️ 👋🏽 [Entre em contato!](https://www.linkedin.com/in/gmarconato/
 ---
