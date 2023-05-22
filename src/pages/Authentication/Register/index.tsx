@@ -2,9 +2,9 @@ import { Box, Button, Divider, Grid, Link, Paper, Typography } from '@mui/materi
 import { Link as RouterLink } from 'react-router-dom';
 import Logo from '../../../components/Logo';
 import styles from './Register.module.scss'
-import FacebookIcon from '@mui/icons-material/Facebook';
+/* import FacebookIcon from '@mui/icons-material/Facebook';
+import TwitterIcon from '@mui/icons-material/Twitter'; */
 import GoogleIcon from '@mui/icons-material/Google';
-import TwitterIcon from '@mui/icons-material/Twitter';
 import FormFields from './FormFields';
 import colorTheme from '../../../components/ColorThemes';
 
@@ -13,7 +13,7 @@ const Register = () => {
 
   const handleGoogleLogin = async () => {
     try {
-      window.location.href = "http://localhost:8000/auth/google";
+      window.location.href = process.env.OAUTH_LINK as string;
     } catch (error) {
       console.log('Failed to initiate Google login:', error);
     }
@@ -60,9 +60,9 @@ const Register = () => {
                     </Divider>
                   </Typography>
                   <Grid item xs={12} md={12} className={styles.RegisterAuthContainer}>
-                    <Button variant="contained" sx={{ width: '30%', height: '50px', backgroundColor: '#44558e' }}><FacebookIcon></FacebookIcon></Button>
+                    {/* <Button variant="contained" sx={{ width: '30%', height: '50px', backgroundColor: '#44558e' }}><FacebookIcon></FacebookIcon></Button> */}
                     <Button variant="contained" onClick={handleGoogleLogin} sx={{ width: '30%', height: '50px', backgroundColor: '#EA4335' }}><GoogleIcon></GoogleIcon></Button>
-                    <Button variant="contained" sx={{ width: '30%', height: '50px', backgroundColor: '#03a9f4' }}><TwitterIcon></TwitterIcon></Button>
+                    {/* <Button variant="contained" sx={{ width: '30%', height: '50px', backgroundColor: '#03a9f4' }}><TwitterIcon></TwitterIcon></Button> */}
                   </Grid>
                   <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'center', mb: 6 }}>
                     <Typography variant='body2' sx={{ mr: 0.5 }}>Já possui conta? Faça</Typography>
