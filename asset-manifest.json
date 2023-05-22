@@ -1,8 +1,10 @@
 {
   "files": {
-    "main.css": "/TCC-DesenvolvimentoWebFullStack/static/css/main.1eb5eb05.css",
-    "main.js": "/TCC-DesenvolvimentoWebFullStack/static/js/main.4d9d81b4.js",
-    "static/media/burguer_combo.jpg": "/TCC-DesenvolvimentoWebFullStack/static/media/burguer_combo.ae09939ecc5f504d17b3.jpg",
+    "main.css": "/TCC-DesenvolvimentoWebFullStack/static/css/main.2b51a3bd.css",
+    "main.js": "/TCC-DesenvolvimentoWebFullStack/static/js/main.2a152811.js",
+    "static/js/498.c7a413ea.chunk.js": "/TCC-DesenvolvimentoWebFullStack/static/js/498.c7a413ea.chunk.js",
+    "static/js/703.ddc70206.chunk.js": "/TCC-DesenvolvimentoWebFullStack/static/js/703.ddc70206.chunk.js",
+    "static/js/513.f2e38d95.chunk.js": "/TCC-DesenvolvimentoWebFullStack/static/js/513.f2e38d95.chunk.js",
     "static/media/menu-lunch.jpg": "/TCC-DesenvolvimentoWebFullStack/static/media/menu-lunch.fb5b9fa0126d3a58169c.jpg",
     "static/media/menu-dinner.jpg": "/TCC-DesenvolvimentoWebFullStack/static/media/menu-dinner.ca9d2facab63d6abe208.jpg",
     "static/media/Banner_Restaurant.jpg": "/TCC-DesenvolvimentoWebFullStack/static/media/Banner_Restaurant.744608247e13bb6426cf.jpg",
@@ -12,12 +14,17 @@
     "static/media/mini-banner-barbecue.jpg": "/TCC-DesenvolvimentoWebFullStack/static/media/mini-banner-barbecue.1c1287a33afccc8bcad2.jpg",
     "static/media/menu-dessert.jpg": "/TCC-DesenvolvimentoWebFullStack/static/media/menu-dessert.42bff317f2667e8d702e.jpg",
     "static/media/banner-nuts-web.jpg": "/TCC-DesenvolvimentoWebFullStack/static/media/banner-nuts-web.ccbe41a227a580f1f355.jpg",
+    "static/media/OrderReceived.svg": "/TCC-DesenvolvimentoWebFullStack/static/media/OrderReceived.449216efa319097e62f0a485320f8de3.svg",
+    "static/media/401ErrorUnauthorized-rafiki.svg": "/TCC-DesenvolvimentoWebFullStack/static/media/401ErrorUnauthorized-rafiki.c5bf6f8b231a94ff88f7f717f549107d.svg",
     "index.html": "/TCC-DesenvolvimentoWebFullStack/index.html",
-    "main.1eb5eb05.css.map": "/TCC-DesenvolvimentoWebFullStack/static/css/main.1eb5eb05.css.map",
-    "main.4d9d81b4.js.map": "/TCC-DesenvolvimentoWebFullStack/static/js/main.4d9d81b4.js.map"
+    "main.2b51a3bd.css.map": "/TCC-DesenvolvimentoWebFullStack/static/css/main.2b51a3bd.css.map",
+    "main.2a152811.js.map": "/TCC-DesenvolvimentoWebFullStack/static/js/main.2a152811.js.map",
+    "498.c7a413ea.chunk.js.map": "/TCC-DesenvolvimentoWebFullStack/static/js/498.c7a413ea.chunk.js.map",
+    "703.ddc70206.chunk.js.map": "/TCC-DesenvolvimentoWebFullStack/static/js/703.ddc70206.chunk.js.map",
+    "513.f2e38d95.chunk.js.map": "/TCC-DesenvolvimentoWebFullStack/static/js/513.f2e38d95.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.1eb5eb05.css",
-    "static/js/main.4d9d81b4.js"
+    "static/css/main.2b51a3bd.css",
+    "static/js/main.2a152811.js"
   ]
 }
