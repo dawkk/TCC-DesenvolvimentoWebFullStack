@@ -4,7 +4,7 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import * as Yup from 'yup';
 import { Formik, Form } from 'formik';
 import { useState } from 'react';
-import {  Link as RouterLink,  useNavigate } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../../context/AuthProvider';
 import CustomizedSnackbars from '../../../../components/Alerts/Snackbar';
 /* import FacebookIcon from '@mui/icons-material/Facebook'; */
@@ -39,15 +39,17 @@ const LoginFormFields = () => {
       setShowSucessAlert(true);
       setShowFailAlert(false);
 
-      
-   
+      const currentUrl = window.location.pathname;
+
 
       setTimeout(() => {
-        const currentUrl = window.location.pathname;
+        const lastVisitedUrl = localStorage.getItem('lastVisitedUrl') || '/';
         if (currentUrl === '/login') {
           navigate('/');
         } else if (currentUrl === '/checkout') {
           window.location.reload();
+        } else {
+          navigate(lastVisitedUrl);
         }
       }, 5000);
     } catch (error) {
@@ -200,10 +202,15 @@ const LoginFormFields = () => {
           </Divider>
         </Typography>
         <Grid item xs={12} md={12} className={styles.LoginAuthContainer}>
-   {/*        <Button variant="contained" sx={{ width: '30%', height: '50px', backgroundColor: '#44558e' }}><FacebookIcon></FacebookIcon></Button> */}
-          <Button variant="contained" onClick={handleGoogleLogin} sx={{ width: '30%', height: '50px', backgroundColor: '#EA4335' }}><GoogleIcon></GoogleIcon></Button>
-      {/*     <Button variant="contained" sx={{ width: '30%', height: '50px', backgroundColor: '#03a9f4' }}><TwitterIcon></TwitterIcon></Button> */}
+
+          <Button variant="contained" onClick={handleGoogleLogin} sx={{ width: '40%', height: '50px', backgroundColor: '#EA4335' }}><GoogleIcon></GoogleIcon></Button>
         </Grid>
+    {/*     <Grid item xs={12} md={12} className={styles.LoginAuthContainer}>
+                    <Button variant="contained" sx={{ width: '30%', height: '50px', backgroundColor: '#44558e' }}><FacebookIcon></FacebookIcon></Button>
+        </Grid> */}
+        {/* <Grid item xs={12} md={12} className={styles.LoginAuthContainer}>
+              <Button variant="contained" sx={{ width: '30%', height: '50px', backgroundColor: '#03a9f4' }}><TwitterIcon></TwitterIcon></Button>
+        </Grid> */}
         <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'center', mb: 6, mt: 4 }}>
           <Typography variant='body2' sx={{ mr: 1 }}>Não possui conta?</Typography>
           <Link component={RouterLink} to="/register" underline="none"><Typography variant='body2' fontWeight='bold'>Registre-se</Typography></Link>

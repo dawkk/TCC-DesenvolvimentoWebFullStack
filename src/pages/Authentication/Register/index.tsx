@@ -44,7 +44,7 @@ const Register = () => {
           <Grid sx={{ width: '50%', backgroundColor: 'whitesmoke', borderRadius: 24. }}>
             <Paper>
               <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: 4, boxSizing: 'border-box' }}>
-                <Typography variant='h4' sx={{color:colorTheme.palette.primary.main}}>Registro</Typography>
+                <Typography variant='h4' sx={{ color: colorTheme.palette.primary.main }}>Registro</Typography>
               </Box>
               <Grid container spacing={2} sx={{
                 pl: 4, pr: 4, boxSizing: 'border-box',
@@ -60,9 +60,7 @@ const Register = () => {
                     </Divider>
                   </Typography>
                   <Grid item xs={12} md={12} className={styles.RegisterAuthContainer}>
-                    {/* <Button variant="contained" sx={{ width: '30%', height: '50px', backgroundColor: '#44558e' }}><FacebookIcon></FacebookIcon></Button> */}
-                    <Button variant="contained" onClick={handleGoogleLogin} sx={{ width: '30%', height: '50px', backgroundColor: '#EA4335' }}><GoogleIcon></GoogleIcon></Button>
-                    {/* <Button variant="contained" sx={{ width: '30%', height: '50px', backgroundColor: '#03a9f4' }}><TwitterIcon></TwitterIcon></Button> */}
+                    <Button variant="contained" onClick={handleGoogleLogin} sx={{ width: '40%', height: '50px', backgroundColor: '#EA4335' }}><GoogleIcon></GoogleIcon></Button>
                   </Grid>
                   <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'center', mb: 6 }}>
                     <Typography variant='body2' sx={{ mr: 0.5 }}>Já possui conta? Faça</Typography>
