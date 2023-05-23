@@ -15,7 +15,7 @@ import styles from '../Login.module.scss';
 const LoginFormFields = () => {
   const handleGoogleLogin = async () => {
     try {
-      window.location.href = process.env.OAUTH_LINK as string;
+      window.location.href = process.env.REACT_APP_OAUTH_LINK as string;
     } catch (error) {
       console.log('Failed to initiate Google login:', error);
     }
