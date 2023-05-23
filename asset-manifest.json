@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/TCC-DesenvolvimentoWebFullStack/static/css/main.2b51a3bd.css",
-    "main.js": "/TCC-DesenvolvimentoWebFullStack/static/js/main.a6d1ddeb.js",
+    "main.css": "/TCC-DesenvolvimentoWebFullStack/static/css/main.16180fb6.css",
+    "main.js": "/TCC-DesenvolvimentoWebFullStack/static/js/main.732b005c.js",
     "static/js/498.c7a413ea.chunk.js": "/TCC-DesenvolvimentoWebFullStack/static/js/498.c7a413ea.chunk.js",
     "static/js/703.ddc70206.chunk.js": "/TCC-DesenvolvimentoWebFullStack/static/js/703.ddc70206.chunk.js",
     "static/js/513.f2e38d95.chunk.js": "/TCC-DesenvolvimentoWebFullStack/static/js/513.f2e38d95.chunk.js",
@@ -17,14 +17,14 @@
     "static/media/OrderReceived.svg": "/TCC-DesenvolvimentoWebFullStack/static/media/OrderReceived.449216efa319097e62f0a485320f8de3.svg",
     "static/media/401ErrorUnauthorized-rafiki.svg": "/TCC-DesenvolvimentoWebFullStack/static/media/401ErrorUnauthorized-rafiki.c5bf6f8b231a94ff88f7f717f549107d.svg",
     "index.html": "/TCC-DesenvolvimentoWebFullStack/index.html",
-    "main.2b51a3bd.css.map": "/TCC-DesenvolvimentoWebFullStack/static/css/main.2b51a3bd.css.map",
-    "main.a6d1ddeb.js.map": "/TCC-DesenvolvimentoWebFullStack/static/js/main.a6d1ddeb.js.map",
+    "main.16180fb6.css.map": "/TCC-DesenvolvimentoWebFullStack/static/css/main.16180fb6.css.map",
+    "main.732b005c.js.map": "/TCC-DesenvolvimentoWebFullStack/static/js/main.732b005c.js.map",
     "498.c7a413ea.chunk.js.map": "/TCC-DesenvolvimentoWebFullStack/static/js/498.c7a413ea.chunk.js.map",
     "703.ddc70206.chunk.js.map": "/TCC-DesenvolvimentoWebFullStack/static/js/703.ddc70206.chunk.js.map",
     "513.f2e38d95.chunk.js.map": "/TCC-DesenvolvimentoWebFullStack/static/js/513.f2e38d95.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.2b51a3bd.css",
-    "static/js/main.a6d1ddeb.js"
+    "static/css/main.16180fb6.css",
+    "static/js/main.732b005c.js"
   ]
 }
