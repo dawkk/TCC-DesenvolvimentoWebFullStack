@@ -7,13 +7,23 @@ import TwitterIcon from '@mui/icons-material/Twitter'; */
 import GoogleIcon from '@mui/icons-material/Google';
 import FormFields from './FormFields';
 import colorTheme from '../../../components/ColorThemes';
+import GitHubIcon from '@mui/icons-material/GitHub';
 
 
 const Register = () => {
 
   const handleGoogleLogin = async () => {
     try {
-      window.location.href = process.env.OAUTH_LINK as string;
+      window.location.href = process.env.REACT_APP_OAUTH_GOOGLE_LINK as string;
+    } catch (error) {
+      console.log('Failed to initiate Google login:', error);
+    }
+  };
+
+
+  const handleGithubLogin = async () => {
+    try {
+      window.location.href = process.env.REACT_APP_OAUTH_GITHUB_LINK as string;
     } catch (error) {
       console.log('Failed to initiate Google login:', error);
     }
@@ -61,6 +71,9 @@ const Register = () => {
                   </Typography>
                   <Grid item xs={12} md={12} className={styles.RegisterAuthContainer}>
                     <Button variant="contained" onClick={handleGoogleLogin} sx={{ width: '40%', height: '50px', backgroundColor: '#EA4335' }}><GoogleIcon></GoogleIcon></Button>
+                  </Grid>
+                  <Grid item xs={12} md={12} className={styles.RegisterAuthContainer}>
+                    <Button variant="contained" onClick={handleGithubLogin} sx={{ width: '40%', height: '50px', backgroundColor: 'black' }}><GitHubIcon></GitHubIcon></Button>
                   </Grid>
                   <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'center', mb: 6 }}>
                     <Typography variant='body2' sx={{ mr: 0.5 }}>Já possui conta? Faça</Typography>
