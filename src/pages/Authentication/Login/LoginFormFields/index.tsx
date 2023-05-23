@@ -54,13 +54,10 @@ const LoginFormFields = () => {
 
 
       setTimeout(() => {
-        const lastVisitedUrl = localStorage.getItem('lastVisitedUrl') || '/';
         if (currentUrl === '/login') {
           navigate('/');
         } else if (currentUrl === '/checkout') {
           window.location.reload();
-        } else {
-          navigate(lastVisitedUrl);
         }
       }, 5000);
     } catch (error) {
