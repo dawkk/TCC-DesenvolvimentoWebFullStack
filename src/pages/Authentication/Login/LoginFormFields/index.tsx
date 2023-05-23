@@ -39,17 +39,15 @@ const LoginFormFields = () => {
       setShowSucessAlert(true);
       setShowFailAlert(false);
 
-      const currentUrl = window.location.pathname;
-      localStorage.setItem('lastVisitedUrl', currentUrl);
+      
+   
 
       setTimeout(() => {
-        const lastVisitedUrl = localStorage.getItem('lastVisitedUrl') || '/';
+        const currentUrl = window.location.pathname;
         if (currentUrl === '/login') {
           navigate('/');
         } else if (currentUrl === '/checkout') {
           window.location.reload();
-        } else {
-          navigate(lastVisitedUrl);
         }
       }, 5000);
     } catch (error) {
