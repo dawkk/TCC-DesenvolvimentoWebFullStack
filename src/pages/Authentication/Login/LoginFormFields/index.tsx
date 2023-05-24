@@ -7,9 +7,7 @@ import { useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../../context/AuthProvider';
 import CustomizedSnackbars from '../../../../components/Alerts/Snackbar';
-/* import FacebookIcon from '@mui/icons-material/Facebook'; */
 import GoogleIcon from '@mui/icons-material/Google';
-/* import TwitterIcon from '@mui/icons-material/Twitter'; */
 import GitHubIcon from '@mui/icons-material/GitHub';
 import styles from '../Login.module.scss';
 
@@ -54,12 +52,12 @@ const LoginFormFields = () => {
 
 
       setTimeout(() => {
-        if (currentUrl === '/login') {
+        if (currentUrl.endsWith('/login')) {
           navigate('/');
-        } else if (currentUrl === '/checkout') {
+        } else if (currentUrl.endsWith('/checkout')) {
           window.location.reload();
         }
-      }, 5000);
+      }, 1000);
     } catch (error) {
       console.log("Usuario ou senha errado");
       setShowFailAlert(true);

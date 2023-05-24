@@ -159,7 +159,6 @@ const ListDishes: React.FC = () => {
                       <TableCell align="center">Titulo</TableCell>
                       <TableCell align="center">Descrição</TableCell>
                       <TableCell align="center">Preço</TableCell>
-                      <TableCell align="center">Tipo</TableCell>
                       <TableCell align="center">Menu</TableCell>
                       <TableCell align="center">Editar</TableCell>
                       <TableCell align="center">Excluir</TableCell>

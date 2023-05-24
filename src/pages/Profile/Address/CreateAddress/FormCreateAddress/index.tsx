@@ -12,12 +12,12 @@ const FormCreateAddress = () => {
   const navigate = useNavigate();
 
   const yupValidationSchema = Yup.object().shape({
-    street: Yup.string().max(255),
-    number: Yup.number(),
-    neighborhood: Yup.string().max(255),
-    city: Yup.string().max(255),
-    state: Yup.string().max(255),
-    zipcode: Yup.string().matches(/^\d{5}-\d{3}$/, 'Formato inválido, deve ser XXXXX-XXX'),
+    street: Yup.string().max(255).required('Rua Obrigatória'),
+    number: Yup.number().required('Numero Obrigatório'),
+    neighborhood: Yup.string().required('Bairro Obrigatório').max(255),
+    city: Yup.string().max(255).required('Cidade Obrigatória'),
+    state: Yup.string().max(255).required('Estado Obrigatório'),
+    zipcode: Yup.string().matches(/^\d{5}-\d{3}$/, 'Formato inválido, deve ser XXXXX-XXX').required('CEP Obrigatório'),
     additionalInfo: Yup.string().max(255),
   });
 
@@ -101,7 +101,7 @@ const FormCreateAddress = () => {
 
               <Grid item xs={12} md={12}>
                 <Stack spacing={1}>
-                  <InputLabel>Rua</InputLabel>
+                  <InputLabel>Rua*</InputLabel>
                   <OutlinedInput
                     id='street'
                     type='street'
@@ -122,7 +122,7 @@ const FormCreateAddress = () => {
 
               <Grid item xs={12} md={6}>
                 <Stack spacing={1}>
-                  <InputLabel>Numero</InputLabel>
+                  <InputLabel>Numero*</InputLabel>
                   <OutlinedInput
                     id='number'
                     type='number'
@@ -143,7 +143,7 @@ const FormCreateAddress = () => {
 
               <Grid item xs={12} md={6}>
                 <Stack spacing={1}>
-                  <InputLabel>Bairro</InputLabel>
+                  <InputLabel>Bairro*</InputLabel>
                   <OutlinedInput
                     id='neighborhood'
                     type='neighborhood'
@@ -164,7 +164,7 @@ const FormCreateAddress = () => {
 
               <Grid item xs={12} md={6}>
                 <Stack spacing={1}>
-                  <InputLabel>Cidade</InputLabel>
+                  <InputLabel>Cidade*</InputLabel>
                   <OutlinedInput
                     id='city'
                     type='city'
@@ -185,7 +185,7 @@ const FormCreateAddress = () => {
 
               <Grid item xs={12} md={6}>
                 <Stack spacing={1}>
-                  <InputLabel>Estado</InputLabel>
+                  <InputLabel>Estado*</InputLabel>
                   <OutlinedInput
                     id='state'
                     type='state'
@@ -206,7 +206,7 @@ const FormCreateAddress = () => {
 
               <Grid item xs={12} md={6}>
                 <Stack spacing={1}>
-                  <InputLabel>CEP</InputLabel>
+                  <InputLabel>CEP*</InputLabel>
                   <OutlinedInput
                     id='zipcode'
                     type='zipcode'

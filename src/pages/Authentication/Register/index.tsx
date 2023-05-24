@@ -2,8 +2,6 @@ import { Box, Button, Divider, Grid, Link, Paper, Typography } from '@mui/materi
 import { Link as RouterLink } from 'react-router-dom';
 import Logo from '../../../components/Logo';
 import styles from './Register.module.scss'
-/* import FacebookIcon from '@mui/icons-material/Facebook';
-import TwitterIcon from '@mui/icons-material/Twitter'; */
 import GoogleIcon from '@mui/icons-material/Google';
 import FormFields from './FormFields';
 import colorTheme from '../../../components/ColorThemes';

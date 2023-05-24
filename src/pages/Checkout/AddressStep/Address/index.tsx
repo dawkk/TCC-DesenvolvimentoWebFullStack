@@ -21,46 +21,51 @@ const CheckoutAddress = () => {
   const steps = ['Identificação', 'Confirmação de Endereço', 'Método de Pagamento', 'Revisão de dados'];
   const activeStep = 1;
 
-  useEffect(() => {
-    const fetchUpdatedAddresses = async () => {
-      try {
-        const response = await http.get<IUserAddress[]>(`/users/me/addresses`, {
-          headers: {
-            'Content-Type': 'application/json'
-          },
-        });
-        setAddress(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    if (address.length === 0) {
-      fetchUpdatedAddresses();
-    } else if (!selectedAddress && address.length > 0) {
-      setSelectedAddress(address[0]._id as string);
+  const fetchUpdatedAddresses = async () => {
+    try {
+      const response = await http.get<IUserAddress[]>(`/users/me/addresses`, {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      });
+      console.log('Address response.data', response.data)
+      const filteredAddresses = response.data.filter((address) => {
+        return (
+          address.city.trim() !== '' &&
+          address.state.trim() !== '' &&
+          address.neighborhood.trim() !== '' &&
+          address.street.trim() !== '' &&
+          address.number !== null &&
+          address.zipcode.trim() !== ''
+        );
+      });
+      setAddress(filteredAddresses);
+    } catch (error) {
+      console.log(error);
     }
-  }, [address, selectedAddress]);
+  };
 
-  useEffect(() => {
-    const fetchCheckoutStatus = async () => {
-      try {
-        const response = await http.get('/checkouts/me');
-        if (response.status === 200) {
-          setCheckoutExists(true);
-          setCheckoutId(response.data[0]._id);
-        } else {
-          setCheckoutExists(false);
-          setCheckoutId('');
-        }
-      } catch (error) {
+  const fetchCheckoutStatus = async () => {
+    try {
+      const response = await http.get('/checkouts/me');
+      if (response.status === 200 && response.data.length > 0) {
+        setCheckoutExists(true);
+        setCheckoutId(response.data[0]._id);
+      } else {
         setCheckoutExists(false);
         setCheckoutId('');
       }
-    };
+    } catch (error) {
+      setCheckoutExists(false);
+      setCheckoutId('');
+    }
+  };
 
+  useEffect(() => {
+    fetchUpdatedAddresses();
     fetchCheckoutStatus();
   }, []);
+
 
   const handleButtonClick = async () => {
     try {

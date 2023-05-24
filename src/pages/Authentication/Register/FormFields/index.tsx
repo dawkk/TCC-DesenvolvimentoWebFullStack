@@ -70,7 +70,7 @@ const FormFields = () => {
 
             setTimeout(() => {
               navigate('/login');
-            }, 3000);
+            }, 1000);
           } catch (err) {
             console.error(err);
             setStatus({ success: false });
