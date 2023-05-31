@@ -46,12 +46,11 @@ const ListMenus: React.FC = () => {
   }, []);
 
 
-  const deleteMenu = (_id: string) => {
+  const inactivateMenu = (_id: string) => {
     try{
-
     
-    const config = { data: { _id } };
-    http.delete(`/menus/${_id}`, config)
+    const config = { _id, statusActive: false };
+    http.put(`/menus/${_id}`, config)
       .then(() => {
         const listMenus = menus.filter(menu => menu._id !== _id)
         setMenus([...listMenus])
@@ -114,7 +113,7 @@ const ListMenus: React.FC = () => {
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
               <CustomizedSnackbars
                 open={showSucessAlert}
-                message="Login realizado com sucesso! Redirecionando.."
+                message="Menu inativo com sucesso!"
                 severity="success"
                 onClose={() => setShowSucessAlert(false)}
               />
@@ -124,7 +123,7 @@ const ListMenus: React.FC = () => {
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
               <CustomizedSnackbars
                 open={showFailAlert}
-                message="Erro: E-mail ou senha incorreto(a)."
+                message="Erro: Menu não foi alterado."
                 severity="error"
                 onClose={() => setShowFailAlert(false)}
               />
@@ -160,7 +159,7 @@ const ListMenus: React.FC = () => {
                           {menu.name}
                         </TableCell>
                         <TableCell align="center"><Link component={RouterLink} to={`/staff/menus/${menu._id}`} data-testid={`menu-edit-${index}`}><EditIcon /></Link></TableCell>
-                        <TableCell align="center"><Button onClick={() => deleteMenu(menu._id)}data-testid={`menu-delete-${index}`}><DeleteForeverIcon /></Button></TableCell>
+                        <TableCell align="center"><Button onClick={() => inactivateMenu(menu._id)}data-testid={`menu-delete-${index}`}><DeleteForeverIcon /></Button></TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
@@ -192,7 +191,7 @@ const ListMenus: React.FC = () => {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                      }} onClick={() => deleteMenu(menu._id)} data-testid={`menu-delete-${index}`}><DeleteForeverIcon /></Button>
+                      }} onClick={() => inactivateMenu(menu._id)} data-testid={`menu-delete-${index}`}><DeleteForeverIcon /></Button>
                     </Box>
                     <Box sx={{ display: 'flex' }}>
                       {menu.image && <img src={menu.imageURL} alt={menu.name} height={100} width={100} />}

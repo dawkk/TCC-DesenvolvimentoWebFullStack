@@ -6,6 +6,7 @@ export default interface IDish {
   menu: {
     _id: string,
     name: string,
+    statusActive?: boolean,
   },
   image?: string,
   imageURL?: string

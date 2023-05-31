@@ -36,10 +36,10 @@ const AddressData = () => {
 
   }, [address]);
 
-  const deleteAddress = (_id: string) => {
+  const inactivateAddress = (_id: string) => {
     try {
-      const config = { data: { _id } };
-      http.delete(`/users/me/addresses/${_id}`, config)
+      const config = { _id, statusActive: false };
+      http.put(`/users/me/addresses/${_id}`, config)
         .then(() => {
           const listAddresses = address.filter(addr => addr._id !== _id)
           setAddress([...listAddresses])
@@ -74,7 +74,7 @@ const AddressData = () => {
             </Grid>
             <Grid item xs={12} className={styles.GridContainerButton}>
               <Button onClick={() => addr._id && EditAddress(addr._id)} variant='contained' className={styles.Button}data-testid={`address-edit-button-${index}`} sx={{mr:1}}><EditIcon /></Button>
-              <Button onClick={() => addr._id && deleteAddress(addr._id)} variant='contained' className={styles.Button} data-testid={`address-delete-button-${index}`}><DeleteForeverIcon /></Button>
+              <Button onClick={() => addr._id && inactivateAddress(addr._id)} variant='contained' className={styles.Button} data-testid={`address-delete-button-${index}`}><DeleteForeverIcon /></Button>
             </Grid>
           </Grid>
         ))}
