@@ -59,7 +59,7 @@ const LoginFormFields = () => {
         } else if (currentUrl === '/checkout') {
           window.location.reload();
         }
-      }, 5000);
+      }, 1000);
     } catch (error) {
       console.log("Usuario ou senha errado");
       setShowFailAlert(true);
