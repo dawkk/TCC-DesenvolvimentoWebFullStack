@@ -1,7 +1,7 @@
 import EmailIcon from '@mui/icons-material/Email';
 import PhoneEnabledIcon from '@mui/icons-material/PhoneEnabled';
 import ScheduleIcon from '@mui/icons-material/Schedule';
-import { Grid, Typography } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
 import http from "../../../../../api/axios";
@@ -9,6 +9,7 @@ import IUserAddress from "../../../../../interfaces/IUserAddress";
 import IUserDetailed from "../../../../../interfaces/IUserDetailed";
 import IUserOrderDetails from "../../../../../interfaces/IUserOrderDetails";
 import styles from './DetailsUser.module.scss';
+import { Link as RouterLink } from 'react-router-dom';
 
 
 const DetailsUser: React.FC = () => {
@@ -67,6 +68,16 @@ const DetailsUser: React.FC = () => {
       <Grid container>
 
         <Grid container sx={{ display: 'flex', justifyContent: 'center' }}>
+          <Grid item xs={1}>
+            <Button component={RouterLink} to={`/staff/users`} variant="contained" color="primary" sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              mr: 1
+            }}>
+              Voltar
+            </Button>
+          </Grid>
           <Grid container className={styles.GridContainerUserInfo} key={user._id}>
             <Grid item xs={12} className={styles.TitleContainersBackground}>
               <Typography variant="h5" className={styles.TitleUserInfo}>

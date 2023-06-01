@@ -54,8 +54,13 @@ const ListOrders = () => {
         return dateA.getTime() - dateB.getTime();
       });
       setOrders(sortedOrders);
-    } catch (error) {
-      console.error('Error fetching orders:', error);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      if (error.response && error.response.status === 404) {
+        setOrders([]);
+      } else {
+        console.error('Error fetching orders:', error);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -103,6 +108,8 @@ const ListOrders = () => {
           await fetchOrders();
           setShowSucessAlert(true);
           setShowFailAlert(false);
+
+          setOrders(prevOrders => prevOrders.filter(order => order._id !== orderId));
         } catch (error) {
           setShowSucessAlert(false);
           setShowFailAlert(true);
@@ -125,6 +132,8 @@ const ListOrders = () => {
         await fetchOrders();
         setShowSucessAlert(true);
         setShowFailAlert(false);
+
+        setOrders(prevOrders => prevOrders.filter(order => order._id !== orderId));
       }
     } catch (error) {
       setShowSucessAlert(false);
@@ -132,7 +141,7 @@ const ListOrders = () => {
       console.error('Error updating order status:', error);
     }
   };
-  
+
 
 
   const getButtonTypographyStyle = (status: string | undefined) => {
@@ -195,9 +204,22 @@ const ListOrders = () => {
         </Grid>
         <Grid item xs={8}>
           <Paper>
-            <Typography variant="h4" className={styles.OrdersTitle}>
-              {selectedStatusTitle}
-            </Typography>
+            {orders.length === 0 ? (
+              <Box>
+                <Typography variant="h4" className={styles.OrdersTitle}>
+                  {selectedStatusTitle}
+                </Typography>
+                <Box sx={{display:'flex', justifyContent:'center', p:4}}>
+                  <Typography>
+                    Nenhum pedido encontrado para este status no momento
+                  </Typography>
+                </Box>
+              </Box>
+            ) : (
+              <Typography variant="h4" className={styles.OrdersTitle}>
+                {selectedStatusTitle}
+              </Typography>
+            )}
           </Paper>
         </Grid>
         {orders.map((order, index) => (
