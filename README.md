@@ -92,7 +92,7 @@ $ git clone git@github.com:dawkk/TCC-DesenvolvimentoWebFullStack-Backend.git
 # Acesse a pasta do projeto no terminal/cmd
 $ cd TCC-DesenvolvimentoWebFullStack-Backend$
 
-# Instale as dependências (Recomendado utilizar node v16.20.2)
+# Instale as dependências (Recomendado utilizar node v16.20.2TC)
 $ npm install
 
 # Execute a aplicação local pelo docker
