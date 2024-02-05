@@ -1,18 +1,19 @@
 # 💻 Sobre o projeto
 
- **LaCookeria** - é uma forma de conectar clientes e restaurantes criando um novo canal de comunicação e interação para facilitar as interações e delivery, assim como organizar e centralizar informações úteis ao restaurante e cliente.
+**LaCookeria** - é uma forma de conectar clientes e restaurantes criando um novo canal de comunicação e interação para facilitar as interações e delivery, assim como organizar e centralizar informações úteis ao restaurante e cliente.
 
 Projeto de conclusão de curso desenvolvido durante o curso de Desenvolvimento Web Full Stack da universidade Puc-Minas:
 
 ---
 
-## 🚧  Projeto em construção 🚧
+## 🚧 Projeto em construção 🚧
 
 ---
 
 ## 🔨 Funcionalidades
 
 - [x] A equipe do restaurante pode:
+
   - [x] acessar menu administrativo
   - [x] realizar CRUD dos pratos
   - [x] realizar CRUD dos menus
@@ -36,7 +37,7 @@ Projeto de conclusão de curso desenvolvido durante o curso de Desenvolvimento W
 
 As seguintes ferramentas foram usadas na construção do projeto:
 
-### **Website**  ([React](https://reactjs.org/)  +  [TypeScript](https://www.typescriptlang.org/))
+### **Website** ([React](https://reactjs.org/) + [TypeScript](https://www.typescriptlang.org/))
 
 - **[React Router Dom](https://github.com/ReactTraining/react-router/tree/master/packages/react-router-dom)**
 - **[React Hooks](https://legacy.reactjs.org/docs/hooks-intro.html)**
@@ -47,7 +48,7 @@ As seguintes ferramentas foram usadas na construção do projeto:
 - **[Yup](https://github.com/jquense/yup)**
 - **[Docker](https://www.docker.com/)**
 
-### **Server**  ([NodeJS](https://nodejs.org/en/)  +  [Javascript](https://www.javascript.com/))
+### **Server** ([NodeJS](https://nodejs.org/en/) + [Javascript](https://www.javascript.com/))
 
 - **[Express](https://expressjs.com/)**
 - **[CORS](https://expressjs.com/en/resources/middleware/cors.html)**
@@ -61,7 +62,7 @@ As seguintes ferramentas foram usadas na construção do projeto:
 - **[SuperAgent](https://github.com/ladjs/superagent)**
 - **[Jest](https://jestjs.io/pt-BR/)**
 - **[Docker](https://www.docker.com/)**
-  
+
 ---
 
 ## 🚀 Como executar o projeto
@@ -89,18 +90,18 @@ Antes de começar, você vai precisar ter instalado em sua máquina as seguintes
 $ git clone git@github.com:dawkk/TCC-DesenvolvimentoWebFullStack-Backend.git
 
 # Acesse a pasta do projeto no terminal/cmd
-$ cd TCC-DesenvolvimentoWebFullStack-Backend$ 
+$ cd TCC-DesenvolvimentoWebFullStack-Backend$
 
-# Instale as dependências
+# Instale as dependências (Recomendado utilizar node v16.20.2TC)
 $ npm install
 
 # Execute a aplicação local pelo docker
-$ docker-compose up      
+$ docker-compose up
 
 # Se realizar mudanças no código atualize a imagem do docker
 $ docker-compose up --build
 
-# O servidor inciará na porta:8000 - acesse http://localhost:8000 
+# O servidor inciará na porta:8000 - acesse http://localhost:8000
 
 ```
 
@@ -118,7 +119,7 @@ $ cd TCC-DesenvolvimentoWebFullStack
 $ npm install
 
 # Execute a aplicação local pelo docker
-$ docker-compose up      
+$ docker-compose up
 
 # Se realizar mudanças no código atualize a imagem do docker
 $ docker-compose up --build
@@ -135,7 +136,7 @@ $ docker-compose up --build
  <br />
  <sub><b>Gabriel Marconato Venturini</b></sub>
 
- [![Linkedin Badge](https://img.shields.io/badge/-Gabriel-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/gmarconato/)](https://www.linkedin.com/in/gmarconato/)
+[![Linkedin Badge](https://img.shields.io/badge/-Gabriel-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/gmarconato/)](https://www.linkedin.com/in/gmarconato/)
 [![Gmail Badge](https://img.shields.io/badge/-gabriel.marconato@hotmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:gabriel.marconato@hotmail.com)](mailto:gabriel.marconato@hotmail.com)
 
 ---
@@ -144,5 +145,4 @@ $ docker-compose up --build
 
 Este projeto esta sobe a licença [MIT](./LICENSE).
 
-Feito com ❤️ 👋🏽 [Entre em contato!](https://www.linkedin.com/in/gmarconato/
----
+## Feito com ❤️ 👋🏽 [Entre em contato!](https://www.linkedin.com/in/gmarconato/
